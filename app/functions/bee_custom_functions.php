@@ -63,3 +63,52 @@ function get_notificaciones($index = 0){
   return isset($notificaciones[$index]) ? $notificaciones[$index] : $notificaciones[0];
 
 }
+
+//funcion que regrese el status de cada usuario
+//retorna un estado en un objeto, primero es lo que guardamos en la DB el segundo es una representación visual
+function get_estados_usuarios(){
+  return[
+    ['pendiente', 'Pendiente de activación'],
+    ['activo', 'Activo'],
+    ['suspendido', 'Suspendido']
+  ];
+}
+
+//FUNCION PARA FORMATEAR DE MANERA VISUAL EL STATUS
+function format_estado_usuario($status){
+  $placeholder = '<div class="badge %s"><i class= "%s"></i>%s</div>';
+  $classes = '';
+  $icon = '';
+  $text = '';
+
+  switch ($status) {
+    case 'pendiente':
+      # code...
+      $classes = 'badge-warning text-dark';
+      $icon = 'fas fa-clock';
+      $text = 'Pendiente';
+      break;
+
+      case 'activo':
+        # code...
+        $classes = 'badge-success';
+        $icon = 'fas fa-check';
+        $text = 'Activo';
+        break;
+
+        case 'suspendido':
+          # code...
+          $classes = 'badge-danger';
+          $icon = 'fas fa-times';
+          $text = 'Suspendido';
+          break;
+    //colocamos un estado de protección
+    default:
+      # code...
+      $classes = 'badge-danger';
+      $icon = 'fas fa-question';
+      $text = 'Desconocido';
+      break;
+  }
+  return sprintf($placeholder, $classes, $icon, $text);
+}

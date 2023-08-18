@@ -21,7 +21,7 @@
 											<th width="5%">DPI</th>
 											<th>Nombre Completo</th>
 											<th>Correo Electronico</th>
-                      <th>status</th>
+					  					<th>status</th>
 											<th width="10%">Acción</th>
 										</tr>
 									</thead>
@@ -32,7 +32,7 @@
 										<td><?php echo sprintf('<a href="profesores/ver/%s">%s</a>', $p->numero, $p->numero); ?></td>
 										<td><?php echo add_ellipsis($p->nombre_completo,50);?></td>
 										<td><?php echo $p->email;?></td>
-                    <td><?php echo $p->status;?></td>
+										<td><?php echo format_estado_usuario($p->status); ?></td>
 										<td>
 											<div class="btn-group">
 												<a href="<?php echo 'profesores/ver/'.$p->numero; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
