@@ -30,7 +30,7 @@ class profesoresController extends Controller {
     [
       'title' => 'Todos los Profesores',
       'slug' => 'profesores',
-      'button' => ['url' => 'profesores/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Profesor'],
+      'button' => ['url' => buildURL('profesores/agregar'), 'text' => '<i class="fas fa-plus"></i> Agregar Profesor'],
       'profesores' => profesorModel::all_paginated()
     ];
     
@@ -45,8 +45,56 @@ class profesoresController extends Controller {
 
   function agregar()
   {
-    View::render('agregar');
+    //PROCESO DE AGREGAR REGISTRO A LA BASE DE DATOS
+    try {
+      //code...
+      //validamos el token csrf y los campos verificando que esten correctos para poder a agregar los datos y dejar pasar la información
+      if(!check_posted_data(['_t'], $_GET) || !Csrf::validate($_GET['_t'])){
+        throw new Exception(get_notificaciones(0));
+      }
+
+      //VALIDAMOS EL ROL DEL USUARIO PARA QUE SOLO LOS USUARIOS AUTORIZADOS PUEDAN UTILIZAR ESTA FUNCION
+      if(!is_admin(get_user_rol())){
+        throw new Exception(get_notificaciones(1), 1);
+      }
+      //variable para crear numeros random y asignarlos al profesor
+      $numero = rand(111111,999999);
+      $data = 
+      [
+        'numero' => $numero,
+        'dpi' => null,
+        'nombres' => null,
+        'apellidos' => null,
+        'nombre_completo' => null,
+        'email' => null,
+        'password' => null,
+        'hash' => generate_token(),
+        'rol' => 'profesor',
+        'status' => 'pendiente',
+        'creado' => now()
+      ];
+
+      //INSERTAR A LA BASE DE DATOS
+      if(!$id = profesorModel::add(profesorModel::$t1, $data)){
+        throw new Exception(get_notificaciones(2));
+      }
+
+      //notificación de logrado
+      Flasher::new(sprintf('Nuevo Profesor <b>%s</b> agregado con éxito.', $numero), 'success');
+      Redirect::to(sprintf('profesores/ver/%s',$numero));
+
+
+    } catch (PDOException $e) {
+      //throw $th;
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    }catch (Exception $e) {
+      //throw $th;
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    }
   }
+
 
   function post_agregar()
   {
@@ -105,8 +153,11 @@ class profesoresController extends Controller {
                       text-align: left;
                   }
                   .column-id {
-                      width: 20%;
+                      width: 10%;
                   }
+                  .column-dpi {
+                    width: 12%;
+                }
                   .column-nombre {
                       width: 35%;
                   }
@@ -114,7 +165,7 @@ class profesoresController extends Controller {
                       width: 30%;
                   }
                   .column-status {
-                      width: 10%;
+                      width: 12%;
                   }
               </style>';
   
@@ -125,11 +176,11 @@ class profesoresController extends Controller {
       $html .= '<table>';
   
       // Agregar fila de encabezados
-      $html .= '<tr><th class="column-id">DPI</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
+      $html .= '<tr><th class="column-id">No.</th><th class="column-dpi">DPI</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
   
       // Agregar filas de datos
       foreach ($profesores as $profe) {
-          $html .= '<tr><td class="column-id">' . $profe['numero'] . '</td><td class="column-nombre">' . utf8_decode($profe['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($profe['email']) . '</td><td class="column-status">' . utf8_decode($profe['status']) . '</td></tr>';
+          $html .= '<tr><td class="column-id">' . $profe['numero'] . '</td><td class="column-dpi">' . utf8_decode($profe['dpi']) .'</td><td class="column-nombre">' . utf8_decode($profe['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($profe['email']) . '</td><td class="column-status">' . utf8_decode($profe['status']) . '</td></tr>';
       }
       $html .= '</table>';
   

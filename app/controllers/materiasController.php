@@ -322,8 +322,4 @@ function exportar_excel()
     echo '</table>';
     exit;
 }
-
-
-
-
 }
