@@ -69,96 +69,101 @@ class profesoresController extends Controller {
   }
 
   // Agregar función para exportar a PDF
-function exportar_pdf()
-{
-  $data = 
-  [
-    'title' => 'Exportar PDF'
-  ];
-
-    // Cargar la biblioteca de generación de PDF (por ejemplo, TCPDF)
-    require_once __DIR__ . '/../../app/TCPDF/tcpdf.php';
-
-    // Crear un nuevo objeto PDF
-    $pdf = new TCPDF();
-
-    // Agregar una página
-    $pdf->AddPage();
-
-    // Obtener los datos de las materias ordenados por id de menor a mayor
-    $materias = materiaModel::query('SELECT * FROM materias ORDER BY id ASC');
-
-    // Crear una tabla en el PDF con estilos CSS
-    $html = '<style>
-                th {
-                    background-color: #f2f2f2;
-                    padding: 8px;
-                    text-align: left;
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    border: 1px solid #ddd;
-                }
-                th, td {
-                    border: 1px solid #ddd;
-                    padding: 8px;
-                    text-align: left;
-                }
-                .column-id {
-                    width: 10%;
-                }
-                .column-nombre {
-                    width: 30%;
-                }
-                .column-descripcion {
-                    width: 60%;
-                }
-            </style>';
-    
-    // Agregar el encabezado
-    $html .= '<h2 style="text-align: center;">LISTA DE MATERIAS REGISTRADAS</h2>';
-    
-    // Agregar la tabla
-    $html .= '<table>';
-    
-    // Agregar fila de encabezados
-    $html .= '<tr><th class="column-id">DPI</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Email</th><th class="column-status">Email</th></tr>';
-    
-    // Agregar filas de datos
-    foreach ($profesores as $profe) {
-        $html .= '<tr><td class="column-id">' . $profe['numero'] . '</td><td class="column-nombre">' . $profe['nombre_completo'] . '</td><td class="column-descripcion">' . $profe['email'] . '</td></tr>'. $profe['status'] . '</td></tr>';
-    }
-    $html .= '</table>';
-
-    // Agregar el contenido a la página
-    $pdf->writeHTML($html, true, false, false, false, '');
-
-    // Generar el PDF y mostrarlo en el navegador
-    $pdf->Output('materias.pdf', 'I');
-
-    View::render('ver',$data);
-}
-
-// Agregar función para exportar a Excel
-function exportar_excel()
-{
-  $$profes = materiaModel::query('SELECT * FROM materias ORDER BY id ASC');
-
-    $filename = 'profesores.xls';
-
-    header("Content-Type: application/vnd.ms-excel");
-    header("Content-Disposition: attachment; filename=\"$filename\"");
-
-    echo '<table>';
-    echo '<tr><th>ID</th><th>Nombre</th><th>Descripcion</th></tr>';
-
-    // Recorremos el arreglo de materias en orden ascendente
-    foreach ($profesores as $profe) {
-        echo '<tr><td>' . $profe['numero'] . '</td><td>' . utf8_decode($profe['nombre_completo']) . '</td><td>' . utf8_decode($profe['email']) . '</td></tr>'. utf8_decode($profe['status']) . '</td></tr>';
-    }
-
-    echo '</table>';
-    exit;
-}
+  function exportar_pdf()
+  {
+      $data = [
+          'title' => 'Exportar PDF'
+      ];
+  
+      // Cargar la biblioteca de generación de PDF (por ejemplo, TCPDF)
+      require_once __DIR__ . '/../../app/TCPDF/tcpdf.php';
+  
+      // Crear un nuevo objeto PDF
+      $pdf = new TCPDF();
+  
+      // Agregar una página
+      $pdf->AddPage();
+  
+      // Obtener los datos de los profesores ordenados por número de DPI
+      $profesores = profesorModel::query('SELECT * FROM usuarios WHERE rol = "profesor" ORDER BY numero ASC');
+  
+      // Crear una tabla en el PDF con estilos CSS
+      $html = '<style>
+                  th {
+                      background-color: #f2f2f2;
+                      padding: 8px;
+                      text-align: left;
+                  }
+                  table {
+                      width: 100%;
+                      border-collapse: collapse;
+                      border: 1px solid #ddd;
+                  }
+                  th, td {
+                      border: 1px solid #ddd;
+                      padding: 8px;
+                      text-align: left;
+                  }
+                  .column-id {
+                      width: 20%;
+                  }
+                  .column-nombre {
+                      width: 35%;
+                  }
+                  .column-email {
+                      width: 30%;
+                  }
+                  .column-status {
+                      width: 10%;
+                  }
+              </style>';
+  
+      // Agregar el encabezado
+      $html .= '<h2 style="text-align: center;">LISTA DE PROFESORES REGISTRADOS</h2>';
+  
+      // Agregar la tabla
+      $html .= '<table>';
+  
+      // Agregar fila de encabezados
+      $html .= '<tr><th class="column-id">DPI</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
+  
+      // Agregar filas de datos
+      foreach ($profesores as $profe) {
+          $html .= '<tr><td class="column-id">' . $profe['numero'] . '</td><td class="column-nombre">' . utf8_decode($profe['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($profe['email']) . '</td><td class="column-status">' . utf8_decode($profe['status']) . '</td></tr>';
+      }
+      $html .= '</table>';
+  
+      // Agregar el contenido a la página
+      $pdf->writeHTML($html, true, false, false, false, '');
+  
+      // Generar el PDF y mostrarlo en el navegador
+      $pdf->Output('profesores.pdf', 'I');
+  
+      // Redireccionar a la página desde la que se inició la exportación
+      header('Location: ' . buildURL('profesores')); // Cambia 'profesores' por la URL correcta
+  }
+  
+  
+  // Agregar función para exportar a Excel
+  function exportar_excel()
+  {
+      $profesores = profesorModel::query('SELECT * FROM usuarios WHERE rol = "profesor" ORDER BY numero ASC');
+  
+      $filename = 'profesores.xls';
+  
+      header("Content-Type: application/vnd.ms-excel");
+      header("Content-Disposition: attachment; filename=\"$filename\"");
+  
+      echo '<table>';
+      echo '<tr><th>DPI</th><th>Nombre Completo</th><th>Correo Electronico</th><th>Status</th></tr>';
+  
+      // Recorremos el arreglo de profesores en orden ascendente
+      foreach ($profesores as $profe) {
+          echo '<tr><td>' . $profe['numero'] . '</td><td>' . utf8_decode($profe['nombre_completo']) . '</td><td>' . utf8_decode($profe['email']) . '</td><td>' . utf8_decode($profe['status']) . '</td></tr>';
+      }
+  
+      echo '</table>';
+      exit;
+  }
+  
 }
