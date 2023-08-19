@@ -40,7 +40,21 @@ class profesoresController extends Controller {
 
   function ver($id)
   {
-    View::render('ver');
+
+    if (!$profesor = profesorModel::by_numero($id)) {
+      Flasher::new('No existe el profesor en la base de datos.', 'danger');
+      Redirect::back();
+    }
+    $data =
+    [
+      'title'  => sprintf('Profesor #%s', $profesor['numero']),
+      'slug'   => 'profesores',
+      'button' => ['url' => 'profesores', 'text' => '<i class="fas fa-table"></i> Profesores'],
+      'p'      => $profesor
+    ];
+
+    View::render('ver', $data);
+
   }
 
   function agregar()
@@ -58,7 +72,7 @@ class profesoresController extends Controller {
         throw new Exception(get_notificaciones(1), 1);
       }
       //variable para crear numeros random y asignarlos al profesor
-      $numero = rand(111111,999999);
+      $numero = rand(1111,9999);
       $data = 
       [
         'numero' => $numero,
@@ -101,14 +115,88 @@ class profesoresController extends Controller {
 
   }
 
-  function editar($id)
-  {
-    View::render('editar');
-  }
 
   function post_editar()
   {
+    try {
+      //revisamos la data y verificamos el token csrf y los datos que estan en el profesor
+  if (!check_posted_data(['csrf','id','dpi','nombres','apellidos','email','telefono','password'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+    throw new Exception(get_notificaciones());
+}
 
+
+      // Validar rol que seamos administradores
+      //VALIDAMOS EL ROL DEL USUARIO PARA QUE SOLO LOS USUARIOS AUTORIZADOS PUEDAN UTILIZAR ESTA FUNCION
+      if(!is_admin(get_user_rol())){
+        throw new Exception(get_notificaciones(1), 1);
+      }
+
+      $id = clean($_POST["id"]);
+
+
+      //verificamos que el registro exista en la base de datos
+      if (!$profesor = profesorModel::by_id($id)) {
+        throw new Exception('No existe el profesor en la base de datos.');
+      }
+
+      //creación de variables para insertar la información con POST
+      $dpi = clean($_POST["dpi"]);
+
+      // Validar longitud del DPI
+      if (strlen($dpi) !== 13) {
+      throw new Exception('El DPI debe tener 13 caracteres.');
+      }
+
+      $nombres = clean($_POST["nombres"]);
+      $apellidos = clean($_POST["apellidos"]);
+      $email = clean($_POST["email"]);
+      $telefono = clean($_POST["telefono"]);
+      $password = clean($_POST["password"]);
+
+      // Validar que el correo sea válido
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Ingresa un correo electrónico válido.');
+      }
+
+      //objeto data con los parametros que le vamos a pasar para su inserción
+      $data   =
+      [
+        'dpi' => $dpi,
+        'nombres' => $nombres,
+        'apellidos' => $apellidos,
+        'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
+        'email' => $email,
+        'telefono' => $telefono
+      ];
+
+      // En caso de que se cambie el correo electrónico se coloca un estado en pendiente
+      if ($profesor['email'] !== $email && !in_array($profesor['status'], ['pendiente', 'suspendido'])) {
+        $data['status'] = 'pendiente'; //seteamos un valor del objeto data
+      }
+
+      // En caso de que se cambie la contraseña se valida la información
+      if (!empty($password) && !password_verify($password.AUTH_SALT, $profesor['password'])) {
+        $data['password'] = password_hash($password.AUTH_SALT, PASSWORD_BCRYPT);
+      }
+
+      // Insertar a la base de datos
+      if (!profesorModel::update(profesorModel::$t1, ['id' => $id], $data)) {
+        throw new Exception(get_notificaciones(3));
+      }
+
+      // Volver a cargar la información del profesor
+      $profesor = profesorModel::by_id($id);
+
+      Flasher::new(sprintf('Profesor <b>%s</b> actualizado con éxito.', $profesor['nombre_completo']), 'success');
+      Redirect::back();
+
+    } catch (PDOException $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    } catch (Exception $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    }
   }
 
   function borrar($id)

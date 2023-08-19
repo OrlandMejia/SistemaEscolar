@@ -56,8 +56,11 @@ function get_notificaciones($index = 0){
   //creamos objeto que contenga las notificaciones
   $notificaciones = 
   [
-    'Acceso no autorizado',
-    'Acción no autorizada'
+    'Acceso no autorizado.',
+    'Acción no autorizada.',
+    'Hubo un error al agregar el registro.',
+    'Hubo un error al actualizar el registro.',
+    'Hubo un error al borrar el registro.'
   ];
   //retorta y setea que lo que nosotros coloquemos en el llamado se encuentre dentro del array, sino devolverá por defecto el contenido del index 0
   return isset($notificaciones[$index]) ? $notificaciones[$index] : $notificaciones[0];

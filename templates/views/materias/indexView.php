@@ -3,7 +3,7 @@
 <!-- Agregar botón de exportar PDF -->
 <!-- Agregar botones de exportar PDF y Excel en el mismo div -->
 <div class="mb-3 d-flex">
-  <a href="<?php echo buildURL('materias/exportar_pdf'); ?>" class="btn btn-info mr-2"><i class="fas fa-file-pdf"></i> Exportar a PDF</a>
+  <a href="<?php echo buildURL('materias/exportar_pdf'); ?>" class="btn btn-info mr-2"  target="_blank"><i class="fas fa-file-pdf"></i> Exportar a PDF</a>
   <a href="<?php echo buildURL('materias/exportar_excel'); ?>" class="btn btn-success"><i class="fas fa-file-excel"></i> Exportar a Excel</a>
 </div>
 					<!-- DataTales Example -->

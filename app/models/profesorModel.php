@@ -33,10 +33,19 @@ class profesorModel extends Model {
     return PaginationHandler::paginate($sql);
   }
 
+  //busca los datos según el id del registro
   static function by_id($id)
   {
     // Un registro con $id
     $sql = 'SELECT * FROM usuarios WHERE rol = "profesor" AND id = :id LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
+  }
+
+  //busca los datos según el numero de profesor
+  static function by_numero($numero)
+  {
+    // Un registro con $numero
+    $sql = 'SELECT * FROM usuarios WHERE rol = "profesor" AND numero = :numero LIMIT 1';
+    return ($rows = parent::query($sql, ['numero' => $numero])) ? $rows[0] : [];
   }
 }
