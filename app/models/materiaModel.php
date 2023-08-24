@@ -37,5 +37,44 @@ class materiaModel extends Model {
     $sql = 'SELECT * FROM materias WHERE id = :id LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
+
+  //función para cargar las materias disponibles para cada profesor
+  static function disponibles_profesor($id_profesor)
+  {
+    $sql = 
+    'SELECT
+      m.*
+    FROM
+      materias m
+    WHERE
+      m.id NOT IN (
+        SELECT
+          mp.id_materia
+        FROM
+          materias_profesores mp
+        WHERE
+          mp.id_profesor = :id_profesor
+      )';
+    return ($rows = parent::query($sql, ['id_profesor' => $id_profesor])) ? $rows : [];
+  }
+
+  static function materias_profesor($id_profesor)
+  {
+    $sql = 
+    'SELECT
+      m.*
+    FROM
+      materias m
+    WHERE
+      m.id IN (
+        SELECT
+          mp.id_materia
+        FROM
+          materias_profesores mp
+        WHERE
+          mp.id_profesor = :id_profesor
+      )';
+    return ($rows = parent::query($sql, ['id_profesor' => $id_profesor])) ? $rows : [];
+  }
 }
 

@@ -38,13 +38,18 @@ class profesoresController extends Controller {
     View::render('index', $data);
   }
 
-  function ver($id)
+  function ver($numero)
   {
+    if(!is_admin(get_user_rol())){
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
 
-    if (!$profesor = profesorModel::by_numero($id)) {
+    if (!$profesor = profesorModel::by_numero($numero)) {
       Flasher::new('No existe el profesor en la base de datos.', 'danger');
       Redirect::back();
     }
+
     $data =
     [
       'title'  => sprintf('Profesor #%s', $profesor['numero']),
@@ -54,7 +59,6 @@ class profesoresController extends Controller {
     ];
 
     View::render('ver', $data);
-
   }
 
   function agregar()
@@ -221,7 +225,7 @@ class profesoresController extends Controller {
       $pdf->AddPage();
   
       // Obtener los datos de los profesores ordenados por número de DPI
-      $profesores = profesorModel::query('SELECT * FROM usuarios WHERE rol = "profesor" ORDER BY numero ASC');
+      $profesores = profesorModel::query('SELECT * FROM usuarios2 WHERE rol = "profesor" ORDER BY numero ASC');
   
       // Crear una tabla en el PDF con estilos CSS
       $html = '<style>
@@ -281,12 +285,10 @@ class profesoresController extends Controller {
       // Redireccionar a la página desde la que se inició la exportación
       header('Location: ' . buildURL('profesores')); // Cambia 'profesores' por la URL correcta
   }
-  
-  
   // Agregar función para exportar a Excel
   function exportar_excel()
   {
-      $profesores = profesorModel::query('SELECT * FROM usuarios WHERE rol = "profesor" ORDER BY numero ASC');
+      $profesores = profesorModel::query('SELECT * FROM usuarios2 WHERE rol = "profesor" ORDER BY numero ASC');
   
       $filename = 'profesores.xls';
   
@@ -304,5 +306,4 @@ class profesoresController extends Controller {
       echo '</table>';
       exit;
   }
-  
 }

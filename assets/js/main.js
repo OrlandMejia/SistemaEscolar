@@ -5,10 +5,6 @@ $(document).ready(function() {
 
   // Waitme
   //$('body').waitMe({effect : 'orbit'});
-  console.log('////////// Bienvenido a Bee Framework Versión ' + Bee.bee_version + ' //////////');
-  console.log('//////////////////// www.joystick.com.mx ////////////////////');
-  console.log(Bee);
-
   /**
    * Prueba de peticiones ajax al backend en versión 1.1.3
    */
@@ -381,4 +377,66 @@ $(document).ready(function() {
       form.waitMe('hide');
     })
   }
+
+  /////////////////////////////////////////////////////////
+  //// PROYECTO SISTEMA ESCOLAR
+  /////////////////////////////////////////////////////////
+
+  // Función para cargar el listado de materias disponibles
+  function get_materias_disponibles_profesor() {
+
+    var form    = $('#profesor_asignar_materia_form'),
+    select      = $('select', form),
+    id_profesor = $('input[name="id"]', form).val(),
+    wrapper     = $('#profesor_materias'),
+    opciones    = '',
+    action      = 'get',
+    hook        = 'bee_hook';
+
+    if (form.length == 0) return;
+
+    // Limpiar las opciones al cargar
+    select.html('');
+
+    // AJAX
+    $.ajax({
+      url: 'ajax/get_materias_disponibles_profesor',
+      type: 'get',
+      dataType: 'json',
+      data : { 
+        '_t': Bee.csrf,
+        id_profesor,
+        action,
+        hook
+      },
+      beforeSend: function() {
+        wrapper.waitMe();
+      }
+    }).done(function(res) {
+      if(res.status === 200) {
+        if (res.data.length === 0) {
+          select.html('<option disabled selected>No hay opciones disponibles.</option>')
+          $('button', form).attr('disabled', true);
+          return;
+        }
+        
+        $.each(res.data, function(i, m) {
+          opciones += '<option value="'+m.id+'">'+m.nombre+'</option>';
+        });
+
+        select.html(opciones);
+        $('button', form).attr('disabled', false);
+
+      } else {
+        select.html('<option disabled selected>No hay opciones disponibles.</option>')
+        $('button', form).attr('disabled', true);
+        toastr.error(res.msg, '¡Upss!');
+      }
+    }).fail(function(err) {
+      toastr.error('Hubo un error en la petición.', '¡Upss!');
+    }).always(function() {
+      wrapper.waitMe('hide');
+    })
+  }
+  get_materias_disponibles_profesor();
 });
