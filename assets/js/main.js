@@ -419,7 +419,6 @@ function get_materias_disponibles_profesor() {
     if(res.status === 200){
       //condicionamos si existe una materia disponible
       if(res.data.length === 0){
-        toastr.error('No hay materias disponibles para el profesor.');
         select.html('<option disabled selected>No hay opciones disponibles.</option>')
         $('button', form).attr('disabled', true);
         return;
@@ -444,4 +443,48 @@ function get_materias_disponibles_profesor() {
 }
 //EJECUTAMOS LA FUNCION
 get_materias_disponibles_profesor();
+
+//FUNCION PARA CARGAR DE FORMA DINAMICA LAS MATERIAS
+//cargamos un bloque de contenido html que inyectamos dentro del wrapper del form 
+function get_materias_profesor(){
+  var wrapper = $('.wrapper_materias_profesor'),
+  id_profesor = wrapper.data('id'),
+  //variables obligatorias del framework para comunicarnos con ajax
+  action = 'get',
+  hook = 'bee_hook';
+
+  if(wrapper.length == 0) return;
+
+  //CODIGO AJAX PARA CARGAR LAS MATERIAS
+  $.ajax({
+    url: 'ajax/get_materias_profesor',
+    type: 'get',
+    dataType: 'json',
+    data : {
+      '_t': Bee.csrf,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      wrapper.waitMe();
+    }
+    //promesas asincronas
+  }).done(function(res){
+    if(res.status === 200){
+      wrapper.html(res.data);
+    }else{
+      wrapper.html(res.msg);
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la peticion.','¡Upss!');
+  }).always(function(){
+    wrapper.waitMe('hide');
+  })
+}
+//EJECUTAMOS LA FUNCION
+get_materias_profesor();
+
+
 });

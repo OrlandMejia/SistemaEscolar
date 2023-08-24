@@ -292,4 +292,26 @@ class ajaxController extends Controller {
       json_output(json_build(400, $e->getMessage()));
     }
   }
+
+  //FUNCION PARA CARGAR LAS MATERIAS QUE TIENE ASIGNADO EL PROFESOR
+  function get_materias_profesor(){
+    try{
+      //validamos que venga el token csrf y el id el profesor mediante el metodo GET
+      if(!check_get_data(['_t', 'id_profesor'], $_GET) || !Csrf::validate($_GET["_t"])){
+      throw new Exception(get_notificaciones());
+      }
+      //limpiamos los datos con la funcion clean
+      $id = clean($_GET["id_profesor"]);
+      //validamos que el profesor exista dentro de la base de datos
+      if(!$profesor = profesorModel::by_id($id)){
+      throw new Exception('No existe el profesor en la base de datos');
+      }
+      $materias = materiaModel::materias_profesor($profesor['id']);
+      $html = get_module('profesores/materias',$materias);
+      json_output(json_build(200, $html));
+    }catch (Exception $e) {
+      //throw $th;
+      json_output(json_build(400, $e->getMessage()));
+    }
+  }
 }
