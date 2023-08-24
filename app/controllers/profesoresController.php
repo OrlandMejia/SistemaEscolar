@@ -38,13 +38,14 @@ class profesoresController extends Controller {
     View::render('index', $data);
   }
 
-  function ver($id)
+  function ver($numero)
   {
 
-    if (!$profesor = profesorModel::by_numero($id)) {
+    if (!$profesor = profesorModel::by_numero($numero)) {
       Flasher::new('No existe el profesor en la base de datos.', 'danger');
       Redirect::back();
     }
+
     $data =
     [
       'title'  => sprintf('Profesor #%s', $profesor['numero']),

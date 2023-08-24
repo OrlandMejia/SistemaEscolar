@@ -381,4 +381,18 @@ $(document).ready(function() {
       form.waitMe('hide');
     })
   }
+
+//********************************FUNCIONES PARA MATERIAS_PROFESORES********************************** */
+//FUNCION QUE CARGA EL LISTADO DE MATERIAS DISPONIBLES
+function get_materias_disponibles_profesor() {
+  
+  var form = $('#profesor_asignar_materia_form'),
+  select = $('select', form),
+  id_profesor =$('input[name="id"]', form).val(),
+  wrapper = $('profesor_materias'),
+  opciones = '',
+  action = 'get',
+  hook = 'bee_hook';
+}
+
 });

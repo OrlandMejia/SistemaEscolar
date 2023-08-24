@@ -68,7 +68,7 @@ define('UPLOADED'   , ASSETS.'uploads/');
 // Set para conexión local o de desarrollo
 define('LDB_ENGINE' , 'mysql');
 define('LDB_HOST'   , 'localhost');
-define('LDB_NAME'   , 'db_sistemas_escolar');
+define('LDB_NAME'   , 'db_sistema_escolar');
 define('LDB_USER'   , 'root');
 define('LDB_PASS'   , '45479707');
 define('LDB_CHARSET', 'utf8');
