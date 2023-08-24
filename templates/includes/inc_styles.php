@@ -1,6 +1,4 @@
 <!-- Todo plugin debe ir debajo de está línea -->
-<!-- Toastr css -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <!-- Waitme css -->
 <link rel="stylesheet" href="<?php echo PLUGINS.'waitme/waitMe.min.css'; ?>">
@@ -17,6 +15,8 @@
 
 <!--ESTILOS DE PLUGINS PARA DATATABLES-->
 <link href="<?php echo ASSETS.'vendor/datatables/dataTables.bootstrap4.min.css'; ?>" rel="stylesheet">
+<!-- Toastr css -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <!-- Estilos registrados manualmente -->
 <?php echo load_styles(); ?>
