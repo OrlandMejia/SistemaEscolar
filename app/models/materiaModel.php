@@ -27,7 +27,7 @@ class materiaModel extends Model {
 
   //FUNCION DE PAGINACION PARA PAGINAR LOS REGISTROS EN PAGINAS DIFERENTES
   static function all_paginated(){
-    $sql = 'SELECT * FROM materias ORDER BY id DESC';
+    $sql = 'SELECT * FROM materias ORDER BY id ASC';
     return PaginationHandler::paginate($sql);
   }
 

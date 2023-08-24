@@ -486,5 +486,52 @@ function get_materias_profesor(){
 //EJECUTAMOS LA FUNCION
 get_materias_profesor();
 
+//FUNCION PARA AGREGAR MATERIAS CON AJAX 
+$('#profesor_asignar_materia_form').on('submit', add_materia_profesor);
+//la peticion no se hace directo al servidor sino que se hace a trave de ajax
+function add_materia_profesor(e){
+  e.preventDefault();
+  //inicializamos variables
+  var form = $('#profesor_asignar_materia_form'),
+  select = $('select', form),
+  id_materia = select.val(),
+  id_profesor = $('input[name="id"]', form).val(),
+  csrf = $('input[name="csrf"]', form).val(),
+  action = 'post',
+  hook = 'bee_hook';
 
+  if(id_materia === undefined || id_materia === ''){
+    toastr.error('Selecciona una materia válida');
+    return;
+  }
+
+  //FUNCION AJAX
+  $.ajax({
+    url: 'ajax/add_materia_profesor',
+    type: 'post',
+    dataType: 'json',
+    data : {
+      csrf,
+      id_materia,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      form.waitMe();
+    }
+  }).done(function(res){
+    if(res.status === 201){
+      toastr.success(res.msg);
+      get_materias_disponibles_profesor();
+      get_materias_profesor();
+    }else{
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la petición.', '¡Upss!');
+  }).always(function(){
+    form.waitMe('hide');
+  })
+}
 });
