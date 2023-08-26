@@ -48,7 +48,7 @@ class profesorModel extends Model {
     $sql = 'SELECT * FROM usuarios WHERE rol = "profesor" AND numero = :numero LIMIT 1';
     return ($rows = parent::query($sql, ['numero' => $numero])) ? $rows[0] : [];
   }
-
+  //FUNCION PARA ASIGNAR LA MATERIA EN LA BASE DE DATOS RELACIONAL
   static function asignar_materia($id_profesor, $id_materia){
     $data = [
       'id_materia' => $id_materia,
@@ -57,5 +57,14 @@ class profesorModel extends Model {
 
     if(!$id = self::add('materias_profesores', $data)) return false;
     return $id;
+  }
+
+  //FUNCIÓN PARA ELIMINAR LA MATERIA DE LA BASE DE DATOS
+  static function quitar_materia($id_profesor, $id_materia){
+    $data = [
+      'id_materia' => $id_materia,
+      'id_profesor' => $id_profesor,
+    ];
+    return (self::remove('materias_profesores', $data)) ? true: false;
   }
 }

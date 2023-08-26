@@ -353,4 +353,44 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
+
+  //FUNCION PARA ELIMINAR LA MATERIA DEL BACKEND
+  function quitar_materia_profesor(){
+    try{
+      //validamos que venga el token csrf y el id el profesor mediante el metodo GET
+      if(!check_posted_data(['csrf', 'id_profesor','id_materia'], $_POST) || !Csrf::validate($_POST["csrf"])){
+      throw new Exception(get_notificaciones());
+      }
+      //limpiamos los datos con la funcion clean
+      $id_materia = clean($_POST["id_materia"]);
+      $id_profesor = clean($_POST["id_profesor"]);
+
+      //validamos que el profesor exista dentro de la base de datos
+      if(!$profesor = profesorModel::by_id($id_profesor)){
+      throw new Exception('No existe el profesor en la base de datos');
+      }
+
+      //validamos que el profesor exista dentro de la base de datos
+      if(!$materia = materiaModel::by_id($id_materia)){
+      throw new Exception('No existe la materia en la base de datos');
+      }
+
+      //VALIDAMOS QUE NO EXISTA LA ASIGNACION de la MATERIA a un profesor
+      if(!materiaModel::list('materias_profesores',['id_materia'=> $id_materia, 'id_profesor'=> $id_profesor])){
+        throw new Exception(sprintf('La materia <b>%s</b> No está asignada al profesor <b>%s</b>.', $materia['nombre'], $profesor['nombres']));
+      }
+
+      //QUITAMOS LA MATERIA DEL PROFESOR
+      if(profesorModel::quitar_materia($id_profesor, $id_materia) === false){
+        throw new Exception(get_notificaciones(4));
+      }
+      $msg = sprintf('La materia <b>%s</b> se ha removido con éxito.', $materia['nombre']);
+      json_output(json_build(200, $profesor, $msg));
+
+    }catch (Exception $e) {
+      json_output(json_build(400,null, $e->getMessage()));
+    }catch (PDOException $e){
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
 }

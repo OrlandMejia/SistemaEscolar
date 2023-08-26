@@ -534,4 +534,56 @@ function add_materia_profesor(e){
     form.waitMe('hide');
   })
 }
+
+//BORRAR MATERIAS CON AJAX DEL FRONTEND
+//los elementos que se cargan post la carga completa del sitio, se debe seleccionar de una manera diferente con body
+$('body').on('click', '.quitar_materia_profesor', quitar_materia_profesor);
+function quitar_materia_profesor(e) {
+  e.preventDefault();
+// this se refiere al elemento o boton al que le estamos dando clic en una lista de elementos iguales 
+  var btn = $(this),
+  wrapper = $('.wrapper_materias_profesor'),
+  csrf = Bee.csrf,
+  id_materia = btn.data('id'),
+  id_profesor = wrapper.data('id'),
+  li = btn.closest('li'),
+  action = 'delete',
+  hook = 'bee_hook';
+
+  //realizamos la confirmación
+  if(!confirm('¿Estas seguro?')) return false;
+
+  //CODIGO AJAX PARA LIMINAR EL FRONTEND LA MATERIA
+  $.ajax({
+    url: 'ajax/quitar_materia_profesor',
+    type: 'post',
+    dataType: 'json',
+    cache: false,
+    data: {
+      csrf,
+      id_materia,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      //aparece un cargador solo en el elemento li
+      li.waitMe();
+    }
+  }).done(function(res){
+    if(res.status === 200){
+      toastr.success(res.msg, 'Bien!');
+      li.fadeOut(); //se va a borrar ese li es decir la materia
+      get_materias_disponibles_profesor();
+      get_materias_profesor();
+    }else{
+      toastr.error(res.msg,'¡Upss!');
+    }
+  }).fail(function(){
+    toastr.error('Hubo un error en la petición','¡Upss!');
+  }).always(function(){
+    li.waitMe('hide'); 
+  })
+}
+
 });
