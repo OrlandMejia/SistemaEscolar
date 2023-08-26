@@ -200,9 +200,41 @@ class profesoresController extends Controller {
     }
   }
 
+  //FUNCION PARA BORRAR A LOS PROFESORES DE LA BASE DE DATOS
   function borrar($id)
   {
-    // Proceso de borrado
+    try {
+      //revisamos la data y verificamos el token csrf y los datos que estan en el profesor
+  if (!check_get_data(['_t'], $_GET) || !Csrf::validate($_GET['_t'])) {
+    throw new Exception(get_notificaciones());
+}
+
+
+      // Validar rol que seamos administradores
+      //VALIDAMOS EL ROL DEL USUARIO PARA QUE SOLO LOS USUARIOS AUTORIZADOS PUEDAN UTILIZAR ESTA FUNCION
+      if(!is_admin(get_user_rol())){
+        throw new Exception(get_notificaciones(1), 1);
+      }
+
+      //verificamos que el registro exista en la base de datos que exista el profesor
+      if (!$profesor = profesorModel::by_id($id)) {
+        throw new Exception('No existe el profesor en la base de datos.');
+      }
+
+      //BORRAMOS EL REGISTRO Y SUS CONEXIONES
+      if(profesorModel::eliminar($profesor['id']) === false){
+        throw new Exception(get_notificaciones(4));
+      }
+      Flasher::new(sprintf('Profesor <b>%s</b> borrado con éxito.', $profesor['nombre_completo']), 'success');
+      Redirect::to('profesores');
+
+    } catch (PDOException $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    } catch (Exception $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    }
   }
 
   // Agregar función para exportar a PDF
