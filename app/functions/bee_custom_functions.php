@@ -26,7 +26,7 @@ function is_profesor($rol){
 }
 
 //NIVEL ADMINISTRADOR
-function is_admin($rol){
+function is_admin($rol) {
   return in_array($rol, ['admin', 'root']);
 }
 
@@ -115,3 +115,61 @@ function format_estado_usuario($status){
   }
   return sprintf($placeholder, $classes, $icon, $text);
 }
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+function mail_confirmar_cuenta($id_usuario) {
+  // Se verifica que el usuario exista
+  $usuario = usuarioModel::by_id($id_usuario);
+  if (!$usuario) {
+      return false;
+  }
+
+  // Se obtienen los datos del usuario
+  $nombre = $usuario['nombres'];
+  $hash = $usuario['hash'];
+  $email = $usuario['email'];
+  $status = $usuario['status'];
+
+  // Si el estado del usuario no es "pendiente", no es necesario confirmar
+  if ($status !== 'pendiente') {
+      return false;
+  }
+
+  // Configuración de PHPMailer
+
+  require 'vendor/autoload.php'; // Ruta al archivo autoload.php de Composer
+
+  $mail = new PHPMailer(true);
+
+  try {
+      // Configuración del servidor SMTP
+      $mail->isSMTP();
+      $mail->Host = 'smtp.gmail.com'; // Reemplaza con tu servidor SMTP
+      $mail->SMTPAuth = true;
+      $mail->Username = 'colegiojuda34@gmail.com'; // Reemplaza con tu correo electrónico
+      $mail->Password = 'Unodostres123'; // Reemplaza con tu contraseña
+      $mail->SMTPSecure = 'tls'; // Puedes cambiar a 'ssl' si es necesario
+      $mail->Port = 587; // Puerto SMTP
+      
+      // Configuración del correo
+      $mail->setFrom('tu_correo', 'Tu Nombre');
+      $mail->addAddress($email, $nombre);
+      $mail->Subject = sprintf('Confirma tu correo electrónico por favor, %s', $nombre);
+      $mail->AltBody = sprintf('Debes confirmar tu correo electrónico para poder ingresar a %s.', get_sitename());
+      $url = buildURL(URL.'login/activate', ['email' => $email, 'hash' => $hash], false, false);
+      $text = '¡Hola %s! <br>Para ingresar al Sistema de <b>%s</b>, primero debes confirmar tu dirección de correo electrónico haciendo clic en el siguiente enlace seguro: <a href="%s">%s</a>';
+      $mail->Body = sprintf($text, $nombre, get_sitename(), $url, $url);
+
+      // Envío del correo electrónico
+      $mail->send();
+
+      return true;
+  } catch (Exception $e) {
+    error_log("Error al enviar correo: {$mail->ErrorInfo}");
+    return false;
+}
+
+}
+
+
