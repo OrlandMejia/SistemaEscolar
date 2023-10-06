@@ -477,7 +477,7 @@ class ajaxController extends Controller {
     }
   }
 
-  //FUNCION PARA ELIMINAR LAS MATERIAS DEL GRUPO DESDE EL FRONTEND
+  //FUNCION PARA ELIMINAR LAS MATERIAS DEL GRUPO DESDE EL FRONTEND****//
   function quitar_materia_grupo()
   {
     try {
