@@ -5,3 +5,35 @@
         background-size: cover;
         background-repeat: no-repeat;
     }
+
+/* Estilo básico para el botón de archivo */
+.custom-file-input::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  
+  .custom-file-input::before {
+    content: 'Elegir archivo';
+    display: inline-block;
+    background-color: #7cc87e; /* Color de fondo (verde claro) */
+    color: #fff; /* Color de texto */
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Transición de color de fondo */
+  }
+  
+  .custom-file-input:hover::before {
+    background-color: #4b9f4e; /* Color de fondo al pasar el mouse por encima */
+  }
+  
+  .custom-file-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fa-lg {
+    font-size: 1.8em; /* Ajusta el tamaño del icono según tus preferencias */
+  }
+  
+  

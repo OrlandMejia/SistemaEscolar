@@ -29,7 +29,7 @@
 
               <div class="form-group">
                 <label for="horario">Horario de clases</label>
-                <input type="file" class="form-control" id="horario" name="horario" accept="image/png, image/gif, image/jpeg">
+                <input type="file" class="form-control" id="horario" name="horario" accept="img/png, img/gif, img/jpeg, img/jpg">
               </div>
 
               <button class="btn btn-success" type="submit">Guardar cambios</button>
@@ -60,7 +60,7 @@
                 <p class="text-muted"><?php echo sprintf('El archivo <b>%s</b> no existe o está dañado.', $d->g->horario); ?></p>
               <?php endif; ?>
             <?php else: ?>
-              No hay un horario definido aún para este grupo.
+              No hay un horario definido aún para el Grado.
             <?php endif; ?>
           </div>
       </div>

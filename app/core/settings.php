@@ -51,18 +51,18 @@ define('MODULES'    , TEMPLATES.'modules'.DS);
 define('VIEWS'      , TEMPLATES.'views'.DS);
 
 // Rutas de recursos y assets absolutos
-define('IMAGES_PATH', ROOT.'assets'.DS.'images'.DS);
+define('IMAGES_PATH', ROOT.DS.'img'.DS);
 
 // Rutas de archivos o assets con base URL
 define('ASSETS'     , URL.'assets/');
 define('CSS'        , ASSETS.'css/');
 define('FAVICON'    , ASSETS.'favicon/');
 define('FONTS'      , ASSETS.'fonts/');
-define('IMAGES'     , ASSETS.'images/');
+define('IMAGES'     , 'img/');
 define('JS'         , ASSETS.'js/');
 define('PLUGINS'    , ASSETS.'plugins/');
-define('UPLOADS'    , ROOT.'assets'.DS.'uploads'.DS);
-define('UPLOADED'   , ASSETS.'uploads/');
+define('UPLOADS'    , ROOT.DS.'uploads'.DS);
+define('UPLOADED'   , 'uploads/');
 
 // Credenciales de la base de datos
 // Set para conexión local o de desarrollo

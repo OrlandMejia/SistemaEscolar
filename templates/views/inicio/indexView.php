@@ -1,4 +1,3 @@
-<html lang="en">
 <head>
 
      <title>Known - Education HTML Template</title>
@@ -64,65 +63,62 @@ https://templatemo.com/tm-516-known
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                         <li><a href="#"><i class="fa fa-user"></i> Iniciar Sesión</a></li>
+                         <li><a href="login"><i class="fa fa-user"></i> Iniciar Sesión</a></li>
                      </ul>
                      
                </div>
 
           </div>
      </section>
-
-
      <!-- HOME -->
      <section id="home">
           <div class="row">
-
-                    <div class="owl-carousel owl-theme home-slider">
-                         <div class="item item-first">
-                              <div class="caption">
-                                   <div class="container">
-                                        <div class="col-md-6 col-sm-12">
-                                             <h1>Distance Learning Education Center</h1>
-                                             <h3>Our online courses are designed to fit in your industry supporting all-round with latest technologies.</h3>
-                                             <a href="#feature" class="section-btn btn btn-default smoothScroll">Discover more</a>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
-
-                         <div class="item item-second">
-                              <div class="caption">
-                                   <div class="container">
-                                        <div class="col-md-6 col-sm-12">
-                                             <h1>Start your journey with our practical courses</h1>
-                                             <h3>Our online courses are built in partnership with technology leaders and are designed to meet industry demands.</h3>
-                                             <a href="#courses" class="section-btn btn btn-default smoothScroll">Take a course</a>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
-
-                         <div class="item item-third">
-                              <div class="caption">
-                                   <div class="container">
-                                        <div class="col-md-6 col-sm-12">
-                                             <h1>Efficient Learning Methods</h1>
-                                             <h3>Nam eget sapien vel nibh euismod vulputate in vel nibh. Quisque eu ex eu urna venenatis sollicitudin ut at libero. Visit <a rel="nofollow" href="https://www.facebook.com/templatemo">templatemo</a> page.</h3>
-                                             <a href="#contact" class="section-btn btn btn-default smoothScroll">Let's chat</a>
-                                        </div>
-                                   </div>
-                              </div>
-                         </div>
+          <div class="owl-carousel owl-theme home-slider">
+     <div class="item item-first">
+          <img src="img/slider-image1.jpg" alt="Imagen 1">
+          <div class="caption">
+               <div class="container">
+                    <div class="col-md-6 col-sm-12">
+                         <h1>Distance Learning Education Center</h1>
+                         <h3>Our online courses are designed to fit in your industry supporting all-round with latest technologies.</h3>
+                         <a href="#feature" class="section-btn btn btn-default smoothScroll">Discover more</a>
                     </div>
+               </div>
+          </div>
+     </div>
+     <div class="item item-second">
+          <img src="img/slider-image2.jpg" alt="Imagen 2">
+          <div class="caption">
+               <div class="container">
+                    <div class="col-md-6 col-sm-12">
+                         <h1>Start your journey with our practical courses</h1>
+                         <h3>Our online courses are built in partnership with technology leaders and are designed to meet industry demands.</h3>
+                         <a href="#courses" class="section-btn btn btn-default smoothScroll">Take a course</a>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <div class="item item-third">
+          <img src="img/slider-image3.jpg" alt="Imagen 3">
+          <div class="caption">
+               <div class="container">
+                    <div class="col-md-6 col-sm-12">
+                         <h1>Efficient Learning Methods</h1>
+                         <h3>Nam eget sapien vel nibh euismod vulputate in vel nibh. Quisque eu ex eu urna venenatis sollicitudin ut at libero. Visit <a rel="nofollow" href="https://www.facebook.com/templatemo">templatemo</a> page.</h3>
+                         <a href="#contact" class="section-btn btn btn-default smoothScroll">Let's chat</a>
+                    </div>
+               </div>
+          </div>
+     </div>
+</div>
+
           </div>
      </section>
-
 
      <!-- FEATURE -->
      <section id="feature">
           <div class="container">
                <div class="row">
-
                     <div class="col-md-4 col-sm-4">
                          <div class="feature-thumb">
                               <span>01</span>
@@ -130,7 +126,6 @@ https://templatemo.com/tm-516-known
                               <p>Known is free education HTML Bootstrap Template. You can download and use this for your website.</p>
                          </div>
                     </div>
-
                     <div class="col-md-4 col-sm-4">
                          <div class="feature-thumb">
                               <span>02</span>
@@ -138,7 +133,6 @@ https://templatemo.com/tm-516-known
                               <p>Lorem ipsum dolor sit amet, consectetur adipisicing eiusmod tempor incididunt ut labore et dolore magna.</p>
                          </div>
                     </div>
-
                     <div class="col-md-4 col-sm-4">
                          <div class="feature-thumb">
                               <span>03</span>
@@ -146,12 +140,9 @@ https://templatemo.com/tm-516-known
                               <p>templatemo provides a wide variety of free Bootstrap Templates for you. Please tell your friends about us. Thank you.</p>
                          </div>
                     </div>
-
                </div>
           </div>
      </section>
-
-
      <!-- ABOUT -->
      <section id="about">
           <div class="container">
@@ -186,7 +177,6 @@ https://templatemo.com/tm-516-known
                               </figure>
                          </div>
                     </div>
-
                     <div class="col-md-offset-1 col-md-4 col-sm-12">
                          <div class="entry-form">
                               <form action="#" method="post">
@@ -205,8 +195,6 @@ https://templatemo.com/tm-516-known
                </div>
           </div>
      </section>
-
-
      <!-- TEAM -->
      <section id="team">
           <div class="container">
@@ -221,7 +209,7 @@ https://templatemo.com/tm-516-known
                     <div class="col-md-3 col-sm-6">
                          <div class="team-thumb">
                               <div class="team-image">
-                                   <img src="images/author-image1.jpg" class="img-responsive" alt="">
+                                   <img src="img/author-image1.jpg" class="img-responsive" alt="">
                               </div>
                               <div class="team-info">
                                    <h3>Mark Wilson</h3>
@@ -234,11 +222,10 @@ https://templatemo.com/tm-516-known
                               </ul>
                          </div>
                     </div>
-
                     <div class="col-md-3 col-sm-6">
                          <div class="team-thumb">
                               <div class="team-image">
-                                   <img src="images/author-image2.jpg" class="img-responsive" alt="">
+                                   <img src="img/author-image2.jpg" class="img-responsive" alt="">
                               </div>
                               <div class="team-info">
                                    <h3>Catherine</h3>
@@ -250,11 +237,10 @@ https://templatemo.com/tm-516-known
                               </ul>
                          </div>
                     </div>
-
                     <div class="col-md-3 col-sm-6">
                          <div class="team-thumb">
                               <div class="team-image">
-                                   <img src="images/author-image3.jpg" class="img-responsive" alt="">
+                                   <img src="img/author-image3.jpg" class="img-responsive" alt="">
                               </div>
                               <div class="team-info">
                                    <h3>Jessie Ca</h3>
@@ -267,11 +253,10 @@ https://templatemo.com/tm-516-known
                               </ul>
                          </div>
                     </div>
-
                     <div class="col-md-3 col-sm-6">
                          <div class="team-thumb">
                               <div class="team-image">
-                                   <img src="images/author-image4.jpg" class="img-responsive" alt="">
+                                   <img src="img/author-image4.jpg" class="img-responsive" alt="">
                               </div>
                               <div class="team-info">
                                    <h3>Andrew Berti</h3>
@@ -284,12 +269,9 @@ https://templatemo.com/tm-516-known
                               </ul>
                          </div>
                     </div>
-
                </div>
           </div>
      </section>
-
-
      <!-- Courses -->
      <section id="courses">
           <div class="container">
@@ -306,22 +288,20 @@ https://templatemo.com/tm-516-known
                                         <div class="courses-thumb">
                                              <div class="courses-top">
                                                   <div class="courses-image">
-                                                       <img src="images/courses-image1.jpg" class="img-responsive" alt="">
+                                                       <img src="img/courses-image1.jpg" class="img-responsive" alt="">
                                                   </div>
                                                   <div class="courses-date">
                                                        <span><i class="fa fa-calendar"></i> 12 / 7 / 2018</span>
                                                        <span><i class="fa fa-clock-o"></i> 7 Hours</span>
                                                   </div>
                                              </div>
-
                                              <div class="courses-detail">
                                                   <h3><a href="#">Social Media Management</a></h3>
                                                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                              </div>
-
                                              <div class="courses-info">
                                                   <div class="courses-author">
-                                                       <img src="images/author-image1.jpg" class="img-responsive" alt="">
+                                                       <img src="img/author-image1.jpg" class="img-responsive" alt="">
                                                        <span>Mark Wilson</span>
                                                   </div>
                                                   <div class="courses-price">
@@ -331,13 +311,12 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="courses-thumb">
                                              <div class="courses-top">
                                                   <div class="courses-image">
-                                                       <img src="images/courses-image2.jpg" class="img-responsive" alt="">
+                                                       <img src="img/courses-image2.jpg" class="img-responsive" alt="">
                                                   </div>
                                                   <div class="courses-date">
                                                        <span><i class="fa fa-calendar"></i> 20 / 7 / 2018</span>
@@ -352,7 +331,7 @@ https://templatemo.com/tm-516-known
 
                                              <div class="courses-info">
                                                   <div class="courses-author">
-                                                       <img src="images/author-image2.jpg" class="img-responsive" alt="">
+                                                       <img src="img/author-image2.jpg" class="img-responsive" alt="">
                                                        <span>Jessica</span>
                                                   </div>
                                                   <div class="courses-price">
@@ -362,28 +341,25 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="courses-thumb">
                                              <div class="courses-top">
                                                   <div class="courses-image">
-                                                       <img src="images/courses-image3.jpg" class="img-responsive" alt="">
+                                                       <img src="img/courses-image3.jpg" class="img-responsive" alt="">
                                                   </div>
                                                   <div class="courses-date">
                                                        <span><i class="fa fa-calendar"></i> 15 / 8 / 2018</span>
                                                        <span><i class="fa fa-clock-o"></i> 6 Hours</span>
                                                   </div>
                                              </div>
-
                                              <div class="courses-detail">
                                                   <h3><a href="#">Marketing Communication</a></h3>
                                                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                              </div>
-
                                              <div class="courses-info">
                                                   <div class="courses-author">
-                                                       <img src="images/author-image3.jpg" class="img-responsive" alt="">
+                                                       <img src="img/author-image3.jpg" class="img-responsive" alt="">
                                                        <span>Catherine</span>
                                                   </div>
                                                   <div class="courses-price free">
@@ -393,13 +369,12 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="courses-thumb">
                                              <div class="courses-top">
                                                   <div class="courses-image">
-                                                       <img src="images/courses-image4.jpg" class="img-responsive" alt="">
+                                                       <img src="img/courses-image4.jpg" class="img-responsive" alt="">
                                                   </div>
                                                   <div class="courses-date">
                                                        <span><i class="fa fa-calendar"></i> 10 / 8 / 2018</span>
@@ -414,7 +389,7 @@ https://templatemo.com/tm-516-known
 
                                              <div class="courses-info">
                                                   <div class="courses-author">
-                                                       <img src="images/author-image1.jpg" class="img-responsive" alt="">
+                                                       <img src="img/author-image1.jpg" class="img-responsive" alt="">
                                                        <span>Mark Wilson</span>
                                                   </div>
                                                   <div class="courses-price">
@@ -424,28 +399,25 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="courses-thumb">
                                              <div class="courses-top">
                                                   <div class="courses-image">
-                                                       <img src="images/courses-image5.jpg" class="img-responsive" alt="">
+                                                       <img src="img/courses-image5.jpg" class="img-responsive" alt="">
                                                   </div>
                                                   <div class="courses-date">
                                                        <span><i class="fa fa-calendar"></i> 5 / 10 / 2018</span>
                                                        <span><i class="fa fa-clock-o"></i> 10 Hours</span>
                                                   </div>
                                              </div>
-
                                              <div class="courses-detail">
                                                   <h3><a href="#">Business &amp; Management</a></h3>
                                                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                              </div>
-
                                              <div class="courses-info">
                                                   <div class="courses-author">
-                                                       <img src="images/author-image2.jpg" class="img-responsive" alt="">
+                                                       <img src="img/author-image2.jpg" class="img-responsive" alt="">
                                                        <span>Jessica</span>
                                                   </div>
                                                   <div class="courses-price free">
@@ -455,29 +427,23 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                          </div>
-
                </div>
           </div>
      </section>
-
-
      <!-- TESTIMONIAL -->
      <section id="testimonial">
           <div class="container">
                <div class="row">
-
                     <div class="col-md-12 col-sm-12">
                          <div class="section-title">
                               <h2>Student Reviews <small>from around the world</small></h2>
                          </div>
-
                          <div class="owl-carousel owl-theme owl-client">
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="tst-image">
-                                             <img src="images/tst-image1.jpg" class="img-responsive" alt="">
+                                             <img src="img/tst-image1.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="tst-author">
                                              <h4>Jackson</h4>
@@ -493,11 +459,10 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="tst-image">
-                                             <img src="images/tst-image2.jpg" class="img-responsive" alt="">
+                                             <img src="img/tst-image2.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="tst-author">
                                              <h4>Camila</h4>
@@ -511,11 +476,10 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="tst-image">
-                                             <img src="images/tst-image3.jpg" class="img-responsive" alt="">
+                                             <img src="img/tst-image3.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="tst-author">
                                              <h4>Barbie</h4>
@@ -530,11 +494,10 @@ https://templatemo.com/tm-516-known
                                         </div>
                                    </div>
                               </div>
-
                               <div class="col-md-4 col-sm-4">
                                    <div class="item">
                                         <div class="tst-image">
-                                             <img src="images/tst-image4.jpg" class="img-responsive" alt="">
+                                             <img src="img/tst-image4.jpg" class="img-responsive" alt="">
                                         </div>
                                         <div class="tst-author">
                                              <h4>Andrio</h4>
@@ -585,7 +548,7 @@ https://templatemo.com/tm-516-known
 
                     <div class="col-md-6 col-sm-12">
                          <div class="contact-image">
-                              <img src="images/contact-image.jpg" class="img-responsive" alt="Smiling Two Girls">
+                              <img src="img/contact-image.jpg" class="img-responsive" alt="Smiling Two Girls">
                          </div>
                     </div>
 
@@ -674,4 +637,3 @@ https://templatemo.com/tm-516-known
      <script src="js/custom.js"></script>
 
 </body>
-</html>

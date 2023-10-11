@@ -25,7 +25,7 @@
 								<td>
 									<?php if (is_file(UPLOADS.$g->horario)): ?>
 										<a href="<?php echo get_uploaded_image($g->horario); ?>" data-lightbox="<?php echo $g->numero; ?>" title="<?php echo sprintf('Horario del grupo %s', $g->nombre); ?>">
-											<span class="badge badge-pill badge-success"><i class="fas fa-image"></i> Ver horario</span>
+										<span class="badge badge-pill badge-success"><i class="fas fa-image fa-lg"></i> Ver horario</span>
 										</a>
 									<?php else: ?>
 										<small class="text-muted">No existe el horario.</small>
@@ -53,4 +53,11 @@
   </div>
 </div>
 	  
+
+<style>
+	.fa-lg {
+  font-size: 1.8em; /* Ajusta el tamaño del icono según tus preferencias */
+}
+
+</style>
 <?php require_once INCLUDES.'inc_footer.php'; ?>

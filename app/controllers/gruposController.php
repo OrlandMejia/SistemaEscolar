@@ -1,5 +1,5 @@
 <?php
-
+use \Verot\Upload\Upload;
 /**
  * Plantilla general de controladores
  * Versión 1.0.2
@@ -135,12 +135,13 @@ class gruposController extends Controller {
         $nombre      = clean($_POST["nombre"]);
         $descripcion = clean($_POST["descripcion"]);
         $horario     = $_FILES["horario"];
+        //variable para actualizar la imagen pasada, para actualizarla o borrarla
         $n_horario   = false;
   
         if (!$grupo = grupoModel::by_id($id)) {
           throw new Exception('No existe el grupo en la base de datos.');
         }
-  
+        //almacenamos en una variable el horario anterior
         $db_horario = $grupo['horario'];
   
         // Validar la longitud del nombre
@@ -162,35 +163,39 @@ class gruposController extends Controller {
         ];
         
         // Validar si se está subiendo una imagen
+        //4 es un codigo de error ya seteado
         if ($horario['error'] !== 4) {
           $tmp  = $horario['tmp_name'];
           $name = $horario['name'];
           $ext  = pathinfo($name, PATHINFO_EXTENSION);
   
-          // Validar extensión del archivo
+          // Validar extensión del archivo, que sea cualquiera de los aceptados
           if (!in_array($ext, ['jpg','png','jpeg','bmp'])) {
             throw new Exception('Selecciona un formato de imagen válido.');
           }
-  
+          
+          //inicializamos una clase de upload para subir el archivo, indica si la imagen se sube con exito
           $foo = new upload($horario); 
           if (!$foo->uploaded) {
             throw new Exception('Hubo un problema al subir el archivo.');
           }
   
-          // Nuevo nombre y nuevas medidas de la imagen
+          // Nuevo nombre y nuevas medidas de la imagen // generamos un nuevo nombre con la función que viene directamente en la plantilla
           $filename                = generate_filename();
           $foo->file_new_name_body = $filename;
-          $foo->image_resize       = true;
-          $foo->image_x            = 800;
-          $foo->image_ratio_y      = true;
+          $foo->image_resize       = true; //le cambiamos el tamaño
+          $foo->image_x            = 800; //definimos el tamño de la imagen
+          $foo->image_ratio_y      = true; //no se modifica
   
+          //indicamos con process en donde se guardará la imagen en el servidor
           $foo->process(UPLOADS);
           if (!$foo->processed) {
             throw new Exception('Hubo un problema al guardar la imagen en el servidor.');
           }
   
+          //se añade al array donde se impregna la información la nueva información de horario, con el nombre y la extensión
           $data['horario'] = sprintf('%s.%s', $filename, $ext);
-          $n_horario       = true;
+          $n_horario       = true; //establecemos al sistema que deba borrar cualquier imagen anterior
         }
   
         // Insertar a la base de datos
@@ -198,7 +203,7 @@ class gruposController extends Controller {
           throw new Exception(get_notificaciones(3));
         }
   
-        // Borrado del horario anterior en caso de actualización
+        // Borrado del horario anterior en caso de actualización // borra de la base de datos cualquier imagen anterior
         if ($db_horario !== null && $n_horario === true && is_file(UPLOADS.$db_horario)) {
           unlink(UPLOADS.$horario);
         }
