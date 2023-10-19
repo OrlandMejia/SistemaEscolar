@@ -18,16 +18,18 @@ function is_root($rol){
   return in_array($rol, ['root']);
 }
 
+//NIVEL ADMINISTRADOR
+function is_admin($rol){
+  return in_array($rol, ['admin', 'root']);
+}
+
 //EN PROFESOR Y ALMUMNO VALIDAMOS SI ES PROFESOR PUEDE ENTRAR A LAS FUNCIONES DE ESTE ROL, PERO TAMBIEN
 //SI ES UN SUPER ADMIN TAMBIEN TIENE ACCESO A ESOS RECURSOS
 function is_profesor($rol){
   return in_array($rol, ['profesor', 'admin', 'root']);
 }
 
-//NIVEL ADMINISTRADOR
-function is_admin($rol){
-  return in_array($rol, ['admin', 'root']);
-}
+
 
 function is_alumno($rol){
   return in_array($rol, ['estudiante', 'admin', 'root']);

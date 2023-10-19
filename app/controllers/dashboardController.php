@@ -25,8 +25,8 @@ class dashboardController extends Controller {
     }
     $data = 
     [
-      'title' => 'Reemplazar título',
-      'msg'   => 'Bienvenido al controlador de "dashboard", se ha creado con éxito si ves este mensaje.'
+      'title' => 'Dashboard',
+      'msg'   => 'Dashboard'
     ];
     
     // Descomentar vista si requerida
