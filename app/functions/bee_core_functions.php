@@ -650,7 +650,7 @@ function generate_filename($size = 12, $span = 3) {
 	$name = '';
 	for ($i=0; $i < $span; $i++) { 
 		$name .= random_password($size).'-';
-	}
+	} 
 
 	$name = rtrim($name , '-');
 	return strtolower($name);

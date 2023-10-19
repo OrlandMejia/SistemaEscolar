@@ -517,6 +517,150 @@ class ajaxController extends Controller {
     }
   }
 
+  //CARGAR ALUMNOS DESDE LA BASE DE DATOS
+  function get_alumnos_grupo()
+  {
+    try {
+      if (!check_get_data(['_t', 'id_grupo'], $_GET) || !Csrf::validate($_GET["_t"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id = clean($_GET["id_grupo"]);
+
+      if (!$grupo = grupoModel::by_id($id)) {
+        throw new Exception('No existe el grupo en la base de datos.');
+      }
+
+      $alumnos  = grupoModel::alumnos_asignados($grupo['id']);
+      $html     = get_module('grupos/alumnos', $alumnos);
+      json_output(json_build(200, $html));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  //FUNCION EN BACKEND PARA QUITAR A LOS ALUMNOS DE LA TABLA DE ASIGNACIÓN MAS NO DE USUARIOS
+  function quitar_alumno_grupo()
+  {
+    try {
+      if (!check_posted_data(['csrf', 'id_grupo', 'id_alumno'], $_POST) || !Csrf::validate($_POST["csrf"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id_grupo  = clean($_POST["id_grupo"]);
+      $id_alumno = clean($_POST["id_alumno"]);
+
+      if (!$grupo = grupoModel::by_id($id_grupo)) {
+        throw new Exception('No existe el grupo en la base de datos.');
+      }
+
+      if (!$alumno = alumnoModel::by_id($id_alumno)) {
+        throw new Exception('No existe el alumno en la base de datos.');
+      }
+
+      // Validar que exista el alumno asignado
+      if (!grupoModel::list(grupoModel::$t3, ['id_grupo' => $id_grupo, 'id_alumno' => $id_alumno])) {
+        throw new Exception('El alumno no está inscrito a este grupo.');
+      }
+
+      // Quitar al alumno asignado
+      if (grupoModel::quitar_alumno($id_grupo, $id_alumno) === false) {
+        throw new Exception(get_notificaciones(4));
+      }
+
+      $msg = sprintf('El alumno ha sido removido del grupo <b>%s</b> con éxito.', $grupo['nombre']);
+
+      json_output(json_build(200, $grupo, $msg));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  //FUNCIÓN EN BACKEND PARA SUSPENDER AL ALUMNO
+  function suspender_alumno()
+  {
+    try {
+      if (!check_posted_data(['csrf', 'id_alumno'], $_POST) || !Csrf::validate($_POST["csrf"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id_alumno = clean($_POST["id_alumno"]);
+
+      if (!$alumno = alumnoModel::by_id($id_alumno)) {
+        throw new Exception('No existe el alumno en la base de datos.');
+      }
+
+      if ($alumno['status'] === 'suspendido') {
+        throw new Exception(sprintf('<b>%s</b> ya se encuentra suspendido.', $alumno['nombre_completo']));
+      }
+
+      if ($alumno['status'] === 'pendiente') {
+        throw new Exception(sprintf('No se puede suspender al alumno <b>%s</b>. Hasta que confirme su Email', $alumno['nombre_completo']));
+      }
+
+      // Suspensión del alumno
+      if (alumnoModel::suspender($id_alumno) === false) {
+        throw new Exception(get_notificaciones(4));
+      }
+
+      // Email de suspensión
+     // mail_suspension_cuenta($id_alumno);
+
+      $msg = sprintf('El alumno <b>%s</b> ha sido suspendido con éxito.', $alumno['nombre_completo']);
+
+      json_output(json_build(200, $alumno, $msg));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+  //funcion para remover la suspension del alumno
+  function remover_suspension_alumno()
+  {
+    try {
+      if (!check_posted_data(['csrf', 'id_alumno'], $_POST) || !Csrf::validate($_POST["csrf"])) {
+        throw new Exception(get_notificaciones());
+      }
+
+      $id_alumno = clean($_POST["id_alumno"]);
+
+      if (!$alumno = alumnoModel::by_id($id_alumno)) {
+        throw new Exception('No existe el alumno en la base de datos.');
+      }
+
+      if ($alumno['status'] !== 'suspendido') {
+        throw new Exception(sprintf('<b>%s</b> No se encuentra suspendido.', $alumno['nombre_completo']));
+      }
+
+      if ($alumno['status'] === 'pendiente') {
+        throw new Exception(sprintf('No se puede remover la suspensión del alumno <b>%s</b>.', $alumno['nombre_completo']));
+      }
+
+      // Retiro de suspensión del alumno
+      if (alumnoModel::remover_supension($id_alumno) === false) {
+        throw new Exception(get_notificaciones(4));
+      }
+
+      // Email de remover suspensión
+      //mail_retirar_suspension_cuenta($id_alumno);
+
+      $msg    = sprintf('Se ha retirado la suspensión del alumno <b>%s</b> con éxito.', $alumno['nombre_completo']);
+      $alumno = alumnoModel::by_id($id_alumno);
+
+      json_output(json_build(200, $alumno, $msg));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
 
 }
 

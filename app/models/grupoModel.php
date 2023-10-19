@@ -143,7 +143,7 @@ class grupoModel extends Model {
     return (self::remove(self::$t2, $data)) ? true : false;
   }
 
-  static function alumnos_asignados($id_grupo)
+  static function  alumnos_asignados($id_grupo)
   {
     $sql = 
     'SELECT

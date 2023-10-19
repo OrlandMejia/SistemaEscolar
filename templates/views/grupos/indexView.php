@@ -56,7 +56,7 @@
 
 <style>
 	.fa-lg {
-  font-size: 1.8em; /* Ajusta el tamaño del icono según tus preferencias */
+  font-size: 1.7em; /* Ajusta el tamaño del icono según tus preferencias */
 }
 
 </style>
