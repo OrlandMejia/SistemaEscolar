@@ -35,7 +35,7 @@ define('CUR_PAGE'   , PROTOCOL.'://'.HOST.REQUEST_URI); // URL actual incluyendo
 
 // Las rutas de directorios y archivos
 define('DS'         , DIRECTORY_SEPARATOR);
-define('ROOT'       , getcwd().DS);
+define('ROOT'       , getcwd().'/');
 
 define('APP'        , ROOT.'app'.DS);
 define('CLASSES'    , APP.'classes'.DS);
@@ -61,7 +61,7 @@ define('FONTS'      , ASSETS.'fonts/');
 define('IMAGES'     , 'img/');
 define('JS'         , ASSETS.'js/');
 define('PLUGINS'    , ASSETS.'plugins/');
-define('UPLOADS'    , ROOT.DS.'uploads'.DS);
+define('UPLOADS'    , ROOT.'/uploads/');
 define('UPLOADED'   , 'uploads/');
 
 // Credenciales de la base de datos
