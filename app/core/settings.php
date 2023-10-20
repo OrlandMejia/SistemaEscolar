@@ -51,7 +51,7 @@ define('MODULES'    , TEMPLATES.'modules'.DS);
 define('VIEWS'      , TEMPLATES.'views'.DS);
 
 // Rutas de recursos y assets absolutos
-define('IMAGES_PATH', ROOT.DS.'img'.DS);
+define('IMAGES_PATH', ROOT.'/img/');
 
 // Rutas de archivos o assets con base URL
 define('ASSETS'     , URL.'assets/');

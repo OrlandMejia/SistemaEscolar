@@ -343,7 +343,7 @@
                 <td class="wrapper">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
-                      <td align="center"><img src="img/favicon.png" alt="<?php echo get_sitename(); ?>" style="width: 150px;"></td>
+                      <td align="center"><img src="https://th.bing.com/th/id/OIP.NJY-H2q9aPObGwZScD__QgAAAA?pid=ImgDet&rs=1" alt="<?php echo get_sitename(); ?>" style="width: 150px;"></td>
                     </tr>
                   </table>
                 </td>
@@ -373,13 +373,13 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Una calle en México #123, Dentro de una Colonia, CDMX, 87560</span>
-                    <br>¿No te gustan estos correos? <a href="https://github.com/Moxtrip69/Bee-Framework">Darse de baja</a>.
+                    <span class="apple-link">Barrio San Miguel Oriente, Guazacapán, Santa Rosa</span>
+                    <br>Visitanos en Nuestras Redes Sociales "Colegio Cristiano Juda"</a>.
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Creada por <a href="http://htmlemail.io">HTMLemail</a>.
+                    Sistema Juda, Todos los Derechos Reservados 2023</a>.
                   </td>
                 </tr>
               </table>

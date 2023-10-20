@@ -745,69 +745,22 @@ function set_session($k, $v) {
  * @param array $attachments
  * @return void
  */
-function sends_email($from, $to, $subject, $body, $alt = null, $bcc = null, $reply_to = null, $attachments = []) {
-	$mail     = new PHPMailer(true);
-	$mail->isSMTP();
+
+ function send_email($from, $to, $subject, $body, $alt = null, $bcc = null, $reply_to = null, $attachments = []) {
+    $mail = new PHPMailer(true);
 	$template = 'emailTemplate';
-	
-	try {
-		$mail->CharSet = 'UTF-8';
-		// Remitente
-		$mail->setFrom($from, get_sitename());
-
-		// Destinatario
-		$mail->addAddress($to);
-
-		if ($reply_to != null) {
-			$mail->addReplyTo($reply_to);
-		}
-
-		if ($bcc != null) {
-			$mail->addBCC($bcc);
-		}
-
-		// Attachments
-		if (!empty($attachments)) {
-			foreach ($attachments as $file) {
-				if (!is_file($file)) {
-					continue;
-				}
-
-				$mail->addAttachment($file);
-			}
-		}
-
-		// Content
-		$mail->isHTML(true);
-		$mail->Subject = $subject;
-		$mail->Body    = get_module($template, ['alt' => $alt, 'body' => $body, 'subject' => $subject]);
-		$mail->AltBody = $alt;
-
-		$mail->send();
-		return true;
-
-	} catch (EmailException $e) {
-		throw new Exception($e->getMessage());
-	}
-}
-
-function send_email($from, $to, $subject, $body, $alt = null, $bcc = null, $reply_to = null, $attachments = []) {
-    require_once __DIR__ . '/../../vendor/autoload.php'; // Asegúrate de que autoload.php esté en la ruta correcta
-    $mail = new PHPMailer\PHPMailer\PHPMailer();
-    $mail->isSMTP();
-    $template = 'emailTemplate';
 
     try {
         $mail->CharSet = 'UTF-8';
+
         // Configuración del servidor SMTP de Gmail
-        $mail->SMTPDebug = 0; // Puedes cambiar esto a 2 para ver detalles de depuración
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'colegiocristianojuda@gmail.com'; // Tu dirección de correo de Gmail
-        $mail->Password = 'ColegioCristianoJuda123@'; // Tu contraseña de Gmail
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'colegiocristianojuda@gmail.com'; // Tu dirección de Gmail
+        $mail->Password   = 'lwml nvjg vceg qtpf'; // Tu contraseña de Gmail
+        $mail->SMTPSecure = 'tls'; // O 'ssl'
+        $mail->Port       = 587; // Puerto de Gmail para TLS (o 465 para SSL)
 
         // Remitente
         $mail->setFrom($from, get_sitename());
@@ -833,19 +786,28 @@ function send_email($from, $to, $subject, $body, $alt = null, $bcc = null, $repl
                 $mail->addAttachment($file);
             }
         }
-
-        // Content
-        $mail->isHTML(true);
-        $mail->Subject = $subject;
-        $mail->Body = get_module($template, ['alt' => $alt, 'body' => $body, 'subject' => $subject]);
-        $mail->AltBody = $alt;
+		        // Disable SSL verification (add this part)
+				$mail->SMTPOptions = array(
+					'ssl' => array(
+						'verify_peer' => false,
+						'verify_peer_name' => false,
+						'allow_self_signed' => true
+					)
+				);
+		// Content
+		$mail->isHTML(true);
+		$mail->Subject = $subject;
+		$mail->Body    = get_module($template, ['alt' => $alt, 'body' => $body, 'subject' => $subject]);
+		$mail->AltBody = $alt;
 
         $mail->send();
         return true;
-    } catch (Exception $e) {
+    }
+    catch (Exception $e) {
         throw new Exception($e->getMessage());
     }
 }
+
 
 
 

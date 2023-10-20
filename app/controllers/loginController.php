@@ -60,30 +60,32 @@ class loginController extends Controller {
       $email  = clean($_POST['email']);
       $password = clean($_POST['password']);
   
-      //VERIFICAR SI EL EMAIL ES VALIDO
-      if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        throw new Exception("No se encontró el correo electronico", 1);
-        
-      }
+//VERIFICAR SI EL EMAIL ES VALIDO
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  Flasher::new("No se encontró el correo electrónico", "danger");
+  Redirect::back();
+}
 
-      //verificar que exista el usuario con el metodo
-      if(!$user = usuarioModel::by_email($email)){
-        throw new Exception("correo electronico incorrecto", 1);
-      }
+// verificar que exista el usuario con el método
+if (!$user = usuarioModel::by_email($email)) {
+  Flasher::new("Correo electrónico incorrecto", "danger");
+  Redirect::back();
+}
 
-
-          // Información del usuario loggeado, simplemente se puede reemplazar aquí con un query a la base de datos
-    // para cargar la información del usuario si es existente
-    if (!password_verify($password.AUTH_SALT, $user['password'])) {
-      throw new Exception("La contraseña no es correcta", 1);
-    }
+// Información del usuario loggeado, simplemente se puede reemplazar aquí con un query a la base de datos
+// para cargar la información del usuario si es existente
+if (!password_verify($password . AUTH_SALT, $user['password'])) {
+  Flasher::new("La contraseña no es correcta", "danger");
+  Redirect::back();
+}
 
     //VALIDAR EL STATUS DEL USUARIO
-    if($user['status']==='pendiente'){
+    if ($user['status'] === 'pendiente') {
       mail_confirmar_cuenta($user['id']);
-      throw new Exception('Confirma tu Correo Electronico.',1);
+      Flasher::new("Porfavor Verifica tu Correo Electronico", "warning");
       Redirect::back();
-    }
+  }
+  
 
     // Loggear al usuario
     Auth::login($user['id'], $user);
@@ -94,4 +96,53 @@ class loginController extends Controller {
       Flasher::new($ex->getMessage(). 'danger');
     }
   }
+
+
+function activate()
+{
+  try {
+    if (!check_get_data(['email','hash'], $_GET)) {
+      throw new Exception('El enlace de activación no es válido.');
+    }
+
+    // Data pasada en URL
+    $email    = clean($_GET["email"]);
+    $hash     = clean($_GET["hash"]);
+
+    // Verificar que exista el usuario con ese email
+    if (!$user = usuarioModel::by_email($email)) {
+      throw new Exception('El enlace de activación no es válido.');
+    }
+
+    $id      = $user['id'];
+    $nombre  = $user['nombres'];
+    $status  = $user['status'];
+    $db_hash = $user['hash'];
+
+    // Verificar el hash del usuario y el status
+    if ($hash !== $db_hash) {
+      throw new Exception('El enlace de activación no es válido.');
+    }
+
+    // Validar el status del usuario
+    if ($status !== 'pendiente') {
+      throw new Exception('El enlace de activación no es válido.');
+    }
+
+    // Activar cuenta
+    if (usuarioModel::update(usuarioModel::$t1, ['id' => $id], ['status' => 'activo']) === false) {
+      throw new Exception(get_notificaciones(3));
+    }
+
+    Flasher::new(sprintf('Tu correo electrónico ha sido activado con éxito <b>%s</b>, ya puedes iniciar sesión.', $nombre), 'success');
+    Redirect::to('login');
+
+  } catch (Exception $e) {
+    Flasher::new($e->getMessage(), 'danger');
+    Redirect::to('login');
+  } catch (PDOException $e) {
+    Flasher::new($e->getMessage(), 'danger');
+    Redirect::to('login');
+  }
+}
 }

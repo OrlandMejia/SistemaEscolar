@@ -28,7 +28,7 @@ class alumnoModel extends Model {
   static function all_paginated()
   {
     // Todos los registros
-    $sql = 'SELECT * FROM usuarios WHERE rol = "alumno" ORDER BY id DESC';
+    $sql = 'SELECT * FROM usuarios WHERE rol = "alumno" ORDER BY id ASC';
     return PaginationHandler::paginate($sql);
   }
 
