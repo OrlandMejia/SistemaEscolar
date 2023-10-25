@@ -71,4 +71,30 @@
   </div>
 </div>
 
+<script>
+function validatePassword(password) {
+    const messageElement = document.getElementById("password-validation-message");
+    const passwordElement = document.getElementById("password");
+
+    const isLengthValid = password.length >= 8;
+    const hasSpecialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
+    const hasNumbers = /\d/.test(password);
+
+    if (isLengthValid && hasSpecialChars && hasNumbers) {
+        messageElement.textContent = "Contraseña válida";
+        messageElement.style.color = "green";
+    } else {
+        messageElement.textContent = "La contraseña debe contener al menos 8 caracteres, caracteres especiales y números.";
+        messageElement.style.color = "red";
+    }
+}
+
+// Agregar un evento de escucha para validar la contraseña en tiempo real
+const passwordElement = document.getElementById("password");
+passwordElement.addEventListener("input", function () {
+    validatePassword(this.value);
+});
+</script>
+
+
 <?php require_once INCLUDES.'inc_footer.php'; ?>

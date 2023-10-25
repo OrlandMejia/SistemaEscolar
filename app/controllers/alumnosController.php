@@ -63,6 +63,7 @@ View::render('index', $data);
     View::render('ver', $data);
   }
 
+
   function agregar()
   {
     $data = 
@@ -75,7 +76,176 @@ View::render('index', $data);
     View::render('agregar',$data);
   }
 
+  /*function post_agregar()
+  {
+      try {
+          if (!check_posted_data(['csrf', 'nombres', 'apellidos', 'email', 'telefono', 'password', 'conf_password', 'id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+              throw new Exception(get_notificaciones());
+          }
+  
+          // Validar el rol de la persona que quiera acceder al listado
+          if (!is_admin(get_user_rol())) {
+              Flasher::new(get_notificaciones(0), 'danger');
+              Redirect::back();
+          }
+  
+          $nombres = clean($_POST["nombres"]);
+          $apellidos = clean($_POST["apellidos"]);
+          $email = clean($_POST["email"]);
+          $telefono = clean($_POST["telefono"]);
+          $password = clean($_POST["password"]);
+          $conf_password = clean($_POST["conf_password"]);
+          $id_grupo = clean($_POST["id_grupo"]);
+  
+          // Validar que el correo sea válido
+          if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+              throw new Exception('Ingresa un correo electrónico válido.');
+          }
+  
+          // Validar el nombre del usuario
+          if (strlen($nombres) < 5) {
+              throw new Exception('Ingresa un nombre válido.');
+          }
+  
+          // Validar el apellido del usuario
+          if (strlen($apellidos) < 5) {
+              throw new Exception('Ingresa un apellido válido.');
+          }
+  
+          // Validar la contraseña
+          if (strlen($password) < 8 || !password_compleja($password)) {
+              Flasher::new('La contraseña debe contener al menos 8 caracteres, caracteres especiales y números.');
+          }
+  
+          // Validar ambas contraseñas
+          if ($password !== $conf_password) {
+              throw new Exception('Las contraseñas no son iguales.');
+          }
+  
+          // Exista el id_grupo
+          if ($id_grupo === '' || !grupoModel::by_id($id_grupo)) {
+              throw new Exception('Selecciona un grupo válido.');
+          }
+  
+          // Aquí puedes continuar con el proceso de agregar el alumno a la base de datos
+          // ...
+  
+          // Después de agregar el alumno con éxito, puedes mostrar un mensaje
+          Flasher::new('Alumno agregado con éxito.', 'success');
+          Redirect::back();
+  
+      } catch (PDOException $e) {
+          Flasher::new($e->getMessage(), 'danger');
+          Redirect::back();
+      } catch (Exception $e) {
+          // Aquí ya no borramos los datos, simplemente mostramos el mensaje de error
+          Flasher::new($e->getMessage(), 'danger');
+      }
+  }*/
+  
+
   function post_agregar()
+  {
+    try {
+      if (!check_posted_data(['csrf','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+        throw new Exception(get_notificaciones());
+      }
+
+  //validar el rol de la persona que quiera acceder al listado
+  if(!is_admin(get_user_rol())){
+    Flasher::new(get_notificaciones(0), 'danger');
+    Redirect::back();
+  }
+
+      $nombres       = clean($_POST["nombres"]);
+      $apellidos     = clean($_POST["apellidos"]);
+      $email         = clean($_POST["email"]);
+      $telefono      = clean($_POST["telefono"]);
+      $password      = clean($_POST["password"]);
+      $conf_password = clean($_POST["conf_password"]);
+      $id_grupo      = clean($_POST["id_grupo"]);
+
+      // Validar que el correo sea válido
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Ingresa un correo electrónico válido.');
+      }
+
+      // Validar el nombre del usuario
+      if (strlen($nombres) < 5) {
+        throw new Exception('Ingresa un nombre válido.');
+      }
+
+      // Validar el apellido del usuario
+      if (strlen($apellidos) < 5) {
+        throw new Exception('Ingresa un apellido válido.');
+      }
+
+        // Validar la contraseña
+        if (strlen($password) < 8 || !preg_match('/[0-9]/', $password) || !preg_match('/[^A-Za-z0-9]/', $password)) {
+          throw new Exception('La contraseña debe contener al menos 8 caracteres, incluyendo caracteres especiales y números.');
+      }
+
+      // Validar ambas contraseñas
+      if ($password !== $conf_password) {
+        throw new Exception('Las contraseñas no son iguales.');
+      }
+
+      // Exista el id_grupo
+      if ($id_grupo === '' || !grupoModel::by_id($id_grupo)) {
+        throw new Exception('Selecciona un grupo válido.');
+      }
+
+      $data   =
+      [
+        'numero'          => rand(111111, 999999),
+        'nombres'         => $nombres,
+        'apellidos'       => $apellidos,
+        'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
+        'email'           => $email,
+        'telefono'        => $telefono,
+        'password'        => password_hash($password.AUTH_SALT, PASSWORD_BCRYPT),
+        'hash'            => generate_token(),
+        'rol'             => 'alumno',
+        'status'          => 'pendiente',
+        'creado'          => now()
+      ];
+
+      $data2 =
+      [
+        'id_alumno' => null,
+        'id_grupo'  => $id_grupo
+      ];
+
+      // Insertar a la base de datos
+      if (!$id = alumnoModel::add(alumnoModel::$t1, $data)) {
+        throw new Exception(get_notificaciones(2));
+      }
+
+      $data2['id_alumno'] = $id;
+
+      // Insertar a la base de datos
+      if (!$id_ga = grupoModel::add(grupoModel::$t3, $data2)) {
+        throw new Exception(get_notificaciones(2));
+      }
+
+      // Email de confirmación de correo
+      mail_confirmar_cuenta($id);
+
+      $alumno = alumnoModel::by_id($id);
+      $grupo  = grupoModel::by_id($id_grupo);
+
+      Flasher::new(sprintf('Alumno <b>%s</b> agregado con éxito e inscrito al grupo <b>%s</b>.', $alumno['nombre_completo'], $grupo['nombre']), 'success');
+      Redirect::back();
+
+    } catch (PDOException $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    } catch (Exception $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    }
+  }
+  /*function post_agregar()
   {
     try {
       if (!check_posted_data(['csrf','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
@@ -175,14 +345,147 @@ View::render('index', $data);
       Flasher::new($e->getMessage(), 'danger');
       Redirect::back();
     }
-  }
+  }*/
 
   function editar($id)
   {
     View::render('editar');
   }
 
+
   function post_editar()
+{
+    try {
+        if (!check_posted_data(['csrf', 'id', 'nombres', 'apellidos', 'email', 'telefono', 'password', 'conf_password', 'id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+            throw new Exception(get_notificaciones());
+        }
+
+        // Validar el rol de la persona que quiera acceder al listado
+        if (!is_admin(get_user_rol())) {
+            Flasher::new(get_notificaciones(0), 'danger');
+            Redirect::back();
+        }
+
+        // Validar existencia del alumno
+        $id = clean($_POST["id"]);
+        if (!$alumno = alumnoModel::by_id($id)) {
+            throw new Exception('No existe el alumno en la base de datos.');
+        }
+
+        // VARIABLES QUE YA SE ENCUENTRAN EN LA BASE DE DATOS
+        $db_email = $alumno['email'];
+        $db_pw = $alumno['password'];
+        $db_status = $alumno['status'];
+        $db_id_g = $alumno['id_grupo'];
+
+        // VARIABLES DE INFORMACIÓN DEL FORMULARIO
+        $nombres = clean($_POST["nombres"]);
+        $apellidos = clean($_POST["apellidos"]);
+        $email = clean($_POST["email"]);
+        $telefono = clean($_POST["telefono"]);
+        $password = clean($_POST["password"]);
+        $conf_password = clean($_POST["conf_password"]);
+        $id_grupo = clean($_POST["id_grupo"]);
+
+        // VARIABLES QUE DETERMINAN EL CAMBIO DE INFORMACIÓN SENSIBLE
+        // Indican que si la nueva es igual entonces es false y si es distinta lanza true
+        $changed_email = $db_email === $email ? false : true;
+        $changed_pw = false;
+        $changed_g = $db_id_g === $id_grupo ? false : true;
+
+        // Validar existencia del correo electrónico
+        $sql = 'SELECT * FROM usuarios WHERE email = :email AND id != :id LIMIT 1';
+        if (usuarioModel::query($sql, ['email' => $email, 'id' => $id])) {
+            throw new Exception('El correo electrónico ya existe en la base de datos.');
+        }
+
+        // Validar que el correo sea válido solo pasa si hay un cambio en el correo electrónico
+        if ($changed_email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception('Ingresa un correo electrónico válido.');
+        }
+
+        // Validar el nombre del usuario
+        if (strlen($nombres) < 5) {
+            throw new Exception('Ingresa un nombre válido.');
+        }
+
+        // Validar la contraseña
+        if (!empty($password) && !password_compleja($password)) {
+            throw new Exception('La contraseña debe contener al menos 8 caracteres, incluyendo caracteres especiales y números.');
+        }
+
+        // Validar ambas contraseñas
+        if (!empty($password) && $password !== $conf_password) {
+            throw new Exception('Las contraseñas no son iguales.');
+        }
+
+        // Exista el id_grupo
+        if ($id_grupo === '' || !grupoModel::by_id($id_grupo)) {
+            throw new Exception('Selecciona un grupo válido.');
+        }
+
+        $data = [
+            'nombres' => $nombres,
+            'apellidos' => $apellidos,
+            'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
+            'email' => $email,
+            'telefono' => $telefono,
+            'status' => $changed_email ? 'pendiente' : $db_status
+        ];
+
+        // Actualización de contraseña
+        if (!empty($password)) {
+            $data['password'] = password_hash($password . AUTH_SALT, PASSWORD_BCRYPT);
+            $changed_pw = true;
+        }
+
+        // Actualizar base de datos
+        if (!alumnoModel::update(alumnoModel::$t1, ['id' => $id], $data)) {
+            throw new Exception(get_notificaciones(2));
+        }
+
+        // Actualizar base de datos
+        if ($changed_g) {
+            if (!grupoModel::update(grupoModel::$t3, ['id_alumno' => $id], ['id_grupo' => $id_grupo])) {
+                throw new Exception(get_notificaciones(2));
+            }
+        }
+
+        $alumno = alumnoModel::by_id($id);
+        $grupo = grupoModel::by_id($id_grupo);
+
+        Flasher::new(sprintf('Alumno <b>%s</b> actualizado con éxito.', $alumno['nombre_completo']), 'success');
+
+        if ($changed_email) {
+            mail_confirmar_cuenta($id);
+            Flasher::new('El correo electrónico del alumno ha sido actualizado, debe ser confirmado.');
+        }
+
+        if ($changed_pw) {
+            Flasher::new('La contraseña del alumno ha sido actualizada.');
+        }
+
+        if ($changed_g) {
+            Flasher::new(sprintf('El grupo del alumno ha sido actualizado a <b>%s</b> con éxito.', $grupo['nombre']));
+        }
+
+        Redirect::back();
+
+    } catch (PDOException $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    } catch (Exception $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    }
+}
+
+function password_compleja($password)
+{
+    return strlen($password) >= 8 && preg_match('/[0-9]/', $password) && preg_match('/[^A-Za-z0-9]/', $password);
+}
+
+  /*function post_editar()
   {
     try {
       if (!check_posted_data(['csrf','id','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
@@ -312,10 +615,41 @@ View::render('index', $data);
       Flasher::new($e->getMessage(), 'danger');
       Redirect::back();
     }
-  }
+  }*/
 
   function borrar($id)
   {
-    // Proceso de borrado
+    try {
+      if (!check_get_data(['_t'], $_GET) || !Csrf::validate($_GET['_t'])) {
+        throw new Exception(get_notificaciones());
+      }
+
+  //validar el rol de la persona que quiera acceder al listado
+  if(!is_admin(get_user_rol())){
+    Flasher::new(get_notificaciones(0), 'danger');
+    Redirect::back();
+  }
+
+      // Exista el alumno
+      if (!$alumno = alumnoModel::by_id($id)) {
+        throw new Exception('No existe el alumno en la base de datos.');
+      }
+
+      // Borramos el registro y sus conexiones
+      if (alumnoModel::eliminar($alumno['id']) === false) {
+        throw new Exception(get_notificaciones(4));
+      }
+
+      Flasher::new(sprintf('Alumno <b>%s</b> borrado con éxito.', $alumno['nombre_completo']), 'success');
+      Redirect::to('alumnos');
+
+    } catch (PDOException $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    } catch (Exception $e) {
+      Flasher::new($e->getMessage(), 'danger');
+      Redirect::back();
+    }
   }
 }
+
