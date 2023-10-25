@@ -11,7 +11,7 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th width="5%">#</th>
+							<th width="5%">No.</th>
 							<th>Nombre completo</th>
               <th>Correo electrónico</th>
               <th>Status</th>
@@ -45,7 +45,7 @@
 			</div>
 		<?php else: ?>
 			<div class="py-5 text-center">
-				<img src="<?php echo IMAGES.'error.jpg'; ?>" alt="No hay registros" style="width: 250px;">
+				<img src="error.jpg" alt="No hay registros" style="width: 250px;">
 				<p class="text-muted">No hay registros en la base de datos.</p>
 			</div>
 		<?php endif; ?>

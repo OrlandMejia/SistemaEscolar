@@ -782,7 +782,6 @@ function set_session($k, $v) {
                 if (!is_file($file)) {
                     continue;
                 }
-
                 $mail->addAttachment($file);
             }
         }
