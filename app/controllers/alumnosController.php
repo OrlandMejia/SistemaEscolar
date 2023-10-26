@@ -75,75 +75,6 @@ View::render('index', $data);
     ];
     View::render('agregar',$data);
   }
-
-  /*function post_agregar()
-  {
-      try {
-          if (!check_posted_data(['csrf', 'nombres', 'apellidos', 'email', 'telefono', 'password', 'conf_password', 'id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
-              throw new Exception(get_notificaciones());
-          }
-  
-          // Validar el rol de la persona que quiera acceder al listado
-          if (!is_admin(get_user_rol())) {
-              Flasher::new(get_notificaciones(0), 'danger');
-              Redirect::back();
-          }
-  
-          $nombres = clean($_POST["nombres"]);
-          $apellidos = clean($_POST["apellidos"]);
-          $email = clean($_POST["email"]);
-          $telefono = clean($_POST["telefono"]);
-          $password = clean($_POST["password"]);
-          $conf_password = clean($_POST["conf_password"]);
-          $id_grupo = clean($_POST["id_grupo"]);
-  
-          // Validar que el correo sea válido
-          if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-              throw new Exception('Ingresa un correo electrónico válido.');
-          }
-  
-          // Validar el nombre del usuario
-          if (strlen($nombres) < 5) {
-              throw new Exception('Ingresa un nombre válido.');
-          }
-  
-          // Validar el apellido del usuario
-          if (strlen($apellidos) < 5) {
-              throw new Exception('Ingresa un apellido válido.');
-          }
-  
-          // Validar la contraseña
-          if (strlen($password) < 8 || !password_compleja($password)) {
-              Flasher::new('La contraseña debe contener al menos 8 caracteres, caracteres especiales y números.');
-          }
-  
-          // Validar ambas contraseñas
-          if ($password !== $conf_password) {
-              throw new Exception('Las contraseñas no son iguales.');
-          }
-  
-          // Exista el id_grupo
-          if ($id_grupo === '' || !grupoModel::by_id($id_grupo)) {
-              throw new Exception('Selecciona un grupo válido.');
-          }
-  
-          // Aquí puedes continuar con el proceso de agregar el alumno a la base de datos
-          // ...
-  
-          // Después de agregar el alumno con éxito, puedes mostrar un mensaje
-          Flasher::new('Alumno agregado con éxito.', 'success');
-          Redirect::back();
-  
-      } catch (PDOException $e) {
-          Flasher::new($e->getMessage(), 'danger');
-          Redirect::back();
-      } catch (Exception $e) {
-          // Aquí ya no borramos los datos, simplemente mostramos el mensaje de error
-          Flasher::new($e->getMessage(), 'danger');
-      }
-  }*/
-  
-
   function post_agregar()
   {
     try {
@@ -245,107 +176,6 @@ View::render('index', $data);
       Redirect::back();
     }
   }
-  /*function post_agregar()
-  {
-    try {
-      if (!check_posted_data(['csrf','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
-        throw new Exception(get_notificaciones());
-      }
-
-     //validar el rol de la persona que quiera acceder al listado
-      if(!is_admin(get_user_rol())){
-        Flasher::new(get_notificaciones(0), 'danger');
-        Redirect::back();
-      }
-
-      $nombres       = clean($_POST["nombres"]);
-      $apellidos     = clean($_POST["apellidos"]);
-      $email         = clean($_POST["email"]);
-      $telefono      = clean($_POST["telefono"]);
-      $password      = clean($_POST["password"]);
-      $conf_password = clean($_POST["conf_password"]);
-      $id_grupo      = clean($_POST["id_grupo"]);
-
-      // Validar que el correo sea válido
-      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Ingresa un correo electrónico válido.');
-      }
-
-      // Validar el nombre del usuario
-      if (strlen($nombres) < 5) {
-        throw new Exception('Ingresa un nombre válido.');
-      }
-
-      // Validar el apellido del usuario
-      if (strlen($apellidos) < 5) {
-        throw new Exception('Ingresa un apellido válido.');
-      }
-
-      // Validar el password del usuario
-      if (strlen($password) < 5) {
-        throw new Exception('Ingresa una contraseña mayor a 5 caracteres.');
-      }
-
-      // Validar ambas contraseñas
-      if ($password !== $conf_password) {
-        throw new Exception('Las contraseñas no son iguales.');
-      }
-
-      // Exista el id_grupo
-      if ($id_grupo === '' || !grupoModel::by_id($id_grupo)) {
-        throw new Exception('Selecciona un grupo válido.');
-      }
-
-      $data   =
-      [
-        'numero'          => rand(111111, 999999),
-        'nombres'         => $nombres,
-        'apellidos'       => $apellidos,
-        'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
-        'email'           => $email,
-        'telefono'        => $telefono,
-        'password'        => password_hash($password.AUTH_SALT, PASSWORD_BCRYPT),
-        'hash'            => generate_token(),
-        'rol'             => 'alumno',
-        'status'          => 'pendiente',
-        'creado'          => now()
-      ];
-
-      $data2 =
-      [
-        'id_alumno' => null,
-        'id_grupo'  => $id_grupo
-      ];
-
-      // Insertar a la base de datos
-      if (!$id = alumnoModel::add(alumnoModel::$t1, $data)) {
-        throw new Exception(get_notificaciones(2));
-      }
-
-      $data2['id_alumno'] = $id;
-
-      // Insertar a la base de datos
-      if (!$id_ga = grupoModel::add(grupoModel::$t3, $data2)) {
-        throw new Exception(get_notificaciones(2));
-      }
-
-      // Email de confirmación de correo
-      mail_confirmar_cuenta($id);
-
-      $alumno = alumnoModel::by_id($id);
-      $grupo  = grupoModel::by_id($id_grupo);
-
-      Flasher::new(sprintf('Alumno <b>%s</b> agregado con éxito e inscrito al grupo <b>%s</b>.', $alumno['nombre_completo'], $grupo['nombre']), 'success');
-      Redirect::back();
-
-    } catch (PDOException $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
-    } catch (Exception $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
-    }
-  }*/
 
   function editar($id)
   {
@@ -651,5 +481,104 @@ function password_compleja($password)
       Redirect::back();
     }
   }
+
+  function exportar_pdf()
+  {
+      $data = [
+          'title' => 'Exportar PDF'
+      ];
+  
+      // Cargar la biblioteca de generación de PDF (por ejemplo, TCPDF)
+      require_once __DIR__ . '/../../app/TCPDF/tcpdf.php';
+  
+      // Crear un nuevo objeto PDF
+      $pdf = new TCPDF();
+  
+      // Agregar una página
+      $pdf->AddPage();
+  
+      // Obtener los datos de los profesores ordenados por número de DPI
+      $alumnos = alumnoModel::query('SELECT * FROM usuarios WHERE rol = "alumno" ORDER BY numero ASC');
+  
+      // Estilos CSS para los encabezados
+      $headerStyle = 'background-color: #001f3f; color: #fff; padding: 8px; text-align: left;';
+  
+      // Crear una tabla en el PDF con estilos CSS
+      $html = '<style>
+                th {
+                    ' . $headerStyle . '
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    border: 1px solid #ddd;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                }
+                .column-id {
+                    width: 10%;
+                }
+                .column-nombre {
+                    width: 35%;
+                }
+                .column-email {
+                    width: 40%;
+                }
+                .column-status {
+                    width: 12%;
+                }
+            </style>';
+  
+      // Agregar el encabezado
+      $html .= '<h2 style="text-align: center;">LISTA DE ALUMNOS REGISTRADOS</h2>';
+  
+      // Agregar la tabla
+      $html .= '<table>';
+  
+      // Agregar fila de encabezados
+      $html .= '<tr><th class="column-id">No.</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
+  
+      // Agregar filas de datos
+      foreach ($alumnos as $alumno) {
+          $html .= '<tr><td class="column-id">' . $alumno['numero'] . '</td><td class="column-nombre">' . utf8_decode($alumno['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($alumno['email']) . '</td><td class="column-status">' . utf8_decode($alumno['status']) . '</td></tr>';
+      }
+      $html .= '</table>';
+  
+      // Agregar el contenido a la página
+      $pdf->writeHTML($html, true, false, false, false, '');
+  
+      // Generar el PDF y mostrarlo en el navegador
+      $pdf->Output('profesores.pdf', 'I');
+  
+      // Redireccionar a la página desde la que se inició la exportación
+      header('Location: ' . buildURL('profesores')); // Cambia 'profesores' por la URL correcta
+  }
+  
+  function exportar_excel()
+  {
+      $alumnos = profesorModel::query('SELECT * FROM usuarios WHERE rol = "alumno" ORDER BY numero ASC');
+  
+      $filename = 'alumnos.xls';
+  
+      header("Content-Type: application/vnd.ms-excel");
+      header("Content-Disposition: attachment; filename=\"$filename\"");
+  
+      echo '<table>';
+      echo '<tr><th>Numero</th><th>Nombre Completo</th><th>Correo Electronico</th><th>Status</th></tr>';
+  
+      // Recorremos el arreglo de profesores en orden ascendente
+      foreach ($alumnos as $alumno) {
+          echo '<tr><td>' . $alumno['numero'] . '</td><td>' . utf8_decode($alumno['nombre_completo']) . '</td><td>' . utf8_decode($alumno['email']) . '</td><td>' . utf8_decode($alumno['status']) . '</td></tr>';
+      }
+  
+      echo '</table>';
+      exit;
+  }
+  
+
+
 }
 

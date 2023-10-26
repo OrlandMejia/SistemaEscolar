@@ -131,7 +131,7 @@ function mail_confirmar_cuenta($id_usuario)
   $subject = sprintf('Confirma tu correo eletrónico por favor %s', $nombre);
   $alt     = sprintf('Debes confirmar tu correo electrónico para poder ingresar a %s.', get_sitename());
   $url     = buildURL(URL.'login/activate', ['email' => $email, 'hash' => $hash], false, false);
-  $text    = '¡Hola %s!<br>Para ingresar al sistema de <b>%s</b> primero debes confirmar tu dirección de correo electrónico dando clic en el siguiente enlace seguro: <a href="%s">%s</a>';
+  $text    = '¡Hola %s!<br>Para ingresar al <b>%s</b> primero debes confirmar tu dirección de correo electrónico dando clic en el siguiente enlace seguro: <a href="%s">%s</a>';
   $body    = sprintf($text, $nombre, get_sitename(), $url, $url);
 
   // Creando el correo electrónico
