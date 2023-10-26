@@ -140,58 +140,100 @@ function mail_confirmar_cuenta($id_usuario)
   return true;
 }
 
-/**function mail_confirmar_cuenta($id_usuario)
+function mail_recuperacion_contrasena($id_usuario)
 {
-    if (!$usuario = usuarioModel::by_id($id_usuario)) return false; // nuevo método creado en modelo
+  $usuario = usuarioModel::by_id($id_usuario);
 
-    $nombre = $usuario['nombres'];
-    $hash   = $usuario['hash'];
-    $email  = $usuario['email'];
-    $status = $usuario['status'];
+  if (empty($usuario)) return false;
 
-    // Si no es pendiente el status no requiere activación
-    if ($status !== 'pendiente') return false;
+  // Array para nuevo token
+  $email  = $usuario['email'];
+  $nombre = $usuario['nombre_completo'];
+  $token  = generate_token();
+  $url    = buildURL(URL.'login/password', ['id' => $id_usuario, 'token' => $token], false, false);
+  //array para guardar información a la tabla post donde guardaremos en este caso un token de autorizacion
+  $post   =
+  [
+    'tipo'       => 'token_recuperacion',
+    'id_ref'     => 0,
+    'id_usuario' => $id_usuario,
+    'titulo'     => 'Token de recuperación de contraseña',
+    'contenido'  => $token,
+    'permalink'  => $url,
+    'creado'     => now()
+  ];
 
-    // Generar la URL de activación
-    $url = buildURL(URL.'login/activate', ['email' => $email, 'hash' => $hash], false, false);
+  // Agregando el post / token a la base de datos
+  if (!$id_post = postModel::add(postModel::$t1, $post)) {
+    return false;
+  }
 
-    // Configurar PHPMailer
-    $mail = new PHPMailer(true);
+  $subject = sprintf('Recuperación de contraseña para %s', $nombre);
+  $alt     = 'Ingresa para realizar el cambio de contraseña para tu cuenta.';
+  $text    = '¡Hola %s!<br>Para actualizar tu contraseña ingresa al siguiente enlace: <a href="%s">%s</a>';
+  $body    = sprintf($text, $nombre, $url, $url);
 
-    try {
-        // Configurar el servidor SMTP de Gmail
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->SMTPSecure = 'tls'; // Puedes usar 'ssl' si prefieres SSL
-        $mail->Port = 465; // Puerto SMTP de Gmail
+  // Creando el correo electrónico
+  if (send_email(get_siteemail(), $email, $subject, $body, $alt) !== true) return false;
 
-        // Configurar las credenciales de tu cuenta de Gmail
-        $mail->Username = 'colegiocristianojuda@gmail.com'; // Tu dirección de Gmail
-        $mail->Password = 'lwml nvjg vceg qtpf'; // La contraseña de aplicación generada en el paso anterior
+  return true;
+}
 
-        // Remitente y destinatario
-        $mail->setFrom('colegiocristianojuda@gmail.com', 'Sistema Juda'); // Tu dirección de Gmail y nombre
-        $mail->addAddress($email, $nombre); // La dirección de correo del destinatario y su nombre
 
-        // Configurar el contenido del correo
-        $mail->isHTML(true);
-        $mail->Subject = sprintf('Confirma tu correo eletrónico por favor %s', $nombre);
-        $mail->AltBody = sprintf('Debes confirmar tu correo electrónico para poder ingresar a %s.', get_sitename());
-        $mail->Body = sprintf(
-            '¡Hola %s!<br>Para ingresar al sistema de <b>%s</b> primero debes confirmar tu dirección de correo electrónico dando clic en el siguiente enlace seguro: <a href="%s">%s</a>',
-            $nombre,
-            get_sitename(),
-            $url,
-            $url
-        );
+/**
+ * Enviar email de suspensión de cuenta
+ *
+ * @param integer $id_usuario
+ * @return bool
+ */
+function mail_suspension_cuenta($id_usuario)
+{
+  $usuario = usuarioModel::by_id($id_usuario);
 
-        // Enviar el correo
-        $mail->send();
+  if (empty($usuario)) return false;
 
-        return true;
-    } catch (Exception $e) {
-        // Manejar cualquier error que pueda ocurrir al enviar el correo
-        return false;
-    }
-}**/
+  $nombre = $usuario['nombre_completo'];
+  $email  = $usuario['email'];
+  $status = $usuario['status'];
+
+  if ($status !== 'suspendido') return false;
+
+  $subject = sprintf('%s tu cuenta ha sido Suspendida!', $nombre);
+  $alt     = sprintf('Comunicate con la administración del %s para poder ingresar.', get_sitename());
+  $text    = 'Hola %s<br>Te informamos que tu cuenta ha sido suspendida, comunicate con la administración para poder ingresar de nuevo a <b>%s</b>.';
+  $body    = sprintf($text, $nombre, get_sitename());
+
+  // Creando el correo electrónico
+  if (send_email(get_siteemail(), $email, $subject, $body, $alt) !== true) return false;
+
+  return true;
+}
+
+/**
+ * Enviar email de retiro de suspensión
+ *
+ * @param integer $id_usuario
+ * @return bool
+ */
+function mail_retirar_suspension_cuenta($id_usuario)
+{
+  $usuario = usuarioModel::by_id($id_usuario);
+
+  if (empty($usuario)) return false;
+
+  $nombre = $usuario['nombre_completo'];
+  $email  = $usuario['email'];
+  $status = $usuario['status'];
+
+  if ($status === 'suspendido') return false;
+
+  $subject = sprintf('%s Suspensión retirada de tu Cuenta', $nombre);
+  $alt     = sprintf('Puedes ingresar de nuevo a %s.', get_sitename());
+  $text    = 'Hola %s<br>Te informamos que tu cuenta ha sido habilitada de nuevo, ya puedes ingresar a <b>%s</b>.';
+  $body    = sprintf($text, $nombre, get_sitename());
+
+  // Creando el correo electrónico
+  if (send_email(get_siteemail(), $email, $subject, $body, $alt) !== true) return false;
+
+  return true;
+}

@@ -608,7 +608,7 @@ class ajaxController extends Controller {
       }
 
       // Email de suspensión
-     // mail_suspension_cuenta($id_alumno);
+     mail_suspension_cuenta($id_alumno);
 
       $msg = sprintf('El alumno <b>%s</b> ha sido suspendido con éxito.', $alumno['nombre_completo']);
 
@@ -648,7 +648,7 @@ class ajaxController extends Controller {
       }
 
       // Email de remover suspensión
-      //mail_retirar_suspension_cuenta($id_alumno);
+      mail_retirar_suspension_cuenta($id_alumno);
 
       $msg    = sprintf('Se ha retirado la suspensión del alumno <b>%s</b> con éxito.', $alumno['nombre_completo']);
       $alumno = alumnoModel::by_id($id_alumno);
@@ -663,8 +663,3 @@ class ajaxController extends Controller {
   }
 
 }
-
-//CARGAR MATERIAS DISPONIBLES PARA LOS GRADOS
-// Grupos
-
-
