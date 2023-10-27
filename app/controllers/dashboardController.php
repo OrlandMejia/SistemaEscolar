@@ -20,17 +20,33 @@ class dashboardController extends Controller {
   //ACA VAMOS A CARGAR TODO LO QUE NECESITAMOS PARA EL ROL QUE NECESITEMOS Y PARA LA VISTA Y COLUMNAS DE NUESTROS REGISTROS
   function index()
   {
-    if(!is_user(get_user_rol(), ['admin'])){
-      Redirect::to('home');
-    }
+    $rol  = get_user_rol();
     $data = 
     [
-      'title' => 'Dashboard',
-      'msg'   => 'Dashboard'
+      'title' => 'Dashboard para Profesores',
+      'slug'  => 'dashboard'
     ];
-    
-    // Descomentar vista si requerida
-    View::render('index', $data);
+
+    /*if (is_admin($rol)) {
+      
+      $data['stats'] = adminModel::stats();
+      View::render('dashboard_admin', $data);
+
+    } */if (is_profesor($rol)) {
+      
+      $data['stats'] = profesorModel::stats_by_id(get_user('id'));
+      View::render('dashboard_profesor', $data);
+      
+    } else if (is_alumno($rol)) {
+      
+      $data['grupo'] = grupoModel::by_alumno(get_user('id'));
+      View::render('dashboard_alumno', $data);
+
+    } else {
+
+      echo 'Tu rol de usuario no es válido.';
+      
+    }
   }
 
   function ver($id)

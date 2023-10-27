@@ -31,7 +31,7 @@ function is_profesor($rol){
 
 
 function is_alumno($rol){
-  return in_array($rol, ['estudiante', 'admin', 'root']);
+  return in_array($rol, ['alumno', 'admin', 'root']);
 }
 
 //funcion para la accion o acceso solamente para roles aceptados
@@ -236,4 +236,149 @@ function mail_retirar_suspension_cuenta($id_usuario)
   if (send_email(get_siteemail(), $email, $subject, $body, $alt) !== true) return false;
 
   return true;
+}
+
+
+function get_estados_lecciones()
+{
+  return
+  [
+    ['borrador', 'Borrador'],
+    ['publica' , 'Publicada']
+  ];
+}
+
+function format_estado_leccion($status)
+{
+  $placeholder = '<div class="badge %s"><i class="%s"></i> %s</div>';
+  $classes     = '';
+  $icon        = '';
+  $text        = '';
+
+  switch ($status) {
+    case 'borrador':
+      $classes = 'badge-info';
+      $icon    = 'fas fa-eraser';
+      $text    = 'Borrador';
+      break;
+
+    case 'publica':
+      $classes = 'badge-success';
+      $icon    = 'fas fa-check';
+      $text    = 'Publicada';
+      break;
+
+    default:
+      $classes = 'badge-danger';
+      $icon    = 'fas fa-question';
+      $text    = 'Desconocido';
+      break;
+  }
+
+  return sprintf($placeholder, $classes, $icon, $text);
+}
+
+function format_tiempo_restante($fecha)
+{
+  $output   = '';
+  $segundos = strtotime($fecha) - time();
+  $segundos = $segundos < 0 ? 0 : $segundos;
+  $minutos  = $segundos / 60;
+  $horas    = $minutos / 60;
+  $dias     = $horas / 24;
+  $semanas  = $dias / 7;
+  $meses    = $semanas / 4;
+  $anos     = $meses / 12;
+
+  switch (true) {
+    case $anos >= 1:
+      $anos   = floor($anos);
+      $output = sprintf('%s %s', $anos, $anos === 1 ? 'año restante.' : 'años restantes.');
+      break;
+
+    case $meses >= 2:
+      $output = sprintf('%s meses restantes.', floor($meses));
+      break;
+
+    case $semanas >= 2:
+      $output = sprintf('%s semanas restantes.', floor($semanas));
+      break;
+
+    case $dias >= 3:
+      $output = sprintf('%s días restantes.', floor($dias));
+      break;
+
+    case $horas >= 2:
+      $output = sprintf('%s horas restantes.', floor($horas));
+      break;
+
+    case $minutos >= 2:
+      $output = sprintf('%s minutos restantes.', floor($minutos));
+      break;
+
+    case $segundos > 0:
+      $output = sprintf('%s segundos restantes.', $segundos);
+      break;
+    
+    case $segundos === 0:
+      $output = 'El tiempo de ha terminado.';
+      break;
+
+    default:
+      $output = 'Desconocido.';
+      break;
+  }
+
+  return $output;
+}
+
+function get_ingresos()
+{
+  return
+  [
+    ['Enero'     , 23848],
+    ['Febrero'   , 85633],
+    ['Marzo'     , 54200],
+    ['Abril'     , 61250],
+    ['Mayo'      , 12577],
+    ['Junio'     , 25966],
+    ['Julio'     , 34700],
+    ['Agosto'    , 75000],
+    ['Septiembre', 23848],
+    ['Octubre'   , 16450],
+    ['Noviembre' , 63250],
+    ['Diciembre' , 83500]
+  ];
+}
+
+function get_proyectos()
+{
+  return
+  [
+    [
+      'titulo'   => 'Programa escolar 2021',
+      'tipo'     => 'danger',
+      'progreso' => 20
+    ],
+    [
+      'titulo'   => 'Registro de nuevos alumnos',
+      'tipo'     => 'warning',
+      'progreso' => 40
+    ],
+    [
+      'titulo'   => 'Registro de profesores',
+      'tipo'     => 'primary',
+      'progreso' => 60
+    ],
+    [
+      'titulo'   => 'Capacitación de personal',
+      'tipo'     => 'info',
+      'progreso' => 80
+    ],
+    [
+      'titulo'   => 'Crear un sistema escolar',
+      'tipo'     => 'success',
+      'progreso' => 100
+    ]
+  ];
 }

@@ -7,37 +7,27 @@ use \Verot\Upload\Upload;
  * Controlador de grupos
  */
 class gruposController extends Controller {
+  private $id  = null;
+  private $rol = null;
+
   function __construct()
   {
     // Validación de sesión de usuario, descomentar si requerida
-
     if (!Auth::validate()) {
       Flasher::new('Debes iniciar sesión primero.', 'danger');
       Redirect::to('login');
     }
-  
-  }
-  
-  function index()
-  {
-    $data = 
-    [
-      'title'  => 'Todos los Grados',
-      'slug'   => 'grupos',
-      'button' => ['url' => 'grupos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar grupo'],
-      'grupos' => grupoModel::all_paginated()
-    ];
-    
-    // Descomentar vista si requerida
-    View::render('index', $data);
+
+    $this->id  = get_user('id');
+    $this->rol = get_user_rol();
   }
 
   function ver($id)
   {
-        // Validar rol
-        if(!is_admin(get_user_rol())){
-          throw new Exception(get_notificaciones(1), 1);
-        }
+    if (!is_admin($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
 
     if (!$grupo = grupoModel::by_id($id)) {
       Flasher::new('No existe el grupo en la base de datos.', 'danger');
@@ -48,7 +38,7 @@ class gruposController extends Controller {
     [
       'title'  => sprintf('Grupo %s', $grupo['nombre']),
       'slug'   => 'grupos',
-      'button' => ['url' => 'grupos', 'text' => '<i class="fas fa-table"></i> Todos los Grados'],
+      'button' => ['url' => 'grupos', 'text' => '<i class="fas fa-table"></i> Todos los grupos'],
       'g'      => $grupo
     ];
 
@@ -259,4 +249,90 @@ class gruposController extends Controller {
       Redirect::back();
     }
   }
+
+  // Para profesores
+  function asignados()
+  {
+    if (is_admin($this->rol)) {
+      Redirect::to('grupos');
+    }
+
+    if (!is_profesor($this->rol)) {
+      Flasher::deny();
+      Redirect::back();
+    }
+
+    $data =
+    [
+      'title'  => 'Grados Asignados',
+      'slug'   => 'grupos',
+      'grupos' => profesorModel::grupos_asignados($this->id)
+    ];
+
+    View::render('asignados', $data);
+  }
+
+  function detalles($id)
+  {
+    if (is_admin($this->rol)) {
+      Redirect::to(sprintf('grupos/ver/%s', $id));
+    }
+
+    if (!is_profesor($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
+
+    if (!$grupo = grupoModel::by_id($id)) {
+      Flasher::new('No existe el grado en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
+    $grupo['materias'] = grupoModel::materias_asignadas($id, $this->id);
+    $grupo['alumnos']  = grupoModel::alumnos_asignados($id);
+
+    if (!profesorModel::asignado_a_grupo($this->id, $id)) {
+      Flasher::new('No eres profesor de este grado.', 'danger');
+      Redirect::to('grupos/asignados');
+    }
+
+    $data =
+    [
+      'title'  => sprintf('Grado %s', $grupo['nombre']),
+      'slug'   => 'grupos',
+      'button' => ['url' => 'grupos/asignados', 'text' => '<i class="fas fa-table"></i> Todos mis grados'],
+      'g'      => $grupo
+    ];
+
+    View::render('detalles', $data);
+  }
+
+  function materia($id)
+  {
+    if (is_admin($this->rol)) {
+      Redirect::to(sprintf('materias/ver/%s', $id));
+    }
+
+    if (!is_profesor($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
+
+    if (!$materia = materiaModel::by_id($id)) {
+      Flasher::new('No existe la materia en la base de datos.', 'danger');
+      Redirect::to('materias');
+    }
+
+    $data = 
+    [
+      'title'     => sprintf('Lecciones disponibles para %s', $materia['nombre']),
+      'slug'      => 'grupos',
+      'button'    => ['url' => 'materias/asignadas', 'text' => '<i class="fas fa-undo"></i> Mis materias'],
+      'materia'   => $materia,
+      'lecciones' => leccionModel::by_materia_profesor($id, $this->id)
+    ];
+
+    View::render('materia', $data);
+  }
+
 }

@@ -11,7 +11,7 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th width="5%">#</th>
+							<th width="5%">No.</th>
 							<th>Nombre</th>
 							<th>Horario</th>
 							<th width="10%">Acción</th>

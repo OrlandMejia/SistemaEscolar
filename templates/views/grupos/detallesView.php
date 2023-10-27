@@ -31,13 +31,13 @@
                     <img src="<?php echo UPLOADED.$d->g->horario; ?>" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
                   </a>
                 <?php else: ?>
-                  <a href="<?php echo get_image('broken.png'); ?>" data-lightbox="Horario" title="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>">
-                    <img src="<?php echo get_image('broken.png'); ?>" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
+                  <a href="img/broken.png" data-lightbox="Horario" title="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>">
+                    <img src="img/broken.png" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
                   </a>
                   <p class="text-muted"><?php echo sprintf('El archivo <b>%s</b> no existe o está dañado.', $d->g->horario); ?></p>
                 <?php endif; ?>
               <?php else: ?>
-                <p>No hay un horario definido aún para este grupo.</p>
+                <p>No hay un horario definido aún para este Grado.</p>
               <?php endif; ?>
             </div>
           </div>
@@ -72,8 +72,8 @@
             </ul>
           <?php else: ?>
             <div class="text-center py-5">
-              <img src="<?php echo get_image('undraw_taken.png'); ?>" alt="No hay registros." class="img-fluid" style="width: 200px;">
-              <p class="text-muted">No hay alumnos inscritos a este grupo.</p>
+              <img src="img/error.jpg" alt="No hay registros." class="img-fluid" style="width: 200px;">
+              <p class="text-muted">No hay alumnos inscritos a este Grado.</p>
             </div>
           <?php endif; ?>
         </div>
@@ -108,7 +108,7 @@
               </ul>
             <?php else: ?>
               <div class="text-center py-5">
-                <img src="<?php echo get_image('undraw_taken.png'); ?>" alt="No hay registros." class="img-fluid" style="width: 200px;">
+                <img src="img/broken.png" alt="No hay registros." class="img-fluid" style="width: 200px;">
                 <p class="text-muted">No hay materias asignadas.</p>
               </div>
             <?php endif; ?>

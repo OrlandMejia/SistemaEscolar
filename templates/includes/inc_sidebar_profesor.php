@@ -5,13 +5,13 @@
     <span>Dashboard</span></a>
 </li>
 
-<!-- Divider -->
-<hr class="sidebar-divider">
+	<!-- Divider -->
+	<hr class="sidebar-divider">
 
-<!-- Heading -->
-<div class="sidebar-heading">
-  Menú
-</div>
+	<!-- Heading -->
+	<div class="sidebar-heading">
+		Menú
+	</div>
 
 <!-- Nav Item - Grupos del profesor -->
 <li class="nav-item <?php echo $slug === 'grupos' ? 'active' : null; ?>">
@@ -27,10 +27,10 @@
 			<span>Materias</span></a>
 	</li>
 
-<!-- Divider -->
-<hr class="sidebar-divider d-none d-md-block">
+	<!-- Divider -->
+	<hr class="sidebar-divider d-none d-md-block">
 
-<!-- Sidebar Toggler (Sidebar) -->
-<div class="text-center d-none d-md-inline">
-  <button class="rounded-circle border-0" id="sidebarToggle"></button>
-</div>
+	<!-- Sidebar Toggler (Sidebar) -->
+	<div class="text-center d-none d-md-inline">
+		<button class="rounded-circle border-0" id="sidebarToggle"></button>
+	</div>

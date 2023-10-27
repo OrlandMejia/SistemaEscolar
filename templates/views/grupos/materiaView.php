@@ -40,7 +40,7 @@
             <div class="row">
               <div class="col-xl-1">
                 <a href="<?php echo sprintf('lecciones/ver/%s', $l->id); ?>">
-                  <img src="<?php echo get_image('player.png'); ?>" alt="<?php echo $l->titulo; ?>" class="img-fluid" style="width: 30px;">
+                  <img src="img/player.png" alt="<?php echo $l->titulo; ?>" class="img-fluid" style="width: 30px;">
                 </a>
               </div>
               <div class="col-xl-5">
@@ -74,7 +74,7 @@
       <?php echo $d->lecciones->pagination; ?>
 		<?php else: ?>
 			<div class="py-5 text-center">
-				<img src="<?php echo get_image('homework.png'); ?>" alt="No hay registros" style="width: 150px;">
+				<img src="img/homework.png" alt="No hay registros" style="width: 150px;">
 				<p class="text-muted mt-3">No hay lecciones para esta materia.</p>
 			</div>
 		<?php endif; ?>
