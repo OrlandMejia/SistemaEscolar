@@ -31,7 +31,7 @@
 										<?php foreach ($d->profesores->rows as $p): ?>
 										<tr>
 										<td><?php echo sprintf('<a href="profesores/ver/%s">%s</a>', $p->numero, $p->numero); ?></td>
-										<td><?php echo empty($p->dpi) ? 'Sin DPI agregado' : $p->dpi; ?></td>
+										<td><?php echo empty($p->identificacion) ? 'Sin DPI agregado' : $p->identificacion; ?></td>
 										<td><?php echo empty($p->nombre_completo) ? 'Sin Nombre' : add_ellipsis($p->nombre_completo,50);?></td>
 										<td><?php echo empty($p->email) ? 'Sin Correo Electronico' : $p->email; ?></td>
 										<td><?php echo format_estado_usuario($p->status); ?></td>

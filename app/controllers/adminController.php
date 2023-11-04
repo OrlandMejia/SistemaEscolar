@@ -7,57 +7,35 @@
  * Controlador de admin
  */
 class adminController extends Controller {
+  private $id  = null;
+  private $rol = null;
+
   function __construct()
   {
     // Validación de sesión de usuario, descomentar si requerida
-    /**
     if (!Auth::validate()) {
       Flasher::new('Debes iniciar sesión primero.', 'danger');
       Redirect::to('login');
     }
-    */
+
+    $this->id  = get_user('id');
+    $this->rol = get_user_rol();
+
+    if (!is_admin($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
   }
   
   function index()
   {
     $data = 
     [
-      'title' => 'Reemplazar título',
-      'slug' => 'admin',
-      'msg'   => 'Bienvenido al controlador de "admin", se ha creado con éxito si ves este mensaje.'
+      'title' => 'Administración',
+      'slug'  => 'admin'
     ];
     
     // Descomentar vista si requerida
     View::render('index', $data);
-  }
-
-  function ver($id)
-  {
-    View::render('ver');
-  }
-
-  function agregar()
-  {
-    View::render('agregar');
-  }
-
-  function post_agregar()
-  {
-
-  }
-
-  function editar($id)
-  {
-    View::render('editar');
-  }
-
-  function post_editar()
-  {
-
-  }
-
-  function borrar($id)
-  {
-    // Proceso de borrado
   }
 }

@@ -56,6 +56,20 @@
 			<span>Tareas</span></a>
 	</li>
 
+			<!-- Nav Item - Profesores -->
+			<li class="nav-item <?php echo $slug === 'notas' ? 'active' : null; ?>">
+		<a class="nav-link" href="notas">
+		<i class="fas fa-fw fa-pencil-alt"></i>
+			<span>Notas</span></a>
+	</li>
+
+		<!-- Nav Item - Profesores -->
+		<li class="nav-item <?php echo $slug === 'usuarios' ? 'active' : null; ?>">
+		<a class="nav-link" href="usuarios">
+			<i class="fas fa-fw fa-user"></i>
+			<span>Usuarios</span></a>
+	</li>
+
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">
 

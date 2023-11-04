@@ -182,4 +182,3 @@ class leccionModel extends Model {
     return parent::query($sql, ['ano' => $año]);
   }
 }
-

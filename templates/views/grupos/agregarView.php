@@ -25,7 +25,13 @@
                 <textarea name="descripcion" id="descripcion" cols="10" rows="5" class="form-control"></textarea>
               </div>
 
-              <button class="btn btn-success" type="submit">Guardar grupo</button>
+              <div class="form-group">
+                <label for="ciclo">Ciclo Escolar</label>
+                <input type="text" class="form-control" id="ciclo" name="ciclo" required>
+              </div>
+
+
+              <button class="btn btn-success" type="submit">Guardar Grado</button>
             </form>
           </div>
       </div>

@@ -23,16 +23,16 @@ class dashboardController extends Controller {
     $rol  = get_user_rol();
     $data = 
     [
-      'title' => 'Dashboard para Profesores',
+      'title' => 'Dashboard',
       'slug'  => 'dashboard'
     ];
 
-    /*if (is_admin($rol)) {
+    if (is_admin($rol)) {
       
       $data['stats'] = adminModel::stats();
       View::render('dashboard_admin', $data);
 
-    } */if (is_profesor($rol)) {
+    }if (is_profesor($rol)) {
       
       $data['stats'] = profesorModel::stats_by_id(get_user('id'));
       View::render('dashboard_profesor', $data);

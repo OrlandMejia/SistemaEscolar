@@ -1,24 +1,10 @@
 <?php
 
-/**
- * Plantilla general de modelos
- * Versión 1.0.1
- *
- * Modelo de grupo
- */
 class grupoModel extends Model {
   public static $t1 = 'grupos'; // Nombre de la tabla en la base de datos;
   public static $t2 = 'grupos_materias';
   public static $t3 = 'grupos_alumnos';
-  
-  // Nombre de tabla 2 que talvez tenga conexión con registros
-  //public static $t2 = '__tabla 2___'; 
-  //public static $t3 = '__tabla 3___'; 
-
-  function __construct()
-  {
-    // Constructor general
-  }
+  function __construct(){}
   
   static function all()
   {
@@ -33,14 +19,12 @@ class grupoModel extends Model {
     $sql = 'SELECT * FROM grupos ORDER BY id ASC';
     return PaginationHandler::paginate($sql);
   }
-
   static function by_id($id)
   {
     // Un registro con $id
     $sql = 'SELECT * FROM grupos WHERE id = :id LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
-
   static function materias_disponibles($id)
   {
     $sql = 
@@ -64,7 +48,6 @@ class grupoModel extends Model {
 
     return ($rows = parent::query($sql, ['id_grupo' => $id])) ? $rows : [];
   }
-
   static function materias_asignadas($id, $id_profesor = null)
   {
     // Cargar las materias del grupo sin importar el profesor
@@ -93,7 +76,6 @@ class grupoModel extends Model {
   
       return ($rows = parent::query($sql, ['id_grupo' => $id])) ? $rows : [];
     }
-
     $sql = 
     'SELECT
       mp.id,
@@ -118,7 +100,6 @@ class grupoModel extends Model {
 
     return ($rows = parent::query($sql, ['id_grupo' => $id, 'id_profesor' => $id_profesor])) ? $rows : [];
   }
-
   static function asignar_materia($id_grupo, $id_mp)
   {
     $data =
@@ -126,12 +107,9 @@ class grupoModel extends Model {
       'id_grupo' => $id_grupo,
       'id_mp'    => $id_mp
     ];
-
     if (!$id = self::add(self::$t2, $data)) return false;
-
     return $id;
   }
-
   static function quitar_materia($id_grupo, $id_mp)
   {
     $data =
@@ -139,10 +117,8 @@ class grupoModel extends Model {
       'id_grupo' => $id_grupo,
       'id_mp'    => $id_mp
     ];
-
     return (self::remove(self::$t2, $data)) ? true : false;
   }
-
   static function  alumnos_asignados($id_grupo)
   {
     $sql = 
@@ -158,7 +134,6 @@ class grupoModel extends Model {
 
     return ($rows = parent::query($sql, ['id' => $id_grupo])) ? $rows : [];
   }
-
   static function quitar_alumno($id_grupo, $id_alumno)
   {
     $data =
@@ -166,10 +141,8 @@ class grupoModel extends Model {
       'id_grupo' => $id_grupo,
       'id_alumno' => $id_alumno
     ];
-
     return (self::remove(self::$t3, $data)) ? true : false;
   }
-
   static function eliminar($id_grupo)
   {
     $sql = 
@@ -180,7 +153,6 @@ class grupoModel extends Model {
     WHERE g.id = :id';
     return parent::query($sql, ['id' => $id_grupo]) ? true : false;
   }
-
   static function by_alumno($id_alumno)
   {
     $sql = 
@@ -193,20 +165,15 @@ class grupoModel extends Model {
     WHERE
       u.id = :id
     AND u.rol = "alumno"';
-
     $grupo = [];
     $rows  = parent::query($sql, ['id' => $id_alumno]);
-
     if (!$rows) return $grupo;
-
     // Cargando materias
     $grupo = $rows[0];
     $grupo['materias'] = grupoModel::materias_asignadas($grupo['id']);
     
     // Cargando compañeros
     $grupo['alumnos']  = grupoModel::alumnos_asignados($grupo['id']);
-
     return $grupo;
   }
 }
-

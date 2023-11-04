@@ -1,38 +1,18 @@
 <?php
-
-/**
- * Plantilla general de modelos
- * Versi�n 1.0.1
- *
- * Modelo de profesor
- */
 class profesorModel extends Model {
   public static $t1   = 'usuarios'; // Nombre de la tabla en la base de datos;
-  
-  // Nombre de tabla 2 que talvez tenga conexi�n con registros
-  //public static $t2 = '__tabla 2___'; 
-  //public static $t3 = '__tabla 3___'; 
+  function __construct(){}
 
-  function __construct()
-  {
-    // Constructor general
-  }
-  
-  static function all()
-  {
+  static function all(){
     // Todos los registros
     $sql = 'SELECT * FROM usuarios WHERE rol = "profesor" ORDER BY id DESC';
-    return ($rows = parent::query($sql)) ? $rows : [];
-  }
-
+    return ($rows = parent::query($sql)) ? $rows : [];}
   //FUNCION QUE EXTRAE TODOS LOS REGISTRO YA PAGINADOS
-  static function all_paginated()
-  {
+  static function all_paginated(){
     // Todos los registros ya paginados
     $sql = 'SELECT * FROM usuarios WHERE rol = "profesor" ORDER BY id ASC';
     return PaginationHandler::paginate($sql);
   }
-
   //busca los datos seg�n el id del registro
   static function by_id($id)
   {
@@ -40,7 +20,6 @@ class profesorModel extends Model {
     $sql = 'SELECT * FROM usuarios WHERE rol = "profesor" AND id = :id LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
-
   //busca los datos seg�n el numero de profesor
   static function by_numero($numero)
   {
@@ -58,7 +37,6 @@ class profesorModel extends Model {
     if(!$id = self::add('materias_profesores', $data)) return false;
     return $id;
   }
-
   //FUNCI�N PARA ELIMINAR LA MATERIA DE LA BASE DE DATOS
   static function quitar_materia($id_profesor, $id_materia){
     $data = [
@@ -67,14 +45,12 @@ class profesorModel extends Model {
     ];
     return (self::remove('materias_profesores', $data)) ? true: false;
   }
-
   //ELIMINAR DATOS RELACIONADOS CUANDO SE ELIMINE EL PROFESOR
   static function eliminar($id_profesor)
   {
     $sql = 'DELETE u, mp FROM usuarios u LEFT JOIN materias_profesores mp ON mp.id_profesor = u.id WHERE u.id = :id AND u.rol = "profesor"';
     return (parent::query($sql, ['id' => $id_profesor])) ? true : false;
   }
-
   //METODO PARA MOSTRAR ESTADISTICAS EN DASHBOARD
   static function stats_by_id($id_profesor)
   {
@@ -82,7 +58,6 @@ class profesorModel extends Model {
     $grupos    = 0;
     $alumnos   = 0;
     $lecciones = 0;
-
     //CARGAR LAS MATERIAS Y TOTAL ASIGNADOS A UN PROFESOR
     $sql = 
     'SELECT
@@ -93,7 +68,6 @@ class profesorModel extends Model {
     WHERE
       mp.id_profesor = :id';
     $materias = parent::query($sql, ['id' => $id_profesor])[0]['total'];
-
     //QUERY PARA CARGAR LOS DATOS TOTAL DE LOS GRADOS QUE TENGA UN PROFESOR
     $sql = 
     'SELECT 
@@ -104,7 +78,6 @@ class profesorModel extends Model {
     JOIN materias_profesores mp ON mp.id = gm.id_mp
     WHERE mp.id_profesor = :id';
     $grupos = parent::query($sql, ['id' => $id_profesor])[0]['total'];
-
     //CONSULTA PARA UNIR Y REQUERIR LOS DATOS DE ALUMNOS
     $sql = 
     'SELECT
@@ -116,21 +89,16 @@ class profesorModel extends Model {
     JOIN materias_profesores mp ON mp.id = gm.id_mp
     WHERE mp.id_profesor = :id';
     $alumnos = parent::query($sql, ['id' => $id_profesor])[0]['total'];
-
     //CONSULTA PARA TENER EL TOTAL DE LECCIONES O TAREAS DE UN PROFESOR
     $sql = 'SELECT COUNT(l.id) AS total FROM lecciones l WHERE l.id_profesor = :id';
     $lecciones = parent::query($sql, ['id' => $id_profesor])[0]['total'];
-
     //RETORNAMOS UN ARRAY DE INFORMACIÓN
-    return
-    [
+    return[
       'materias'  => $materias,
       'grupos'    => $grupos,
       'alumnos'   => $alumnos,
-      'lecciones' => $lecciones
-    ];
-  }
-
+      'lecciones' => $lecciones];
+    }
   static function grupos_asignados($id_profesor)
   {
     $sql = 
@@ -142,7 +110,6 @@ class profesorModel extends Model {
     WHERE mp.id_profesor = :id';
     return PaginationHandler::paginate($sql, ['id' => $id_profesor]);
   }
-
   static function asignado_a_grupo($id_profesor, $id_grupo)
   {
     $sql = 
@@ -154,5 +121,4 @@ class profesorModel extends Model {
     WHERE mp.id_profesor = :id_profesor AND g.id = :id_grupo';
     return parent::query($sql, ['id_profesor' => $id_profesor, 'id_grupo' => $id_grupo]) ? true : false;
   }
-
 }

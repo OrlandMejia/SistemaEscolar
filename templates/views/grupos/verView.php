@@ -10,7 +10,7 @@
           role="button" aria-expanded="true" aria-controls="grupo_data">
           <h6 class="m-0 font-weight-bold text-primary"><?php echo sprintf('Grupo #%s', $d->g->numero); ?></h6>
       </a>
-      <!-- Card Content - Collapse -->
+      <!-- INFORMACIÓN GENERAL DEL GRUPO -->
       <div class="collapse show" id="grupo_data">
           <div class="card-body">
             <form action="grupos/post_editar" method="post" enctype="multipart/form-data">
@@ -25,6 +25,11 @@
               <div class="form-group">
                 <label for="descripcion">Descripción</label>
                 <textarea name="descripcion" id="descripcion" cols="10" rows="5" class="form-control"><?php echo $d->g->descripcion; ?></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="ciclo">Ciclo Escolar</label>
+                <input type="text" class="form-control" id="ciclo" name="ciclo" value="<?php echo $d->g->ciclo_escolar; ?>" required>
               </div>
 
               <div class="form-group">

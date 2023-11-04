@@ -7,15 +7,19 @@
  * Controlador de profesores
  */
 class profesoresController extends Controller {
+  private $id  = null;
+  private $rol = null;
   function __construct()
   {
     // Validación de sesión de usuario, descomentar si requerida
-    /**
+    
     if (!Auth::validate()) {
       Flasher::new('Debes iniciar sesión primero.', 'danger');
       Redirect::to('login');
     }
-    */
+    
+    $this->id  = get_user('id');
+    $this->rol = get_user_rol();
   }
   
   function index()
@@ -77,7 +81,7 @@ class profesoresController extends Controller {
       $data = 
       [
         'numero' => $numero,
-        'dpi' => null,
+        'identificacion' => null,
         'nombres' => null,
         'apellidos' => null,
         'nombre_completo' => null,
@@ -120,14 +124,14 @@ class profesoresController extends Controller {
   function post_editar()
   {
     try {
-      //revisamos la data y verificamos el token csrf y los datos que estan en el profesor
-  if (!check_posted_data(['csrf','id','dpi','nombres','apellidos','email','telefono','password'], $_POST) || !Csrf::validate($_POST['csrf'])) {
-    throw new Exception(get_notificaciones());
-}
-
+          //revisamos la data y verificamos el token csrf y los datos que estan en el profesor
+      if (!check_posted_data(['csrf','id','identificacion','nombres','apellidos','email','telefono','password'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+        throw new Exception(get_notificaciones());
+    }
 
       // Validar rol que seamos administradores
       //VALIDAMOS EL ROL DEL USUARIO PARA QUE SOLO LOS USUARIOS AUTORIZADOS PUEDAN UTILIZAR ESTA FUNCION
+      // Validar rol
       if(!is_admin(get_user_rol())){
         throw new Exception(get_notificaciones(1), 1);
       }
@@ -141,7 +145,7 @@ class profesoresController extends Controller {
       }
 
       //creación de variables para insertar la información con POST
-      $dpi = clean($_POST["dpi"]);
+      $dpi = clean($_POST["identificacion"]);
 
       // Validar longitud del DPI
       if (strlen($dpi) !== 13) {
@@ -162,7 +166,7 @@ class profesoresController extends Controller {
       //objeto data con los parametros que le vamos a pasar para su inserción
       $data   =
       [
-        'dpi' => $dpi,
+        'identificacion' => $dpi,
         'nombres' => $nombres,
         'apellidos' => $apellidos,
         'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
@@ -301,7 +305,7 @@ class profesoresController extends Controller {
   
       // Agregar filas de datos
       foreach ($profesores as $profe) {
-          $html .= '<tr><td class="column-id">' . $profe['numero'] . '</td><td class="column-dpi">' . utf8_decode($profe['dpi']) .'</td><td class="column-nombre">' . utf8_decode($profe['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($profe['email']) . '</td><td class="column-status">' . utf8_decode($profe['status']) . '</td></tr>';
+          $html .= '<tr><td class="column-id">' . $profe['numero'] . '</td><td class="column-dpi">' . utf8_decode($profe['identificacion']) .'</td><td class="column-nombre">' . utf8_decode($profe['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($profe['email']) . '</td><td class="column-status">' . utf8_decode($profe['status']) . '</td></tr>';
       }
       $html .= '</table>';
   

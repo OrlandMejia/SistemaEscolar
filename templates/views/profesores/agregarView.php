@@ -23,7 +23,7 @@
 
               <div class="form-group">
                 <label for="dpi">DPI</label>
-                <input type="text" class="form-control" id="dpi" name="dpi" value="<?php echo $d->p->dpi; ?>" required>
+                <input type="text" class="form-control" id="dpi" name="dpi" value="<?php echo $d->p->identificacion; ?>" required>
               </div>
 
               <div class="form-group">

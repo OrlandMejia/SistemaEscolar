@@ -16,6 +16,11 @@
               <?php echo insert_inputs(); ?>
               
               <div class="form-group">
+                <label for="nombres">Carnet</label>
+                <input type="text" class="form-control" id="carnet" name="carnet" required>
+              </div>
+
+              <div class="form-group">
                 <label for="nombres">Nombre(s)</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" required>
               </div>

@@ -62,7 +62,31 @@ View::render('index', $data);
 
     View::render('ver', $data);
   }
+  
+  function detalles($id)
+  {
+  //validar el rol de la persona que quiera acceder al listado
+  if(!is_profesor(get_user_rol())){
+    Flasher::new(get_notificaciones(0), 'danger');
+    Redirect::back();
+  }
+    
+    if (!$alumno = alumnoModel::by_id($id)) {
+      Flasher::new('No existe el alumno en la base de datos.', 'danger');
+      Redirect::back();
+    }
 
+    $data =
+    [
+      'title'  => sprintf('Alumno #%s', $alumno['numero']),
+      'slug'   => 'alumnos',
+      'button' => ['url' => 'alumnos', 'text' => '<i class="fas fa-table"></i> Alumnos'],
+      'grupos' => grupoModel::all(),
+      'a'      => $alumno
+    ];
+
+    View::render('detalles', $data);
+  }
 
   function agregar()
   {

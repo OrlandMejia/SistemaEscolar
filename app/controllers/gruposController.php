@@ -22,6 +22,25 @@ class gruposController extends Controller {
     $this->rol = get_user_rol();
   }
 
+  function index()
+  {
+    if (!is_admin($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
+    
+    $data = 
+    [
+      'title'  => 'Todos los Grados',
+      'slug'   => 'grupos',
+      'button' => ['url' => 'grupos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Grado'],
+      'grupos' => grupoModel::all_paginated()
+    ];
+    
+    // Descomentar vista si requerida
+    View::render('index', $data);
+  }
+
   function ver($id)
   {
     if (!is_admin($this->rol)) {
@@ -38,7 +57,7 @@ class gruposController extends Controller {
     [
       'title'  => sprintf('Grupo %s', $grupo['nombre']),
       'slug'   => 'grupos',
-      'button' => ['url' => 'grupos', 'text' => '<i class="fas fa-table"></i> Todos los grupos'],
+      'button' => ['url' => 'grupos', 'text' => '<i class="fas fa-table"></i> Todos los Grados'],
       'g'      => $grupo
     ];
 
@@ -59,7 +78,7 @@ class gruposController extends Controller {
   {
     {
       try {
-        if (!check_posted_data(['csrf','nombre','descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+        if (!check_posted_data(['csrf','nombre','descripcion','ciclo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
           throw new Exception(get_notificaciones());
         }
   
@@ -70,6 +89,7 @@ class gruposController extends Controller {
   
         $nombre      = clean($_POST["nombre"]);
         $descripcion = clean($_POST["descripcion"]);
+        $ciclo = clean($_POST["ciclo"]);
   
         // Validar la longitud del nombre
         if (strlen($nombre) < 5) {
@@ -88,6 +108,7 @@ class gruposController extends Controller {
           'nombre'      => $nombre,
           'descripcion' => $descripcion,
           'horario'     => null,
+          'ciclo_escolar'       => $ciclo,
           'creado'      => now()
         ];
   
@@ -113,7 +134,7 @@ class gruposController extends Controller {
   {
     {
       try {
-        if (!check_posted_data(['csrf','id','nombre','descripcion'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+        if (!check_posted_data(['csrf','id','nombre','descripcion','ciclo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
           throw new Exception(get_notificaciones());
         }
   
@@ -124,6 +145,7 @@ class gruposController extends Controller {
         $id          = clean($_POST["id"]);
         $nombre      = clean($_POST["nombre"]);
         $descripcion = clean($_POST["descripcion"]);
+        $ciclo = clean($_POST["ciclo"]);
         $horario     = $_FILES["horario"];
         //variable para actualizar la imagen pasada, para actualizarla o borrarla
         $n_horario   = false;
@@ -148,7 +170,8 @@ class gruposController extends Controller {
         $data =
         [
           'nombre'      => $nombre,
-          'descripcion' => $descripcion
+          'descripcion' => $descripcion,
+          'ciclo_escolar' => $ciclo
           
         ];
         
@@ -300,7 +323,7 @@ class gruposController extends Controller {
     [
       'title'  => sprintf('Grado %s', $grupo['nombre']),
       'slug'   => 'grupos',
-      'button' => ['url' => 'grupos/asignados', 'text' => '<i class="fas fa-table"></i> Todos mis grados'],
+      'button' => ['url' => 'grupos/asignados', 'text' => '<i class="fas fa-table"></i> Todos mis Grados'],
       'g'      => $grupo
     ];
 

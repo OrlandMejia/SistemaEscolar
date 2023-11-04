@@ -12,8 +12,9 @@
 					<thead>
 						<tr>
 							<th width="5%">No.</th>
-							<th>Nombre</th>
+							<th>Nombre del Grado</th>
 							<th>Horario</th>
+							<th>Ciclo Escolar</th>
 							<th width="10%">Acción</th>
 						</tr>
 					</thead>
@@ -30,6 +31,9 @@
 									<?php else: ?>
 										<small class="text-muted">No existe el horario.</small>
 									<?php endif; ?>
+								</td>
+								<td>
+								<?php echo add_ellipsis($g->ciclo_escolar, 50); ?>
 								</td>
 								<td>
 									<div class="btn-group">

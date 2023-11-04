@@ -8,7 +8,7 @@
       <!-- Card Header - Accordion -->
       <a href="#grupo_data" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_data">
-          <h6 class="m-0 font-weight-bold text-primary">Información general</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Información General</h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="grupo_data">
@@ -64,7 +64,7 @@
                   <div class="btn-group float-right">
                     <a class="btn btn-success btn-sm" href="<?php echo sprintf('mailto:%s?subject=[%s] - Mensaje de %s para %s', $a->email, get_sitename(), get_user('nombre_completo'), $a->nombre_completo); ?>"><i class="fas fa-envelope"></i></a>
                   </div>
-                  <b><?php echo $a->nombre_completo; ?></b>
+                  <a href="<?php echo sprintf('alumnos/detalles/%s', $a->id); ?>"><b><?php echo $a->nombre_completo; ?></b></a>
                   <br>
                   <?php echo format_estado_usuario($a->status); ?>
                 </li>
