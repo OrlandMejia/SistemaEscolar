@@ -662,4 +662,156 @@ class ajaxController extends Controller {
     }
   }
 
+  function get_resumen_ingresos()
+  {
+    try {
+      if (!is_admin(get_user_rol())) {
+        throw new Exception(get_notificaciones(1));
+      }
+
+      // Operaciones necesarias
+      $stats     = adminModel::stats();
+      $ingresos  = $stats['ingresos'];
+      $labels    = [];
+      $dataset   = [];
+
+      foreach ($ingresos as $v) {
+        $labels[]  = $v[0];
+        $dataset[] = $v[1];
+      }
+
+      $data =
+      [
+        'labels' => $labels,
+        'data'   => $dataset
+      ];
+
+      json_output(json_build(200, $data));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function get_resumen_comunidad()
+  {
+    try {
+      if (!is_admin(get_user_rol())) {
+        throw new Exception(get_notificaciones(1));
+      }
+
+      // Operaciones necesarias
+      $stats     = adminModel::stats();
+      $comunidad = $stats['comunidad'];
+      $labels    = [];
+      $dataset   = [];
+
+      foreach ($comunidad as $v) {
+        $labels[]  = $v['rol'];
+        $dataset[] = $v['total'];
+      }
+
+      $data =
+      [
+        'labels' => $labels,
+        'data'   => $dataset
+      ];
+
+      json_output(json_build(200, $data));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function get_resumen_ensenanza()
+  {
+    try {
+      if (!is_admin(get_user_rol())) {
+        throw new Exception(get_notificaciones(1));
+      }
+
+      // Operaciones necesarias
+      $stats     = adminModel::stats();
+      $ensenanza = $stats['ensenanza'];
+      $labels    = [];
+      $dataset   = [];
+
+      foreach ($ensenanza as $v) {
+        $labels[]  = $v['mes'];
+        $dataset[] = $v['total'];
+      }
+
+      $data =
+      [
+        'labels' => $labels,
+        'data'   => $dataset
+      ];
+
+      json_output(json_build(200, $data));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
+  function reiniciar_sistema()
+  {
+    try {
+      if (!is_admin(get_user_rol())) {
+        throw new Exception(get_notificaciones(1));
+      }
+
+      // id del usuario actual
+      $id     = get_user('id');
+      $nombre = get_user('nombre_completo');
+
+      // Reiniciar tabla materias
+      $sql = 'TRUNCATE TABLE materias';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla materias_profesores
+      $sql = 'TRUNCATE TABLE materias_profesores';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla grupos
+      $sql = 'TRUNCATE TABLE grupos';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla grupos_alumnos
+      $sql = 'TRUNCATE TABLE grupos_alumnos';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla grupos_materias
+      $sql = 'TRUNCATE TABLE grupos_materias';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla lecciones
+      $sql = 'TRUNCATE TABLE lecciones';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla posts
+      $sql = 'TRUNCATE TABLE posts';
+      Model::query($sql, [], ['transaction' => false]);
+
+      // Reiniciar tabla usuarios
+      $sql = 'DELETE u FROM usuarios u WHERE u.id != :id_usuario OR u.rol NOT IN("admin","root")';
+      Model::query($sql, ['id_usuario' => $id]);
+
+      logger(sprintf('Sistema reiniciado por %s con éxito.', $nombre));
+      json_output(json_build(200, null, 'Sistema reiniciado con éxito.'));
+
+    } catch(Exception $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    } catch(PDOException $e) {
+      json_output(json_build(400, null, $e->getMessage()));
+    }
+  }
+
 }

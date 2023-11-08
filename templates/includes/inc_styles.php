@@ -14,7 +14,11 @@
 <link href="css/style.css" rel="stylesheet">
 <!-- Custom styles for this template-->
 <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+<link rel="stylesheet" type="text/css" href="css/fullcalendar.min.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap2.min.css">
+<link rel="stylesheet" type="text/css" href="css/home.css">
 
 <!--ESTILOS DE PLUGINS PARA DATATABLES-->
 <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">

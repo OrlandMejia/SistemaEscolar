@@ -39,4 +39,6 @@ class alumnoModel extends Model {
     FROM usuarios u 
     JOIN grupos_alumnos ga ON ga.id_alumno = u.id 
     WHERE u.id = :id AND u.rol = "alumno"';
-    return (parent::query($sql, ['id' => $id])) ? true : false;}}
+    return (parent::query($sql, ['id' => $id])) ? true : false;
+  }
+}

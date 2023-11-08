@@ -5,12 +5,12 @@ $(document).ready(function() {
 
   // Waitme
   //$('body').waitMe({effect : 'orbit'});
-  console.log('////////// Bienvenido a Bee Framework Versión ' + Bee.bee_version + ' //////////');
+  console.log('////////// Bienvenido a Bee Framework Versi�n ' + Bee.bee_version + ' //////////');
   console.log('//////////////////// www.joystick.com.mx ////////////////////');
   console.log(Bee);
 
   /**
-   * Prueba de peticiones ajax al backend en versión 1.1.3
+   * Prueba de peticiones ajax al backend en versi�n 1.1.3
    */
   function test_ajax() {
     var body = $('body'),
@@ -32,28 +32,28 @@ $(document).ready(function() {
       toastr.success(res.msg);
       console.log(res);
     }).fail(function(err) {
-      toastr.error('Prueba AJAX fallida.', '¡Upss!');
+      toastr.error('Prueba AJAX fallida.', '�Upss!');
     }).always(function() {
       body.waitMe('hide');
     })
   }
   
   /**
-   * Alerta para confirmar una acción establecida en un link o ruta específica
+   * Alerta para confirmar una acci�n establecida en un link o ruta espec�fica
    */
   $('body').on('click', '.confirmar', function(e) {
     e.preventDefault();
 
     let url = $(this).attr('href'),
-    ok      = confirm('¿Estás seguro?');
+    ok      = confirm('�Est�s seguro?');
 
-    // Redirección a la URL del enlace
+    // Redirecci�n a la URL del enlace
     if (ok) {
       window.location = url;
       return true;
     }
     
-    console.log('Acción cancelada.');
+    console.log('Acci�n cancelada.');
     return true;
   });
 
@@ -80,7 +80,7 @@ $(document).ready(function() {
     });
   }
   
-  // Inicialización de elementos
+  // Inicializacion de elementos
   init_summernote();
   init_tooltips();
   test_ajax();
@@ -94,24 +94,18 @@ $(document).ready(function() {
         infoFiltered:   "(Filtrando de _MAX_ registros en total)",
         infoPostFix:    "",
         zeroRecords:    "No hay registros encontrados.",
-        emptyTable:     "No hay información.",
+        emptyTable:     "No hay informaci�n.",
         paginate: {
           first:      "Primera",
           previous:   "Anterior",
           next:       "Siguiente",
-          last:       "Última"
+          last:       "�ltima"
         }
       },
       paging: false,
       aaSorting: []
     }
   );
-
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
-  ///////// NO REQUERIDOS, SOLO PARA EL PROYECTO DEMO DE GASTOS E INGRESOS
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
   
   // Agregar un movimiento
   $('.bee_add_movement').on('submit', bee_add_movement);
@@ -128,21 +122,21 @@ $(document).ready(function() {
     data.append('hook', hook);
     data.append('action', action);
 
-    // Validar que este seleccionada una opción type
+    // Validar que este seleccionada una opci�n type
     if(type === 'none') {
-      toastr.error('Selecciona un tipo de movimiento válido', '¡Upss!');
+      toastr.error('Selecciona un tipo de movimiento v�lido', '�Upss!');
       return;
     }
 
     // Validar description
     if(description === '' || description.length < 5) {
-      toastr.error('Ingresa una descripción válida', '¡Upss!');
+      toastr.error('Ingresa una descripci�n v�lida', '�Upss!');
       return;
     }
 
     // Validar amount
     if(amount === '' || amount <= 0) {
-      toastr.error('Ingresa un monto válido', '¡Upss!');
+      toastr.error('Ingresa un monto v�lido', '�Upss!');
       return;
     }
 
@@ -160,14 +154,14 @@ $(document).ready(function() {
       }
     }).done(function(res) {
       if(res.status === 201) {
-        toastr.success(res.msg, '¡Bien!');
+        toastr.success(res.msg, '�Bien!');
         form.trigger('reset');
         bee_get_movements();
       } else {
-        toastr.error(res.msg, '¡Upss!');
+        toastr.error(res.msg, '�Upss!');
       }
     }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
+      toastr.error('Hubo un error en la petici�n', '�Upss!');
     }).always(function() {
       form.waitMe('hide');
     })
@@ -199,11 +193,11 @@ $(document).ready(function() {
       if(res.status === 200) {
         wrapper.html(res.data);
       } else {
-        toastr.error(res.msg, '¡Upss!');
+        toastr.error(res.msg, '�Upss!');
         wrapper.html('');
       }
     }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
+      toastr.error('Hubo un error en la petici�n', '�Upss!');
       wrapper.html('');
     }).always(function() {
       wrapper.waitMe('hide');
@@ -237,10 +231,10 @@ $(document).ready(function() {
         wrapper_update_form.html(res.data);
         add_form.hide();
       } else {
-        toastr.error(res.msg, '¡Upss!');
+        toastr.error(res.msg, '�Upss!');
       }
     }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
+      toastr.error('Hubo un error en la petici�n', '�Upss!');
     }).always(function() {
       wrapper_update_form.waitMe('hide');
     })
@@ -261,21 +255,21 @@ $(document).ready(function() {
     data.append('hook', hook);
     data.append('action', action);
 
-    // Validar que este seleccionada una opción type
+    // Validar que este seleccionada una opci�n type
     if(type === 'none') {
-      toastr.error('Selecciona un tipo de movimiento válido', '¡Upss!');
+      toastr.error('Selecciona un tipo de movimiento v�lido', '�Upss!');
       return;
     }
 
     // Validar description
     if(description === '' || description.length < 5) {
-      toastr.error('Ingresa una descripción válida', '¡Upss!');
+      toastr.error('Ingresa una descripci�n v�lida', '�Upss!');
       return;
     }
 
     // Validar amount
     if(amount === '' || amount <= 0) {
-      toastr.error('Ingresa un monto válido', '¡Upss!');
+      toastr.error('Ingresa un monto v�lido', '�Upss!');
       return;
     }
 
@@ -293,16 +287,16 @@ $(document).ready(function() {
       }
     }).done(function(res) {
       if(res.status === 200) {
-        toastr.success(res.msg, '¡Bien!');
+        toastr.success(res.msg, '�Bien!');
         form.trigger('reset');
         form.remove();
         add_form.show();
         bee_get_movements();
       } else {
-        toastr.error(res.msg, '¡Upss!');
+        toastr.error(res.msg, '�Upss!');
       }
     }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
+      toastr.error('Hubo un error en la petici�n', '�Upss!');
     }).always(function() {
       form.waitMe('hide');
     })
@@ -317,7 +311,7 @@ $(document).ready(function() {
     action      = 'delete',
     wrapper     = $('.bee_wrapper_movements');
 
-    if(!confirm('¿Estás seguro?')) return false;
+    if(!confirm('�Est�s seguro?')) return false;
 
     $.ajax({
       url: 'ajax/bee_delete_movement',
@@ -335,10 +329,10 @@ $(document).ready(function() {
         toastr.success(res.msg, 'Bien!');
         bee_get_movements();
       } else {
-        toastr.error(res.msg, '¡Upss!');
+        toastr.error(res.msg, '�Upss!');
       }
     }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
+      toastr.error('Hubo un error en la petici�n', '�Upss!');
     }).always(function() {
       wrapper.waitMe('hide');
     })
@@ -370,452 +364,471 @@ $(document).ready(function() {
       }
     }).done(function(res) {
       if(res.status === 200 || res.status === 201) {
-        toastr.success(res.msg, '¡Bien!');
+        toastr.success(res.msg, '�Bien!');
         bee_get_movements();
       } else {
-        toastr.error(res.msg, '¡Upss!');
+        toastr.error(res.msg, '�Upss!');
       }
     }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
+      toastr.error('Hubo un error en la petici�n', '�Upss!');
     }).always(function() {
       form.waitMe('hide');
     })
   }
 
-  /////////////////////////////////////////////////////////
-  //// PROYECTO SISTEMA ESCOLAR
-  /////////////////////////////////////////////////////////
+//********************************FUNCIONES PARA MATERIAS_PROFESORES********************************** */
+//FUNCION QUE CARGA EL LISTADO DE MATERIAS DISPONIBLES
+function get_materias_disponibles_profesor() {
+  
+  var form = $('#profesor_asignar_materia_form'),
+  select = $('select', form),
+  id_profesor =$('input[name="id"]', form).val(),
+  wrapper = $('profesor_materias'),
+  opciones = '',
+  action = 'get',
+  hook = 'bee_hook';
 
-  // Función para cargar el listado de materias disponibles
-  function get_materias_disponibles_profesor() {
+  if(form.length == 0) return;
 
-    var form    = $('#profesor_asignar_materia_form'),
-    select      = $('select', form),
-    id_profesor = $('input[name="id"]', form).val(),
-    wrapper     = $('#profesor_materias'),
-    opciones    = '',
-    action      = 'get',
-    hook        = 'bee_hook';
+  //LIMPIAR LAS OPCIONES CUANDO SE CARGUE
+  select.html('');
 
-    if (form.length == 0) return;
-
-    // Limpiar las opciones al cargar
-    select.html('');
-
-    // AJAX
-    $.ajax({
-      url: 'ajax/get_materias_disponibles_profesor',
-      type: 'get',
-      dataType: 'json',
-      data : { 
-        '_t': Bee.csrf,
-        id_profesor,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        if (res.data.length === 0) {
-          select.html('<option disabled selected>No hay opciones disponibles.</option>')
-          $('button', form).attr('disabled', true);
-          return;
-        }
-        
-        $.each(res.data, function(i, m) {
-          opciones += '<option value="'+m.id+'">'+m.nombre+'</option>';
-        });
-
-        select.html(opciones);
-        $('button', form).attr('disabled', false);
-
-      } else {
+  //CODIGO PARA CARGAR LAS MATERIAS CON AJAX
+  $.ajax({
+    url: 'ajax/get_materias_disponibles-profesor',
+    type: 'get',
+    dataType: 'json',
+    data : {
+      '_t' : Bee.csrf,
+      id_profesor,
+      action,
+      hook
+    },
+    //PETICION ASINCRONA
+    beforeSend: function(){
+      wrapper.waitMe();
+    }
+  }).done(function(res){
+    //indica que si el status es 200 que todo est� ok
+    if(res.status === 200){
+      //condicionamos si existe una materia disponible
+      if(res.data.length === 0){
         select.html('<option disabled selected>No hay opciones disponibles.</option>')
         $('button', form).attr('disabled', true);
-        toastr.error(res.msg, '¡Upss!');
+        return;
       }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición.', '¡Upss!');
-    }).always(function() {
-      wrapper.waitMe('hide');
-    })
-  }
-  get_materias_disponibles_profesor();
-
-  // Función para cargar las materias del profesor
-  function get_materias_profesor() {
-
-    var wrapper = $('.wrapper_materias_profesor'),
-    id_profesor = wrapper.data('id'),
-    action      = 'get',
-    hook        = 'bee_hook';
-
-    if (wrapper.length == 0) return;
-
-    // AJAX
-    $.ajax({
-      url: 'ajax/get_materias_profesor',
-      type: 'get',
-      dataType: 'json',
-      data : { 
-        '_t': Bee.csrf,
-        id_profesor,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        wrapper.html(res.data);
-      } else {
-        wrapper.html(res.msg);
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición.', '¡Upss!');
-    }).always(function() {
-      wrapper.waitMe('hide');
-    })
-  }
-  get_materias_profesor();
-
-  // Agregar nueva materia al profesor
-  $('#profesor_asignar_materia_form').on('submit', add_materia_profesor);
-  function add_materia_profesor(e) {
-    e.preventDefault();
-
-    var form    = $('#profesor_asignar_materia_form'),
-    select      = $('select', form),
-    id_materia  = select.val(),
-    id_profesor = $('input[name="id"]', form).val(),
-    csrf        = $('input[name="csrf"]', form).val(),
-    action      = 'post',
-    hook        = 'bee_hook';
-
-    if (id_materia === undefined || id_materia === '') {
-      toastr.error('Selecciona una materia válida.');
-      return;
+      //iteramos en cada una de las materias
+      $.each(res.data, function(i,m){
+        opciones += '<option value="'+m.id+'">'+m.nombre+'</option>';
+      });
+      
+      select.html(opciones);
+      $('button', form).attr('disabled', false);
+    
+    }else{
+      select.html('<option disabled selected>No hay Opciones Disponibles.</option>')
+      $('button',form).attr('disabled', true);
+      toastr.error(res.msg, 'Upss!');
     }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la petici�n.', '�Upss!');
+  }).always(function(){
+    wrapper.waitMe('hide');
+  })
+}
+//EJECUTAMOS LA FUNCION
+get_materias_disponibles_profesor();
 
-    // AJAX
-    $.ajax({
-      url: 'ajax/add_materia_profesor',
-      type: 'post',
-      dataType: 'json',
-      data : { 
-        csrf,
-        id_materia,
-        id_profesor,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        form.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 201) {
-        toastr.success(res.msg);
-        get_materias_disponibles_profesor();
-        get_materias_profesor();
+//FUNCION PARA CARGAR DE FORMA DINAMICA LAS MATERIAS
+//cargamos un bloque de contenido html que inyectamos dentro del wrapper del form 
+function get_materias_profesor(){
+  var wrapper = $('.wrapper_materias_profesor'),
+  id_profesor = wrapper.data('id'),
+  //variables obligatorias del framework para comunicarnos con ajax
+  action = 'get',
+  hook = 'bee_hook';
 
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición.', '¡Upss!');
-    }).always(function() {
-      form.waitMe('hide');
-    })
-  }
+  if(wrapper.length == 0) return;
 
-  // Quitar materia de profesor
-  $('body').on('click', '.quitar_materia_profesor', quitar_materia_profesor);
-  function quitar_materia_profesor(e) {
-    e.preventDefault();
-
-    var btn     = $(this),
-    wrapper     = $('.wrapper_materias_profesor'),
-    csrf        = Bee.csrf,
-    id_materia  = btn.data('id'),
-    id_profesor = wrapper.data('id'),
-    li          = btn.closest('li'),
-    action      = 'delete',
-    hook        = 'bee_hook';
-
-    if(!confirm('¿Estás seguro?')) return false;
-
-    $.ajax({
-      url: 'ajax/quitar_materia_profesor',
-      type: 'post',
-      dataType: 'json',
-      cache: false,
-      data: {
-        csrf,
-        id_materia,
-        id_profesor,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        li.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        toastr.success(res.msg, 'Bien!');
-        li.fadeOut();
-        get_materias_disponibles_profesor();
-        get_materias_profesor();
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      li.waitMe('hide');
-    })
-  }
-
-  // Cargar materias disponibles para grupo
-  function get_materias_disponibles_grupo() {
-
-    var form    = $('#grupo_asignar_materia_form'),
-    select      = $('select', form),
-    id_grupo    = $('input[name="id_grupo"]', form).val(),
-    wrapper     = $('.wrapper_materias_grupo'),
-    opciones    = '',
-    _t          = Bee.csrf,
-    action      = 'get',
-    hook        = 'bee_hook';
-
-    if (form.length == 0) return;
-
-    // Limpiar las opciones al cargar
-    select.html('');
-
-    // AJAX
-    $.ajax({
-      url: 'ajax/get_materias_disponibles_grupo',
-      type: 'get',
-      dataType: 'json',
-      data : { 
-        _t,
-        id_grupo,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        if (res.data.length === 0) {
-          select.html('<option disabled selected>No hay opciones disponibles.</option>')
-          $('button', form).attr('disabled', true);
-          return;
-        }
-        
-        $.each(res.data, function(i, m) {
-          opciones += '<option value="'+m.id+'">'+m.materia+' impartida por '+m.profesor+'</option>';
-        });
-
-        select.html(opciones);
-        $('button', form).attr('disabled', false);
-
-      } else {
-        select.html('<option disabled selected>No hay opciones disponibles.</option>')
-        $('button', form).attr('disabled', true);
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición.', '¡Upss!');
-    }).always(function() {
-      wrapper.waitMe('hide');
-    })
-  }
-  get_materias_disponibles_grupo();
-
-  // Función para cargar las materias de un grupo
-  function get_materias_grupo() {
-
-    var wrapper = $('.wrapper_materias_grupo'),
-    id_grupo    = wrapper.data('id'),
-    _t          = Bee.csrf,
-    action      = 'get',
-    hook        = 'bee_hook';
-
-    if (wrapper.length == 0) return;
-
-    // AJAX
-    $.ajax({
-      url: 'ajax/get_materias_grupo',
-      type: 'get',
-      dataType: 'json',
-      data : { 
-        _t,
-        id_grupo,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        wrapper.html(res.data);
-      } else {
-        wrapper.html(res.msg);
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición.', '¡Upss!');
-    }).always(function() {
-      wrapper.waitMe('hide');
-    })
-  }
-  get_materias_grupo();
-
-  // Agregar nueva materia al grupo
-  $('#grupo_asignar_materia_form').on('submit', add_materia_grupo);
-  function add_materia_grupo(e) {
-    e.preventDefault();
-
-    var form    = $('#grupo_asignar_materia_form'),
-    select      = $('select', form),
-    id_mp       = select.val(),
-    id_grupo    = $('input[name="id_grupo"]', form).val(),
-    csrf        = $('input[name="csrf"]', form).val(),
-    action      = 'post',
-    hook        = 'bee_hook';
-
-    if (id_mp === undefined || id_mp === '') {
-      toastr.error('Selecciona una materia válida.');
-      return;
+  //CODIGO AJAX PARA CARGAR LAS MATERIAS
+  $.ajax({
+    url: 'ajax/get_materias_profesor',
+    type: 'get',
+    dataType: 'json',
+    data : {
+      '_t': Bee.csrf,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      wrapper.waitMe();
     }
+    //promesas asincronas
+  }).done(function(res){
+    if(res.status === 200){
+      wrapper.html(res.data);
+    }else{
+      wrapper.html(res.msg);
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la peticion.','¡Upss!');
+  }).always(function(){
+    wrapper.waitMe('hide');
+  })
+}
+//EJECUTAMOS LA FUNCION
+get_materias_profesor();
 
-    // AJAX
-    $.ajax({
-      url: 'ajax/add_materia_grupo',
-      type: 'post',
-      dataType: 'json',
-      data : { 
-        csrf,
-        id_mp,
-        id_grupo,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        form.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 201) {
-        toastr.success(res.msg);
-        get_materias_disponibles_grupo();
-        get_materias_grupo();
+//FUNCION PARA AGREGAR MATERIAS CON AJAX 
+$('#profesor_asignar_materia_form').on('submit', add_materia_profesor);
+//la peticion no se hace directo al servidor sino que se hace a trave de ajax
+function add_materia_profesor(e){
+  e.preventDefault();
+  //inicializamos variables
+  var form = $('#profesor_asignar_materia_form'),
+  select = $('select', form),
+  id_materia = select.val(),
+  id_profesor = $('input[name="id"]', form).val(),
+  csrf = $('input[name="csrf"]', form).val(),
+  action = 'post',
+  hook = 'bee_hook';
 
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición.', '¡Upss!');
-    }).always(function() {
-      form.waitMe('hide');
-    })
+  if(id_materia === undefined || id_materia === ''){
+    toastr.error('Selecciona una materia valida');
+    return;
   }
 
-  // Quitar materia de grupo
-  $('body').on('click', '.quitar_materia_grupo', quitar_materia_grupo);
-  function quitar_materia_grupo(e) {
-    e.preventDefault();
+  //FUNCION AJAX
+  $.ajax({
+    url: 'ajax/add_materia_profesor',
+    type: 'post',
+    dataType: 'json',
+    data : {
+      csrf,
+      id_materia,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      form.waitMe();
+    }
+  }).done(function(res){
+    if(res.status === 201){
+      toastr.success(res.msg);
+      get_materias_disponibles_profesor();
+      get_materias_profesor();
+    }else{
+      toastr.error(res.msg, '�Upss!');
+    }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la petici�n.', '�Upss!');
+  }).always(function(){
+    form.waitMe('hide');
+  })
+}
 
-    var btn     = $(this),
-    wrapper     = $('.wrapper_materias_grupo'),
-    csrf        = Bee.csrf,
-    id_mp       = btn.data('id'),
-    id_grupo    = wrapper.data('id'),
-    li          = btn.closest('li'),
-    action      = 'delete',
-    hook        = 'bee_hook';
+//BORRAR MATERIAS CON AJAX DEL FRONTEND
+//los elementos que se cargan post la carga completa del sitio, se debe seleccionar de una manera diferente con body
+$('body').on('click', '.quitar_materia_profesor', quitar_materia_profesor);
+function quitar_materia_profesor(e) {
+  e.preventDefault();
+// this se refiere al elemento o boton al que le estamos dando clic en una lista de elementos iguales 
+  var btn = $(this),
+  wrapper = $('.wrapper_materias_profesor'),
+  csrf = Bee.csrf,
+  id_materia = btn.data('id'),
+  id_profesor = wrapper.data('id'),
+  li = btn.closest('li'),
+  action = 'delete',
+  hook = 'bee_hook';
 
-    if(!confirm('¿Estás seguro?')) return false;
+  //realizamos la confirmaci�n
+  if(!confirm('¿Estas seguro?')) return false;
 
-    $.ajax({
-      url: 'ajax/quitar_materia_grupo',
-      type: 'post',
-      dataType: 'json',
-      cache: false,
-      data: {
-        csrf,
-        id_mp,
-        id_grupo,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        li.waitMe();
+  //CODIGO AJAX PARA LIMINAR EL FRONTEND LA MATERIA
+  $.ajax({
+    url: 'ajax/quitar_materia_profesor',
+    type: 'post',
+    dataType: 'json',
+    cache: false,
+    data: {
+      csrf,
+      id_materia,
+      id_profesor,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      //aparece un cargador solo en el elemento li
+      li.waitMe();
+    }
+  }).done(function(res){
+    if(res.status === 200){
+      toastr.success(res.msg, 'Bien!');
+      li.fadeOut(); //se va a borrar ese li es decir la materia
+      get_materias_disponibles_profesor();
+      get_materias_profesor();
+    }else{
+      toastr.error(res.msg,'¡Upss!');
+    }
+  }).fail(function(){
+    toastr.error('Hubo un error en la petición','¡Upss!');
+  }).always(function(){
+    li.waitMe('hide'); 
+  })
+}
+
+
+//****FUNCION PARA VALIDAR RECAPTCHA**** */
+function checkRecaptcha() {
+  var recaptchaResponse = grecaptcha.getResponse();
+  if (recaptchaResponse.length === 0) {
+      document.getElementById('recaptcha-error').style.display = 'block';
+      return false;
+  } else {
+      document.getElementById('recaptcha-error').style.display = 'none';
+      return true;
+  }
+}
+
+// Otras funciones personalizadas aquí...
+// Cargar materias disponibles para grupo
+function get_materias_disponibles_grupo(){
+
+  var form = $('#grupo_asignar_materia_form'),
+  select = $('select', form),
+  id_grupo = $('input[name="id_grupo"]', form).val(),
+  wrapper = $('.wrapper_materias_grupo'),
+  opciones = '',
+  _t = Bee.csrf,
+  action = 'get',
+  hook = 'bee_hook';
+
+  if(form.length == 0) return;
+
+  //LIMPIAMOS LAS OPCIONES AL MOMENTO DE CARGAR
+  select.html('');
+
+  //CODIGO AJAX
+  $.ajax({
+    url: 'ajax/get_materias_disponibles_grupo',
+    type: 'get',
+    dataType: 'json',
+    data: {
+      _t,
+      id_grupo,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      wrapper.waitMe();
+    }
+  }).done(function(res){
+    if(res.status === 200){
+      if(res.data.length === 0){
+        select.html('<option disabled selected>No hay Opciones Disponibles.</option>')
+        $('button',form).attr('disabled', true);
+        return;
       }
-    }).done(function(res) {
-      if(res.status === 200) {
-        toastr.success(res.msg, 'Bien!');
-        li.fadeOut();
-        get_materias_disponibles_grupo();
-        get_materias_grupo();
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      li.waitMe('hide');
-    })
+      $.each(res.data, function(i,m){
+        opciones += '<option value="'+m.id+'">'+m.materia+' Asignada A: '+m.profesor+'</option>';
+      });
+      select.html(opciones);
+      $('button', form).attr('disabled', false);
+    }else{
+      select.html('<option disabled selected>No hay Opciones Disponibles.</option>')
+      $('button',form).attr('disabled', true);
+      toastr.error(res.msg, 'Upss!');    
+    }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la petición.', 'Upss!');
+  }).always(function(){
+    wrapper.waitMe('hide');
+  })
+}
+get_materias_disponibles_grupo();
+
+//FUCIÓN PARA CARGAR LAS MATERIAS QUE SE VAN ASIGNANDO A UN GRADO O SECCIÓN
+function get_materias_grupo(){
+
+  var wrapper = $('.wrapper_materias_grupo'),
+  id_grupo = wrapper.data('id'),
+  _t = Bee.csrf,
+  action = 'get',
+  hook = 'bee_hook';
+
+  if(wrapper.length == 0) return;
+
+  //FUNCIÓN AJAX PARA JALAR LOS DATOS AL FRONTEND
+  $.ajax({
+    url: 'ajax/get_materias_grupo',
+    type: 'get',
+    dataType: 'json',
+    data: {
+      _t,
+      id_grupo,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      wrapper.waitMe();
+    }
+  }).done(function(res){
+    if(res.status === 200){
+      wrapper.html(res.data);
+    }else{
+      wrapper.html(res.msg)
+      toastr.error(res.msg, 'Upss!');
+    }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la petición.', 'Upss!');
+  }).always(function(){
+    wrapper.waitMe('hide');
+  })
+}
+get_materias_grupo();
+
+//AGREGAR MATERIA AL GRADO
+$('#grupo_asignar_materia_form').on('submit', add_materia_grupo);
+function add_materia_grupo(e) {
+  e.preventDefault();
+
+  var form    = $('#grupo_asignar_materia_form'),
+  select      = $('select', form),
+  id_mp       = select.val(),
+  id_grupo    = $('input[name="id_grupo"]', form).val(),
+  csrf        = $('input[name="csrf"]', form).val(),
+  action      = 'post',
+  hook        = 'bee_hook';
+
+  if (id_mp === undefined || id_mp === '') {
+    toastr.error('Selecciona una materia válida.');
+    return;
   }
 
-  // Función para cargar los alumnos de un grupo
-  function get_alumnos_grupo() {
+  // AJAX
+  $.ajax({
+    url: 'ajax/add_materia_grupo',
+    type: 'post',
+    dataType: 'json',
+    data : { 
+      csrf,
+      id_mp,
+      id_grupo,
+      action,
+      hook
+    },
+    beforeSend: function() {
+      form.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 201) {
+      toastr.success(res.msg);
+      get_materias_disponibles_grupo();
+      get_materias_grupo();
 
-    var wrapper = $('.wrapper_alumnos_grupo'),
-    id_grupo    = wrapper.data('id'),
-    _t          = Bee.csrf,
-    action      = 'get',
-    hook        = 'bee_hook';
+    } else {
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error en la petición.', '¡Upss!');
+  }).always(function() {
+    form.waitMe('hide');
+  })
+}
 
-    if (wrapper.length == 0) return;
+// Quitar materia de grupo
+$('body').on('click', '.quitar_materia_grupo', quitar_materia_grupo);
+function quitar_materia_grupo(e) {
+  e.preventDefault();
 
-    // AJAX
-    $.ajax({
-      url: 'ajax/get_alumnos_grupo',
-      type: 'get',
-      dataType: 'json',
-      data : { 
-        _t,
-        id_grupo,
-        action,
-        hook
-      },
-      beforeSend: function() {
-        wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        wrapper.html(res.data);
-      } else {
-        wrapper.html(res.msg);
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición.', '¡Upss!');
-    }).always(function() {
-      wrapper.waitMe('hide');
-    })
-  }
-  get_alumnos_grupo();
+  var btn     = $(this),
+  wrapper     = $('.wrapper_materias_grupo'),
+  csrf        = Bee.csrf,
+  id_mp       = btn.data('id'),
+  id_grupo    = wrapper.data('id'),
+  li          = btn.closest('li'),
+  action      = 'delete',
+  hook        = 'bee_hook';
 
-  // Quitar alumno de grupo
-  $('body').on('click', '.quitar_alumno_grupo', quitar_alumno_grupo);
+  if(!confirm('¿Estás seguro?')) return false;
+
+  $.ajax({
+    url: 'ajax/quitar_materia_grupo',
+    type: 'post',
+    dataType: 'json',
+    cache: false,
+    data: {
+      csrf,
+      id_mp,
+      id_grupo,
+      action,
+      hook
+    },
+    beforeSend: function() {
+      li.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 200) {
+      toastr.success(res.msg, 'Bien!');
+      li.fadeOut();
+      get_materias_disponibles_grupo();
+      get_materias_grupo();
+    } else {
+      toastr.error(res.msg, '¡Upss!');
+    }
+  }).fail(function(err) {
+    toastr.error('Hubo un error en la petición', '¡Upss!');
+  }).always(function() {
+    li.waitMe('hide');
+  })
+}
+
+//********FUNCION AJAX PARA CARGAR LOS ALUMNOS DE UNA CLASE**************/
+function get_alumnos_grupo(){
+  var wrapper = $('.wrapper_alumnos_grupo');
+  id_grupo = wrapper.data('id'),
+  _t = Bee.csrf,
+  action = 'get',
+  hook = 'bee_hook';
+
+  if(wrapper.length == 0) return;
+
+  //FUNCION AJAX
+  $.ajax({
+    url: 'ajax/get_alumnos_grupo',
+    type: 'get',
+    dataType: 'json',
+    data : {
+      _t,
+      id_grupo,
+      action,
+      hook
+    },
+    beforeSend: function(){
+      wrapper.waitMe();
+    }
+  }).done(function(res){
+    if(res.status === 200){
+      wrapper.html(res.data);
+    }else {
+      wrapper.html(res.msg);
+      toastr.error(res.msg, 'Ups!');
+    }
+  }).fail(function(err){
+    toastr.error('Hubo un error en la petición.', 'Upss!');
+  }).always(function(){
+    wrapper.waitMe('hide');
+  })
+}
+get_alumnos_grupo();
+
+//*************FUNCION AJAX PARA QUITAR EL ALUMNO, OSEA QUITAR INSCRIPCION DEL GRUPO********** */
+// Quitar ALUMNO de grupo
+$('body').on('click', '.quitar_alumno_grupo', quitar_alumno_grupo);
   function quitar_alumno_grupo(e) {
     e.preventDefault();
 
@@ -861,7 +874,7 @@ $(document).ready(function() {
     })
   }
 
-  // Suspender alumno
+  //******FUNCIÓN PARA SUSPENDER A UN ALUMNO********/
   $('body').on('click', '.suspender_alumno', suspender_alumno);
   function suspender_alumno(e) {
     e.preventDefault();
@@ -946,7 +959,7 @@ $(document).ready(function() {
           window.location.reload();
           return false;
         }
-        
+        //se vuelven a cargar los alumnos
         get_alumnos_grupo();
         
       } else {
@@ -959,35 +972,35 @@ $(document).ready(function() {
     })
   }
 
-  // Inicializar la configuración de las gráficas
-  Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-  Chart.defaults.global.defaultFontColor = '#858796';
+    // Inicializar la configuración de las gráficas
+    Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = '#858796';
 
-  // Función que usa el theme para formatear números
-  function number_format(number, decimals, dec_point, thousands_sep) {
-    // *     example: number_format(1234.56, 2, ',', ' ');
-    // *     return: '1 234,56'
-    number = (number + '').replace(',', '').replace(' ', '');
-    var n = !isFinite(+number) ? 0 : +number,
-      prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-      sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-      dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-      s = '',
-      toFixedFix = function(n, prec) {
-        var k = Math.pow(10, prec);
-        return '' + Math.round(n * k) / k;
-      };
-    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-    if (s[0].length > 3) {
-      s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-    }
-    if ((s[1] || '').length < prec) {
-      s[1] = s[1] || '';
-      s[1] += new Array(prec - s[1].length + 1).join('0');
-    }
-    return s.join(dec);
+ // Función que usa el theme para formatear números
+ function number_format(number, decimals, dec_point, thousands_sep) {
+  // *     example: number_format(1234.56, 2, ',', ' ');
+  // *     return: '1 234,56'
+  number = (number + '').replace(',', '').replace(' ', '');
+  var n = !isFinite(+number) ? 0 : +number,
+    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+    s = '',
+    toFixedFix = function(n, prec) {
+      var k = Math.pow(10, prec);
+      return '' + Math.round(n * k) / k;
+    };
+  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+  if (s[0].length > 3) {
+    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
   }
+  if ((s[1] || '').length < prec) {
+    s[1] = s[1] || '';
+    s[1] += new Array(prec - s[1].length + 1).join('0');
+  }
+  return s.join(dec);
+}
 
   // Cargar dashboard de administrador
   function init_dashboard() {
@@ -1000,14 +1013,13 @@ $(document).ready(function() {
     if (chart3.length !== 0) draw_resumen_enseñanza_chart(chart3);
   }
   init_dashboard();
-
-  // Dibujar gráfica de resumen de ingresos
-  function draw_resumen_ingresos_chart(element) {
+  
+   // Dibujar gráfica de resumen de ingresos
+   function draw_resumen_ingresos_chart(element) {
     var wrapper = element.parent('div'),
     _t          = Bee.csrf,
     action      = 'get',
     hook        = 'bee_hook';
-
     // AJAX
     $.ajax({
       url: 'ajax/get_resumen_ingresos',
@@ -1116,65 +1128,65 @@ $(document).ready(function() {
     });
   }
 
-  // Dibujar gráfica de resumen de comunidad
-  function draw_resumen_comunidad_chart(element) {
-    var wrapper = element.parent('div'),
-    _t          = Bee.csrf,
-    action      = 'get',
-    hook        = 'bee_hook';
-
-    // AJAX
-    $.ajax({
-      url: 'ajax/get_resumen_comunidad',
-      type: 'get',
-      dataType: 'json',
-      data : { _t, action, hook },
-      beforeSend: function() {
-        wrapper.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        var myPieChart = new Chart(element, {
-          type: 'doughnut',
-          data: {
-            labels: res.data.labels,
-            datasets: [{
-              data: res.data.data,
-              backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-              hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-              hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-          },
-          options: {
-            maintainAspectRatio: false,
-            tooltips: {
-              backgroundColor: "rgb(255,255,255)",
-              bodyFontColor: "#858796",
-              borderColor: '#dddfeb',
-              borderWidth: 1,
-              xPadding: 15,
-              yPadding: 15,
-              displayColors: false,
-              caretPadding: 10,
+    // Dibujar gráfica de resumen de comunidad
+    function draw_resumen_comunidad_chart(element) {
+      var wrapper = element.parent('div'),
+      _t          = Bee.csrf,
+      action      = 'get',
+      hook        = 'bee_hook';
+  
+      // AJAX
+      $.ajax({
+        url: 'ajax/get_resumen_comunidad',
+        type: 'get',
+        dataType: 'json',
+        data : { _t, action, hook },
+        beforeSend: function() {
+          wrapper.waitMe();
+        }
+      }).done(function(res) {
+        if(res.status === 200) {
+          var myPieChart = new Chart(element, {
+            type: 'doughnut',
+            data: {
+              labels: res.data.labels,
+              datasets: [{
+                data: res.data.data,
+                backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+                hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                hoverBorderColor: "rgba(234, 236, 244, 1)",
+              }],
             },
-            legend: {
-              display: true
+            options: {
+              maintainAspectRatio: false,
+              tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: '#dddfeb',
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10,
+              },
+              legend: {
+                display: true
+              },
+              cutoutPercentage: 50,
             },
-            cutoutPercentage: 50,
-          },
-        });
-      } else {
-        wrapper.html(res.msg);
-      }
-    }).fail(function(err) {
-      wrapper.html('Hubo un error al cargar la información.')
-    }).always(function() {
-      wrapper.waitMe('hide');
-    });
-  }
+          });
+        } else {
+          wrapper.html(res.msg);
+        }
+      }).fail(function(err) {
+        wrapper.html('Hubo un error al cargar la información.')
+      }).always(function() {
+        wrapper.waitMe('hide');
+      });
+    }
 
-  // Dibujar gráfica de resumen de lecciones
-  function draw_resumen_enseñanza_chart(element) {
+   // Dibujar gráfica de resumen de lecciones
+   function draw_resumen_enseñanza_chart(element) {
     var wrapper = element.parent('div'),
     _t          = Bee.csrf,
     action      = 'get',
@@ -1196,7 +1208,7 @@ $(document).ready(function() {
           data: {
             labels: res.data.labels,
             datasets: [{
-              label: "Tareas",
+              label: "Lecciones",
               lineTension: 0.3,
               backgroundColor: "rgba(78, 115, 223, 0.5)",
               borderColor: "rgba(78, 115, 223, 1)",
@@ -1283,20 +1295,20 @@ $(document).ready(function() {
       wrapper.waitMe('hide');
     });
   }
+  
+   // Recargar tabla de resumen de ingresos
+   $('.recargar_resumen_ingresos_chart').on('click', recargar_resumen_ingresos_chart);
+   function recargar_resumen_ingresos_chart(e) {
+     e.preventDefault();
+ 
+     var chart = $('#resumen_ingresos_chart');
+ 
+     if (chart.length === 0) return;
+ 
+     draw_resumen_ingresos_chart(chart);
+   } 
 
-  // Recargar tabla de resumen de ingresos
-  $('.recargar_resumen_ingresos_chart').on('click', recargar_resumen_ingresos_chart);
-  function recargar_resumen_ingresos_chart(e) {
-    e.preventDefault();
-
-    var chart = $('#resumen_ingresos_chart');
-
-    if (chart.length === 0) return;
-
-    draw_resumen_ingresos_chart(chart);
-  }
-
-  // Recargar tabla de resumen de enseñanza o lecciones
+     // Recargar tabla de resumen de enseñanza o lecciones
   $('.recargar_resumen_enseñanza_chart').on('click', recargar_resumen_enseñanza_chart);
   function recargar_resumen_enseñanza_chart(e) {
     e.preventDefault();
@@ -1308,38 +1320,38 @@ $(document).ready(function() {
     draw_resumen_enseñanza_chart(chart);
   }
 
-  // Reiniciar el sistema
-  $('#reiniciar_sistema_form').on('submit', reiniciar_sistema);
-  function reiniciar_sistema(e) {
-    e.preventDefault();
-
-    var form    = $(this),
-    button      = $('button', form),
-    data        = new FormData(form.get(0));
-
-    if(!confirm('¿Estás seguro?')) return false;
-
-    $.ajax({
-      url: 'ajax/reiniciar_sistema',
-      type: 'post',
-      dataType: 'json',
-      processData: false,
-      contentType: false,
-      cache: false,
-      data: data,
-      beforeSend: function() {
-        button.waitMe();
-      }
-    }).done(function(res) {
-      if(res.status === 200) {
-        toastr.success(res.msg, '¡Bien!');
-      } else {
-        toastr.error(res.msg, '¡Upss!');
-      }
-    }).fail(function(err) {
-      toastr.error('Hubo un error en la petición', '¡Upss!');
-    }).always(function() {
-      button.waitMe('hide');
-    })
-  }
-});
+    // Reiniciar el sistema
+    $('#reiniciar_sistema_form').on('submit', reiniciar_sistema);
+    function reiniciar_sistema(e) {
+      e.preventDefault();
+  
+      var form    = $(this),
+      button      = $('button', form),
+      data        = new FormData(form.get(0));
+  
+      if(!confirm('¿Estás seguro?')) return false;
+  
+      $.ajax({
+        url: 'ajax/reiniciar_sistema',
+        type: 'post',
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+        cache: false,
+        data: data,
+        beforeSend: function() {
+          button.waitMe();
+        }
+      }).done(function(res) {
+        if(res.status === 200) {
+          toastr.success(res.msg, '¡Bien!');
+        } else {
+          toastr.error(res.msg, '¡Upss!');
+        }
+      }).fail(function(err) {
+        toastr.error('Hubo un error en la petición', '¡Upss!');
+      }).always(function() {
+        button.waitMe('hide');
+      })
+    }
+  });   
