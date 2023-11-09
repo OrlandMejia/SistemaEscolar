@@ -7,11 +7,11 @@
 
 	<!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php ECHO URL;?>">
-                <div class="sidebar-brand-icon">
-                    <img src="img/logo.png" alt="<?php echo get_sitename();?>" class="img-fluid" style="width: 80px">
-                </div>
-                <div class="sidebar-brand-text mx-3">Sistema Judá<sup></sup></div>
-            </a>
+        <div class="sidebar-brand-icon">
+            <img src="img/logo.png" alt="<?php echo get_sitename();?>" class="img-fluid" style="width: 80px">
+        </div>
+        	<div class="sidebar-brand-text mx-3">Sistema Judá<sup></sup></div>
+    </a>
 
 	<!-- Divider -->
 	<hr class="sidebar-divider my-0">

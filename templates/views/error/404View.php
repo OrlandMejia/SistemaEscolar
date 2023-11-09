@@ -3,7 +3,7 @@
 <div class="container">
   <div class="row">
     <div class="col-6 text-center offset-xl-3">
-      <img src="<?php echo IMAGES.'bee_logo_white.png' ?>" alt="Bee framework" class="img-fluid" style="width: 200px;">
+      <img src="img/error.jpg" alt="Bee framework" class="img-fluid" style="width: 200px;">
       <h1 class="text-white mt-5 mb-3"><span class="text-warning">404</span><br>Not found</h1>
       <h5 class="text-center text-white">Ejeeeemmm... entraste a otra dimensión, la página que buscas no existe aquí.</h5>
       <div class="mt-5">

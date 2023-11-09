@@ -32,7 +32,8 @@ class adminController extends Controller {
     $data = 
     [
       'title' => 'Administración',
-      'slug'  => 'admin'
+      'slug'  => 'admin',
+      'button' => ['url' => buildURL('usuarios/ingresos'), 'text' => '<i class="fas fa-eye"></i> Ver Ingresos'],
     ];
     
     // Descomentar vista si requerida

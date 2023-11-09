@@ -274,7 +274,6 @@ function format_estado_leccion($status)
       $text    = 'Desconocido';
       break;
   }
-
   return sprintf($placeholder, $classes, $icon, $text);
 }
 
@@ -336,7 +335,7 @@ function get_ingresos()
 {
   return
   [
-    ['Enero'     , 23848],
+    ['Enero'     , 20000],
     ['Febrero'   , 85633],
     ['Marzo'     , 54200],
     ['Abril'     , 61250],
@@ -345,7 +344,7 @@ function get_ingresos()
     ['Julio'     , 34700],
     ['Agosto'    , 75000],
     ['Septiembre', 23848],
-    ['Octubre'   , 16450],
+    ['Octubre'   , 50000],
     ['Noviembre' , 63250],
     ['Diciembre' , 83500]
   ];
@@ -358,7 +357,7 @@ function get_proyectos()
     [
       'titulo'   => 'Programa escolar 2021',
       'tipo'     => 'danger',
-      'progreso' => 20
+      'progreso' => 50
     ],
     [
       'titulo'   => 'Registro de nuevos alumnos',

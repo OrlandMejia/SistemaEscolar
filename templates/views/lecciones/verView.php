@@ -5,7 +5,7 @@
     <!-- Detalles de la lección -->
     <div class="card shadow mb-4">
       <div class="card-header font-weight-bold text-primary">
-        <?php echo sprintf('Lección / <b>%s</b>', $d->l->materia); ?>
+        <?php echo sprintf('Tarea / <b>%s</b>', $d->l->materia); ?>
 
         <?php if (is_admin(get_user_rol())): ?>
           <a href="lecciones" class="btn btn-primary btn-sm float-right"><i class="fas fa-undo"></i> Regresar</a>
@@ -26,7 +26,7 @@
     <?php if (!empty($d->l->video)): ?>
       <!-- Video de la lección -->
       <div class="card shadow mb-4">
-        <div class="card-header font-weight-bold text-primary">Video disponible</div>
+        <div class="card-header font-weight-bold text-primary">Material disponible</div>
         <div class="card-body p-0">
           <div class="yt_video_wrapper">
             <iframe src="<?php echo $d->l->video; ?>" title="<?php echo $d->l->titutlo; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -40,7 +40,7 @@
       <!-- Card Header - Accordion -->
       <a href="#contenido_leccion" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="contenido_leccion">
-          <h6 class="m-0 font-weight-bold text-primary">Contenido</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Detalles</h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="contenido_leccion">

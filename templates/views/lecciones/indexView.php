@@ -15,7 +15,7 @@
             <div class="col-xl-1">
             </div>
             <div class="col-xl-5">
-              Título de la lección
+              Título de la Tarea
             </div>
             <div class="col-xl-1">
               Video

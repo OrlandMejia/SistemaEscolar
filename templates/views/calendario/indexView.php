@@ -60,4 +60,5 @@
     <script src="js/es.js"></script>
     <script src="js/sweetalert2.all.min.js"></script>
     <script src="js/app.js"></script>
+    
 <?php require_once INCLUDES.'inc_footer.php'; ?>

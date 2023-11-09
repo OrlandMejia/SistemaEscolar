@@ -145,7 +145,7 @@
 	</div>
 </div>
 
-<!-- Content Row -->
+<!-- Content Row TARJETA QUE CONTIENE LOS PROYECTOS -->
 <div class="row">
 	<!-- Content Column -->
 	<div class="col-lg-6 mb-4">
@@ -186,6 +186,7 @@
 			</div>
 		</div>
 	</div>
+	
 </div>
 
 <?php require_once INCLUDES.'inc_footer.php'; ?>

@@ -94,7 +94,7 @@ View::render('index', $data);
     [
       'title' => 'Todos los Alumnos',
       'slug' => 'alumnos',
-      'button' => ['url' => 'alumnos', 'text' => '<i class="fas fa-table"></i> Agregar Alumno'],
+      'button' => ['url' => 'alumnos', 'text' => '<i class="fas fa-table"></i> Ver Alumnos'],
       'grupos' => grupoModel::all()
     ];
     View::render('agregar',$data);
@@ -102,7 +102,7 @@ View::render('index', $data);
   function post_agregar()
   {
     try {
-      if (!check_posted_data(['csrf','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+      if (!check_posted_data(['csrf','carnet','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
         throw new Exception(get_notificaciones());
       }
 
@@ -111,7 +111,8 @@ View::render('index', $data);
     Flasher::new(get_notificaciones(0), 'danger');
     Redirect::back();
   }
-
+    //VARIABLES PARA INGRESAR DATOS EN LA BASE DE DATOS
+      $carnet         = clean($_POST['carnet']);
       $nombres       = clean($_POST["nombres"]);
       $apellidos     = clean($_POST["apellidos"]);
       $email         = clean($_POST["email"]);
@@ -123,6 +124,11 @@ View::render('index', $data);
       // Validar que el correo sea válido
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         throw new Exception('Ingresa un correo electrónico válido.');
+      }
+
+      //validar longitud del carnet
+      if(empty($carnet)){
+        throw new Exception('Llena este campo con el carnet o clave del estudiante.');
       }
 
       // Validar el nombre del usuario
@@ -153,6 +159,7 @@ View::render('index', $data);
       $data   =
       [
         'numero'          => rand(111111, 999999),
+        'identificacion'  => $carnet,
         'nombres'         => $nombres,
         'apellidos'       => $apellidos,
         'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
@@ -189,7 +196,7 @@ View::render('index', $data);
       $alumno = alumnoModel::by_id($id);
       $grupo  = grupoModel::by_id($id_grupo);
 
-      Flasher::new(sprintf('Alumno <b>%s</b> agregado con éxito e inscrito al grupo <b>%s</b>.', $alumno['nombre_completo'], $grupo['nombre']), 'success');
+      Flasher::new(sprintf('Alumno <b>%s</b> agregado con éxito e inscrito al Grado de <b>%s</b>.', $alumno['nombre_completo'], $grupo['nombre']), 'success');
       Redirect::back();
 
     } catch (PDOException $e) {

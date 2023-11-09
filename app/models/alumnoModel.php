@@ -7,7 +7,8 @@ class alumnoModel extends Model {
   static function all(){
     // Todos los registros
     $sql = 'SELECT * FROM usuarios ORDER BY id DESC';
-    return ($rows = parent::query($sql)) ? $rows : [];}
+    return ($rows = parent::query($sql)) ? $rows : [];
+  }
   static function all_paginated(){
     // Todos los registros
     $sql = 'SELECT * FROM usuarios WHERE rol = "alumno" ORDER BY id ASC';
@@ -24,14 +25,17 @@ class alumnoModel extends Model {
     LIMIT 1';
     return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
+
   static function suspender($id){
     // Un registro con $id
     return (parent::update(self::$t1, ['id' => $id], ['status' => 'suspendido']) !== false) ? true : false;
   }
+
   static function remover_supension($id){
     // Un registro con $id
     return (parent::update(self::$t1, ['id' => $id], ['status' => 'activo']) !== false) ? true : false;
   }
+  
   static function eliminar($id){
     $sql = 'DELETE 
     u, 

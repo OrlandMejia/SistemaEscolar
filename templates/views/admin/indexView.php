@@ -1,5 +1,8 @@
 <?php require_once INCLUDES.'inc_header.php'; ?>
-
+<div class="mb-3 d-flex">
+  <a href="<?php echo buildURL('usuarios/agregar'); ?>" class="btn btn-primary mr-2" ><i class="fas fa-plus"></i> Agregar Administrador</a>
+  <a href="<?php echo buildURL('usuarios/index'); ?>" class="btn btn-primary"><i class="fas fa-table"></i> Ver Usuarios</a>
+</div>
 <div class="row">
   <div class="col-xl-6">
     <!-- Collapsable Card Example -->

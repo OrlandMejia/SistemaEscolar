@@ -31,7 +31,7 @@ class leccionesController extends Controller {
 
     $data = 
     [
-      'title'     => 'Todas las lecciones',
+      'title'     => 'Todas las Tareas Publicadas',
       'slug'      => 'lecciones',
       'lecciones' => leccionModel::all_paginated()
     ];
@@ -49,7 +49,7 @@ class leccionesController extends Controller {
 
     // Validar que exista la lección
     if (!$leccion = leccionModel::by_id($id)) {
-      Flasher::new('No existe la lección seleccionada.', 'danger');
+      Flasher::new('No existe la tarea seleccionada.', 'danger');
       Redirect::back();
     }
 
@@ -61,7 +61,7 @@ class leccionesController extends Controller {
 
     $data =
     [
-      'title'      => sprintf('Lección %s', $leccion['titulo']),
+      'title'      => sprintf('Tarea %s', $leccion['titulo']),
       'hide_title' => true,
       'slug'       => is_admin($this->rol) ? 'lecciones' : 'grupos',
       'id_profesor'=> $this->id,
@@ -80,7 +80,7 @@ class leccionesController extends Controller {
 
     $data =
     [
-      'title'             => 'Agregar nueva lección',
+      'title'             => 'Agregar nueva tarea',
       'slug'              => 'grupos',
       'id_profesor'       => $this->id,
       'id_materia'        => isset($_GET["id_materia"]) ? $_GET["id_materia"] : null,
@@ -114,7 +114,7 @@ class leccionesController extends Controller {
 
       // Validar que el profesor exista
       if (!$profesor = profesorModel::by_id($id_profesor)) {
-        throw new Exception('El profesor de la lección no existe en la base de datos.');
+        throw new Exception('El profesor de la tarea no existe en la base de datos.');
       }
 
       // Validar la materia
@@ -156,7 +156,7 @@ class leccionesController extends Controller {
         throw new Exception(get_notificaciones(2));
       }
 
-      Flasher::new(sprintf('Nueva lección titulada <b>%s</b> agregada con éxito para la materia <b>%s</b>.', add_ellipsis($titulo, 50), $materia['nombre']), 'success');
+      Flasher::new(sprintf('Nueva tarea titulada <b>%s</b> agregada con éxito para la materia <b>%s</b>.', add_ellipsis($titulo, 50), $materia['nombre']), 'success');
       Redirect::to(sprintf('grupos/materia/%s', $id_materia));
 
     } catch (PDOException $e) {
@@ -177,7 +177,7 @@ class leccionesController extends Controller {
 
     // Validar que exista la lección
     if (!$leccion = leccionModel::by_id($id)) {
-      Flasher::new('No existe la lección seleccionada.', 'danger');
+      Flasher::new('No existe la tarea seleccionada.', 'danger');
       Redirect::back();
     }
 
@@ -189,11 +189,11 @@ class leccionesController extends Controller {
 
     $data =
     [
-      'title'      => sprintf('Lección %s', $leccion['titulo']),
+      'title'      => sprintf('Tarea %s', $leccion['titulo']),
       'slug'       => 'grupos',
       'id_profesor'=> $this->id,
       'l'          => $leccion,
-      'button'     => ['url' => sprintf('grupos/materia/%s', $leccion['id_materia']), 'text' => '<i class="fas fa-undo"></i> Lecciones'],
+      'button'     => ['url' => sprintf('grupos/materia/%s', $leccion['id_materia']), 'text' => '<i class="fas fa-undo"></i> Tareas'],
     ];
 
     View::render('editar', $data);
@@ -214,7 +214,7 @@ class leccionesController extends Controller {
       // Validar que exista la lección
       $id = clean($_POST["id"]);
       if (!$leccion = leccionModel::by_id($id)) {
-        throw new Exception('No existe la lección seleccionada.');
+        throw new Exception('No existe la tarea seleccionada.');
       }
 
       $id_profesor = $this->id;
@@ -257,7 +257,7 @@ class leccionesController extends Controller {
         throw new Exception(get_notificaciones(3));
       }
 
-      Flasher::new(sprintf('Lección titulada <b>%s</b> actualizada con éxito.', add_ellipsis($titulo, 50)), 'success');
+      Flasher::new(sprintf('Tarea titulada <b>%s</b> actualizada con éxito.', add_ellipsis($titulo, 50)), 'success');
       Redirect::to(sprintf('grupos/materia/%s', $leccion['id_materia']));
 
     } catch (PDOException $e) {
@@ -282,7 +282,7 @@ class leccionesController extends Controller {
   
       // Validar que exista la lección
       if (!$leccion = leccionModel::by_id($id)) {
-        throw new Exception('No existe la lección seleccionada.');
+        throw new Exception('No existe la tarea seleccionada.');
       }
   
       $id_profesor = $this->id;
@@ -297,7 +297,7 @@ class leccionesController extends Controller {
         throw new Exception(get_notificaciones(4));
       }
 
-      Flasher::new(sprintf('Lección titulada <b>%s</b> borrada con éxito.', add_ellipsis($leccion['titulo'])), 'success');
+      Flasher::new(sprintf('Tarea titulada <b>%s</b> borrada con éxito.', add_ellipsis($leccion['titulo'])), 'success');
       Redirect::back();
 
     } catch (PDOException $e) {

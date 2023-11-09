@@ -12,7 +12,7 @@
           <?php endif; ?>
           <button class="btn btn-danger btn-sm quitar_alumno_grupo" data-id="<?php echo $a->id; ?>"><i class="fas fa-trash"></i></button>
         </div>
-        <a href="<?php echo sprintf('alumnos/ver/%s', $a->id); ?>" target="_blank"><b><?php echo $a->nombre_completo; ?></b></a>
+        <a href="<?php echo sprintf('alumnos/ver/%s', $a->id); ?>"><b><?php echo $a->nombre_completo; ?></b></a>
         <?php if ($a->status === 'suspendido'): ?>
           <br>
           <span class="badge badge-pill badge-warning text-dark d-inline-block">Suspendido</span>
