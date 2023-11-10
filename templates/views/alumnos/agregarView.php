@@ -1,7 +1,7 @@
 <?php require_once INCLUDES.'inc_header.php'; ?>
 
 <div class="row">
-  <div class="col-xl-6 col-md-6 col-12">
+  <div class="col-12">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
@@ -15,60 +15,92 @@
             <form action="alumnos/post_agregar" method="post">
               <?php echo insert_inputs(); ?>
               
-              <div class="form-group">
-                <label for="nombres">Carnet</label>
-                <input type="text" class="form-control" id="carnet" name="carnet" required>
-              </div>
-
-              <div class="form-group">
-                <label for="nombres">Nombre(s)</label>
-                <input type="text" class="form-control" id="nombres" name="nombres" required>
-              </div>
-
-              <div class="form-group">
-                <label for="apellidos">Apellido(s)</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos" required>
-              </div>
-
-              <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-              </div>
-
-              <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono">
-              </div>
-
-              <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password">
-              </div>
-
-              <div class="form-group">
-                <label for="conf_password">Confirmar contraseña</label>
-                <input type="password" class="form-control" id="conf_password" name="conf_password">
-              </div>
-
-              <hr>
-
-              <?php if (!empty($d->grupos)): ?>
-                <div class="form-group">
-                  <label for="id_grupo">Grado</label>
-                  <select name="id_grupo" id="id_grupo" class="form-control">
-                    <?php foreach ($d->grupos as $g): ?>
-                      <?php echo sprintf('<option value="%s">%s</option>', $g->id, $g->nombre); ?>
-                    <?php endforeach; ?>
-                  </select>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="carnet">Carnet</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                      </div>
+                      <input type="text" class="form-control" id="carnet" name="carnet" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="nombres">Nombre(s)</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input type="text" class="form-control" id="nombres" name="nombres" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="apellidos">Apellido(s)</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input type="text" class="form-control" id="apellidos" name "apellidos" required>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                  </div>
                 </div>
-              <?php else: ?>
-                <div class="form-group">
-                  <label for="id_grupo">Grupo</label>
-                  <div class="alert alert-danger">No hay Grados Registrados.</div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="telefono">Teléfono</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="text" class="form-control" id="telefono" name="telefono">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                      </div>
+                      <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="conf_password">Confirmar contraseña</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                      </div>
+                      <input type="password" class="form-control" id="conf_password" name="conf_password">
+                    </div>
+                  </div>
+                  <hr>
+                  <?php if (!empty($d->grupos)): ?>
+                    <div class="form-group">
+                      <label for="id_grupo">Grado</label>
+                      <select name="id_grupo" id="id_grupo" class="form-control">
+                        <?php foreach ($d->grupos as $g): ?>
+                          <?php echo sprintf('<option value="%s">%s</option>', $g->id, $g->nombre); ?>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  <?php else: ?>
+                    <div class="form-group">
+                      <label for="id_grupo">Grupo</label>
+                      <div class="alert alert-danger">No hay Grados Registrados.</div>
+                    </div>
+                  <?php endif; ?>
+                  <button class="btn btn-success" type="submit" <?php echo empty($d->grupos) ? 'disabled' : null; ?>>Agregar alumno</button>
                 </div>
-              <?php endif; ?>
-
-              <button class="btn btn-success" type="submit" <?php echo empty($d->grupos) ? 'disabled' : null; ?>>Agregar alumno</button>
+              </div>
             </form>
           </div>
       </div>
@@ -100,6 +132,5 @@ passwordElement.addEventListener("input", function () {
     validatePassword(this.value);
 });
 </script>
-
 
 <?php require_once INCLUDES.'inc_footer.php'; ?>

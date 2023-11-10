@@ -19,13 +19,6 @@ define('BEE_VERSION' , $this->version);   // Viene desde Bee.php
 define('SITE_NAME'   , 'Sistema Juda');    // Nombre del sitio
 define('SITE_VERSION', '1.0.0');          // Versión del sitio
 
-// Ruta base de nuestro proyecto
-// Esta constante ahora es configurada desde el archivo settings.php
-// define('BASEPATH'   , IS_LOCAL ? '/Bee-Framework/' : '____EL BASEPATH EN PRODUCCIÓN___');
-
-// Sal del sistema
-// define('AUTH_SALT'  , 'BeeFramework<3'); // Migrad
-
 // Puerto y la URL del sitio
 define('PROTOCOL'   , isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http"); // Detectar si está en HTTPS o HTTP
 define('HOST'       , $_SERVER['HTTP_HOST'] === 'localhost' ? (PREPROS ? 'localhost:'.PORT : 'localhost') : $_SERVER['HTTP_HOST']); // Dominio o host localhost.com tudominio.com
@@ -37,13 +30,13 @@ define('CUR_PAGE'   , PROTOCOL.'://'.HOST.REQUEST_URI); // URL actual incluyendo
 define('DS'         , DIRECTORY_SEPARATOR);
 define('ROOT'       , getcwd().'/');
 
-define('APP'        , ROOT.'app'.DS);
-define('CLASSES'    , APP.'classes'.DS);
-define('CONFIG'     , APP.'config'.DS);
-define('CONTROLLERS', APP.'controllers'.DS);
-define('FUNCTIONS'  , APP.'functions'.DS);
-define('MODELS'     , APP.'models'.DS);
-define('LOGS'       , APP.'logs'.DS);
+define('APP'        , ROOT.'app/');
+define('CLASSES'    , APP.'classes/');
+define('CONFIG'     , APP.'config/');
+define('CONTROLLERS', APP.'controllers/');
+define('FUNCTIONS'  , APP.'functions/');
+define('MODELS'     , APP.'models/');
+define('LOGS'       , APP.'logs/');
 
 define('TEMPLATES'  , ROOT.'templates'.DS);
 define('INCLUDES'   , TEMPLATES.'includes'.DS);
@@ -77,11 +70,3 @@ define('LDB_CHARSET', 'utf8');
 define('DEFAULT_CONTROLLER'      , 'dashboard');
 define('DEFAULT_ERROR_CONTROLLER', 'error');
 define('DEFAULT_METHOD'          , 'index');
-
-// Se encuentra en archivo bee_config.php
-// define('DB_ENGINE'  , 'mysql');
-// define('DB_HOST'    , 'localhost');
-// define('DB_NAME'    , '___REMOTE DB___');
-// define('DB_USER'    , '___REMOTE DB___');
-// define('DB_PASS'    , '___REMOTE DB___');
-// define('DB_CHARSET' , '___REMOTE CHARTSET___');

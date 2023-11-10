@@ -81,4 +81,10 @@ class Auth
     if (!isset($this->{$var})) return false;
     return $this->{$var};
   }
+
+  public function user() {
+    return isset($_SESSION[$this->var]['user']) ? $_SESSION[$this->var]['user'] : null;
+}
+
+
 }

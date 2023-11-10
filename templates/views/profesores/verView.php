@@ -22,37 +22,37 @@
               <input type="hidden" name="id" value="<?php echo $d->p->id; ?>" required>
 
               <div class="form-group">
-                <label for="dpi">DPI</label>
+                <label for="dpi"><i class="fas fa-id-card"></i> DPI</label>
                 <input type="text" class="form-control" id="identificacion" name="identificacion" value="<?php echo $d->p->identificacion; ?>" required>
               </div>
 
               <div class="form-group">
-                <label for="nombres">Nombre(s)</label>
+                <label for="nombres"><i class="fas fa-user"></i> Nombre(s)</label>
                 <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $d->p->nombres; ?>" required>
               </div>
 
               <div class="form-group">
-                <label for="apellidos">Apellido(s)</label>
+                <label for="apellidos"><i class="fas fa-user"></i> Apellido(s)</label>
                 <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $d->p->apellidos; ?>" required>
               </div>
 
               <div class="form-group">
-                <label for="email">Correo electrónico</label>
+                <label for="email"><i class="fas fa-envelope"></i> Correo electrónico</label>
                 <input type="email" class="form-control" id="email" name="email" value="<?php echo $d->p->email; ?>" required>
               </div>
 
               <div class="form-group">
-                <label for="telefono">Teléfono</label>
+                <label for="telefono"><i class="fas fa-phone"></i> Teléfono</label>
                 <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $d->p->telefono; ?>">
               </div>
 
               <div class="form-group">
-                <label for="password">Contraseña</label>
+                <label for="password"><i class="fas fa-lock"></i> Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password">
               </div>
 
               <div class="form-group">
-                <label for="creado">Creado</label>
+                <label for="creado"><i class="fas fa-calendar-alt"></i> Creado</label>
                 <input type="text" class="form-control" id="creado" name="creado" value="<?php echo format_date($d->p->creado); ?>" disabled>
               </div>
 
@@ -80,7 +80,7 @@
               <input type="hidden" name="id" value="<?php echo $d->p->id; ?>" required>
 
               <div class="form-group">
-                <label for="materia">Materias disponibles</label>
+                <label for="materia"><i class="fas fa-book"></i> Materias disponibles</label>
                 <select name="materia" id="materia" class="form-control" required>
                   <option value="">Una materia</option>
                 </select>

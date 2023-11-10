@@ -6,7 +6,7 @@ class alumnoModel extends Model {
   }
   static function all(){
     // Todos los registros
-    $sql = 'SELECT * FROM usuarios ORDER BY id DESC';
+    $sql = 'SELECT * FROM usuarios WHERE rol = "alumno" ORDER BY id DESC';
     return ($rows = parent::query($sql)) ? $rows : [];
   }
   static function all_paginated(){

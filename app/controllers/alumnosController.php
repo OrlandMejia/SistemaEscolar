@@ -92,13 +92,14 @@ View::render('index', $data);
   {
     $data = 
     [
-      'title' => 'Todos los Alumnos',
+      'title' => 'Inscribir un Nuevo Estudiante',
       'slug' => 'alumnos',
       'button' => ['url' => 'alumnos', 'text' => '<i class="fas fa-table"></i> Ver Alumnos'],
       'grupos' => grupoModel::all()
     ];
     View::render('agregar',$data);
   }
+
   function post_agregar()
   {
     try {
@@ -217,7 +218,7 @@ View::render('index', $data);
   function post_editar()
 {
     try {
-        if (!check_posted_data(['csrf', 'id', 'nombres', 'apellidos', 'email', 'telefono', 'password', 'conf_password', 'id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+        if (!check_posted_data(['csrf', 'id','carnet', 'nombres', 'apellidos', 'email', 'telefono', 'password', 'conf_password', 'id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
             throw new Exception(get_notificaciones());
         }
 
@@ -240,6 +241,7 @@ View::render('index', $data);
         $db_id_g = $alumno['id_grupo'];
 
         // VARIABLES DE INFORMACIÓN DEL FORMULARIO
+        $carnet = clean($_POST['carnet']);
         $nombres = clean($_POST["nombres"]);
         $apellidos = clean($_POST["apellidos"]);
         $email = clean($_POST["email"]);
@@ -282,10 +284,11 @@ View::render('index', $data);
 
         // Exista el id_grupo
         if ($id_grupo === '' || !grupoModel::by_id($id_grupo)) {
-            throw new Exception('Selecciona un grupo válido.');
+            throw new Exception('Selecciona un Grado válido.');
         }
 
         $data = [
+            'identificacion' => $carnet,
             'nombres' => $nombres,
             'apellidos' => $apellidos,
             'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
@@ -327,7 +330,7 @@ View::render('index', $data);
         }
 
         if ($changed_g) {
-            Flasher::new(sprintf('El grupo del alumno ha sido actualizado a <b>%s</b> con éxito.', $grupo['nombre']));
+            Flasher::new(sprintf('El Grado del alumno ha sido actualizado a <b>%s</b> con éxito.', $grupo['nombre']));
         }
 
         Redirect::back();
@@ -340,143 +343,6 @@ View::render('index', $data);
         Redirect::back();
     }
 }
-
-function password_compleja($password)
-{
-    return strlen($password) >= 8 && preg_match('/[0-9]/', $password) && preg_match('/[^A-Za-z0-9]/', $password);
-}
-
-  /*function post_editar()
-  {
-    try {
-      if (!check_posted_data(['csrf','id','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
-        throw new Exception(get_notificaciones());
-      }
-
-     //validar el rol de la persona que quiera acceder al listado
-     if(!is_admin(get_user_rol())){
-      Flasher::new(get_notificaciones(0), 'danger');
-      Redirect::back();
-    }
-
-      // Validar existencia del alumno
-      $id = clean($_POST["id"]);
-      if (!$alumno = alumnoModel::by_id($id)) {
-        throw new Exception('No existe el alumno en la base de datos.');
-      }
-      //VARIABLES QUE YA SE ENCUENTRAN EN LA BASE DE DATOS
-      $db_email      = $alumno['email'];
-      $db_pw         = $alumno['password'];
-      $db_status     = $alumno['status'];
-      $db_id_g       = $alumno['id_grupo'];
-      //VARIABLES DE INFORMACIÓN DEL FORMULARIO
-      $nombres       = clean($_POST["nombres"]);
-      $apellidos     = clean($_POST["apellidos"]);
-      $email         = clean($_POST["email"]);
-      $telefono      = clean($_POST["telefono"]);
-      $password      = clean($_POST["password"]);
-      $conf_password = clean($_POST["conf_password"]);
-      $id_grupo      = clean($_POST["id_grupo"]);
-      //VARIABLES QUE DETERMINAN EL CAMBIO DE INFORMACIÓN SENSIBLE
-      //indican que si la nueva es igual entonces es false y si es distinta lanza true
-      $changed_email = $db_email === $email ? false : true;
-      $changed_pw    = false;
-      $changed_g     = $db_id_g === $id_grupo ? false : true;
-
-      // Validar existencia del correo electrónico
-      $sql = 'SELECT * FROM usuarios WHERE email = :email AND id != :id LIMIT 1';
-      if (usuarioModel::query($sql, ['email' => $email, 'id' => $id])) {
-        throw new Exception('El correo electrónico ya existe en la base de datos.');
-      }
-
-      // Validar que el correo sea válido solo pasa si hay un cambio en el correo electronico
-      if ($changed_email && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        throw new Exception('Ingresa un correo electrónico válido.');
-      }
-
-      // Validar el nombre del usuario
-      if (strlen($nombres) < 5) {
-        throw new Exception('Ingresa un nombre válido.');
-      }
-
-      // Validar el apellido del usuario
-      if (strlen($apellidos) < 5) {
-        throw new Exception('Ingresa un apellido válido.');
-      }
-
-      // Validar el password del usuario segun la función de la verificacion de contraseña
-      $pw_ok = password_verify($db_pw, $password.AUTH_SALT);
-      if (!empty($password) && $pw_ok === false && strlen($password) < 7) {
-        throw new Exception('Ingresa una contraseña mayor a 7 caracteres.');
-      }
-
-      // Validar ambas contraseñas
-      if (!empty($password) && $pw_ok === false && $password !== $conf_password) {
-        throw new Exception('Las contraseñas no son iguales.');
-      }
-
-      // Exista el id_grupo que exista el grado
-      if ($id_grupo === '' || !grupoModel::by_id($id_grupo)) {
-        throw new Exception('Selecciona un Grado válido.');
-      }
-
-      $data   =
-      [
-        'nombres'         => $nombres,
-        'apellidos'       => $apellidos,
-        'nombre_completo' => sprintf('%s %s', $nombres, $apellidos),
-        'email'           => $email,
-        'telefono'        => $telefono,
-        'status'          => $changed_email ? 'pendiente' : $db_status
-      ];
-
-      // Actualización de contraseña
-      if (!empty($password) && $pw_ok === false) {
-        $data['password'] = password_hash($password.AUTH_SALT, PASSWORD_BCRYPT);
-        $changed_pw       = true; //se actualizo la contraseña anteriormente
-      }
-
-      // Actualizar base de datos
-      if (!alumnoModel::update(alumnoModel::$t1, ['id' => $id], $data)) {
-        throw new Exception(get_notificaciones(2));
-      }
-
-      // Actualizar base de datos
-      if ($changed_g) {
-        if (!grupoModel::update(grupoModel::$t3, ['id_alumno' => $id], ['id_grupo' => $id_grupo])) {
-          throw new Exception(get_notificaciones(2));
-        }
-      }
-
-      $alumno = alumnoModel::by_id($id);
-      $grupo  = grupoModel::by_id($id_grupo);
-      
-      Flasher::new(sprintf('Alumno <b>%s</b> actualizado con éxito.', $alumno['nombre_completo']), 'success');
-
-        //NOTIFICACIONES QUE INDICAN SI HUBO ALGUN CAMBIO EN LOS DATOS SENSIBLES
-      if ($changed_email) {
-        mail_confirmar_cuenta($id);
-        Flasher::new('El correo electrónico del alumno ha sido actualizado, debe ser confirmado.');
-      }
-
-      if ($changed_pw) {
-        Flasher::new('La contraseña del alumno ha sido actualizada.');
-      }
-
-      if ($changed_g) {
-        Flasher::new(sprintf('El Grado del alumno ha sido actualizado a <b>%s</b> con éxito.', $grupo['nombre']));
-      }
-
-      Redirect::back();
-
-    } catch (PDOException $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
-    } catch (Exception $e) {
-      Flasher::new($e->getMessage(), 'danger');
-      Redirect::back();
-    }
-  }*/
 
   function borrar($id)
   {
@@ -528,40 +394,42 @@ function password_compleja($password)
       // Agregar una página
       $pdf->AddPage();
   
-      // Obtener los datos de los profesores ordenados por número de DPI
-      $alumnos = alumnoModel::query('SELECT * FROM usuarios WHERE rol = "alumno" ORDER BY numero ASC');
-  
-      // Estilos CSS para los encabezados
-      $headerStyle = 'background-color: #001f3f; color: #fff; padding: 8px; text-align: left;';
+      // Obtener todos los alumnos utilizando el modelo
+      $alumnos = alumnoModel::all();
   
       // Crear una tabla en el PDF con estilos CSS
       $html = '<style>
-                th {
-                    ' . $headerStyle . '
-                }
-                table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    border: 1px solid #ddd;
-                }
-                th, td {
-                    border: 1px solid #ddd;
-                    padding: 8px;
-                    text-align: left;
-                }
-                .column-id {
-                    width: 10%;
-                }
-                .column-nombre {
-                    width: 35%;
-                }
-                .column-email {
-                    width: 40%;
-                }
-                .column-status {
-                    width: 12%;
-                }
-            </style>';
+                    th {
+                        background-color: #f2f2f2;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        border: 1px solid #ddd;
+                    }
+                    th, td {
+                        border: 1px solid #ddd;
+                        padding: 8px;
+                        text-align: left;
+                    }
+                    .column-id {
+                        width: 10%;
+                    }
+                    .column-carnet {
+                      width: 12%;
+                  }
+                    .column-nombre {
+                        width: 35%;
+                    }
+                    .column-email {
+                        width: 30%;
+                    }
+                    .column-status {
+                        width: 12%;
+                    }
+                </style>';
   
       // Agregar el encabezado
       $html .= '<h2 style="text-align: center;">LISTA DE ALUMNOS REGISTRADOS</h2>';
@@ -570,11 +438,11 @@ function password_compleja($password)
       $html .= '<table>';
   
       // Agregar fila de encabezados
-      $html .= '<tr><th class="column-id">No.</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
+      $html .= '<tr><th class="column-id">No.</th><th class="column-carnet">Carnet</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
   
       // Agregar filas de datos
       foreach ($alumnos as $alumno) {
-          $html .= '<tr><td class="column-id">' . $alumno['numero'] . '</td><td class="column-nombre">' . utf8_decode($alumno['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($alumno['email']) . '</td><td class="column-status">' . utf8_decode($alumno['status']) . '</td></tr>';
+          $html .= '<tr><td class="column-id">' . $alumno['numero'] . '</td><td class="column-carnet">' . utf8_decode($alumno['identificacion']) .'</td><td class="column-nombre">' . utf8_decode($alumno['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($alumno['email']) . '</td><td class="column-status">' . utf8_decode($alumno['status']) . '</td></tr>';
       }
       $html .= '</table>';
   
@@ -582,11 +450,13 @@ function password_compleja($password)
       $pdf->writeHTML($html, true, false, false, false, '');
   
       // Generar el PDF y mostrarlo en el navegador
-      $pdf->Output('profesores.pdf', 'I');
+      $pdf->Output('alumnos.pdf', 'I');
   
       // Redireccionar a la página desde la que se inició la exportación
-      header('Location: ' . buildURL('profesores')); // Cambia 'profesores' por la URL correcta
+      header('Location: ' . buildURL('alumnos')); // Cambia 'alumnos' por la URL correcta
   }
+  
+  
   
   function exportar_excel()
   {
@@ -608,8 +478,5 @@ function password_compleja($password)
       echo '</table>';
       exit;
   }
-  
-
-
 }
 

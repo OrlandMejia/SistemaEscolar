@@ -53,7 +53,7 @@
                     <i class="fas fa-bullhorn fa-sm fa-fw mr-2 text-gray-400"></i> <!-- Icono de anuncios -->
                     Anuncios
                 </a>
-                <a class="dropdown-item" href="perfil/indexView.php"> <!-- Agregar el enlace a la vista de perfil -->
+                <a class="dropdown-item" href="<?php echo 'perfil/index' ?>"> <!-- Agregar el enlace a la vista de perfil -->
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i> <!-- Icono de perfil -->
                     Perfil
                 </a>

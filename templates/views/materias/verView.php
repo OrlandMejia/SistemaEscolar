@@ -1,7 +1,7 @@
 <?php require_once INCLUDES.'inc_header.php'; ?>
 
 <div class="row">
-  <div class="col-xl-6">
+  <div class="col-10">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
@@ -18,12 +18,22 @@
               
               <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $d->m->nombre; ?>" required>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-font"></i></span>
+                  </div>
+                  <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $d->m->nombre; ?>" required>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                <textarea name="descripcion" id="descripcion" placeholder="Agrega la Nueva Descripción" cols="10" rows="5" class="form-control"><?php echo $d->m->descripcion; ?></textarea>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+                  </div>
+                  <textarea name="descripcion" id="descripcion" placeholder="Agrega la Nueva Descripción" cols="10" rows="5" class="form-control"><?php echo $d->m->descripcion; ?></textarea>
+                </div>
               </div>
 
               <button class="btn btn-success" type="submit">Guardar Cambios</button>

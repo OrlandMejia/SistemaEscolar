@@ -5,43 +5,56 @@
   <div class="col-xl-4 col-md-6 col-12">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
-      <!-- Card Header - Accordion -->
-      <a href="#grupo_data" class="d-block card-header py-3" data-toggle="collapse"
-          role="button" aria-expanded="true" aria-controls="grupo_data">
-          <h6 class="m-0 font-weight-bold text-primary"><?php echo sprintf('Grupo #%s', $d->g->numero); ?></h6>
-      </a>
-      <!-- INFORMACIÓN GENERAL DEL GRUPO -->
-      <div class="collapse show" id="grupo_data">
-          <div class="card-body">
-            <form action="grupos/post_editar" method="post" enctype="multipart/form-data">
-              <?php echo insert_inputs(); ?>
-              <input type="hidden" name="id" value="<?php echo $d->g->id; ?>" required>
-              
-              <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $d->g->nombre; ?>" required>
-              </div>
-
-              <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <textarea name="descripcion" id="descripcion" cols="10" rows="5" class="form-control"><?php echo $d->g->descripcion; ?></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="ciclo">Ciclo Escolar</label>
-                <input type="text" class="form-control" id="ciclo" name="ciclo" value="<?php echo $d->g->ciclo_escolar; ?>" required>
-              </div>
-
-              <div class="form-group">
-                <label for="horario">Horario de clases</label>
-                <input type="file" class="form-control" id="horario" name="horario" accept="img/png, img/gif, img/jpeg, img/jpg">
-              </div>
-
-              <button class="btn btn-success" type="submit">Guardar cambios</button>
-            </form>
+  <!-- Card Header - Accordion -->
+  <a href="#grupo_data" class="d-block card-header py-3" data-toggle="collapse"
+      role="button" aria-expanded="true" aria-controls="grupo_data">
+      <h6 class="m-0 font-weight-bold text-primary">
+          <i class="fas fa-users"></i> <?php echo sprintf('Grupo #%s', $d->g->numero); ?>
+      </h6>
+  </a>
+  <!-- INFORMACIÓN GENERAL DEL GRUPO -->
+  <div class="collapse show" id="grupo_data">
+      <div class="card-body">
+        <form action="grupos/post_editar" method="post" enctype="multipart/form-data">
+          <?php echo insert_inputs(); ?>
+          <input type="hidden" name="id" value="<?php echo $d->g->id; ?>" required>
+          
+          <div class="form-group">
+            <label for="nombre">
+              <i class="fas fa-file-signature"></i> Nombre
+            </label>
+            <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $d->g->nombre; ?>" required>
           </div>
+
+          <div class="form-group">
+            <label for="descripcion">
+              <i class="fas fa-file-alt"></i> Descripción
+            </label>
+            <textarea name="descripcion" id="descripcion" cols="10" rows="5" class="form-control"><?php echo $d->g->descripcion; ?></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="ciclo">
+              <i class="fas fa-calendar-alt"></i> Ciclo Escolar
+            </label>
+            <input type="text" class="form-control" id="ciclo" name="ciclo" value="<?php echo $d->g->ciclo_escolar; ?>" required>
+          </div>
+
+          <div class="form-group">
+            <label for="horario">
+              <i class="fas fa-image"></i> Horario de clases
+            </label>
+            <input type="file" class="form-control" id="horario" name="horario" accept="img/png, img/gif, img/jpeg, img/jpg">
+          </div>
+
+          <button class="btn btn-success" type="submit">
+            <i class="fas fa-save"></i> Guardar cambios
+          </button>
+        </form>
       </div>
-    </div>
+  </div>
+</div>
+
 
     <!-- Horario -->
     <div class="card shadow mb-4">

@@ -381,3 +381,8 @@ function get_proyectos()
     ]
   ];
 }
+
+function password_compleja($password)
+{
+    return strlen($password) >= 8 && preg_match('/[0-9]/', $password) && preg_match('/[^A-Za-z0-9]/', $password);
+}

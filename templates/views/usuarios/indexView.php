@@ -30,7 +30,7 @@
 									<tbody>
 										<?php foreach ($d->usuarios->rows as $p): ?>
 										<tr>
-										<td><?php echo sprintf('<a href="profesores/ver/%s">%s</a>', $p->numero, $p->numero); ?></td>
+										<td><?php echo sprintf('<a href="usuarios/ver/%s">%s</a>', $p->numero, $p->numero); ?></td>
 										<td><?php echo empty($p->identificacion) ? 'Sin Identificación' : $p->identificacion; ?></td>
 										<td><?php echo empty($p->nombre_completo) ? 'Sin Nombre' : add_ellipsis($p->nombre_completo,50);?></td>
 										<td><?php echo empty($p->email) ? 'Sin Correo Electronico' : $p->email; ?></td>

@@ -1,7 +1,7 @@
 <?php require_once INCLUDES.'inc_header.php'; ?>
 
 <div class="row">
-  <div class="col-xl-6">
+  <div class="col-10">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
@@ -17,19 +17,33 @@
               
               <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-font"></i></span>
+                  </div>
+                  <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="descripcion">Descripción</label>
-                <textarea name="descripcion" id="descripcion" cols="10" rows="5" class="form-control"></textarea>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-align-left"></i></span>
+                  </div>
+                  <textarea name="descripcion" id="descripcion" cols="10" rows="5" class="form-control"></textarea>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="ciclo">Ciclo Escolar</label>
-                <input type="text" class="form-control" id="ciclo" name="ciclo" required>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                  </div>
+                  <input type="text" class="form-control" id="ciclo" name="ciclo" required>
+                </div>
               </div>
-
 
               <button class="btn btn-success" type="submit">Guardar Grado</button>
             </form>

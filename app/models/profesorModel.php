@@ -1,12 +1,17 @@
 <?php
 class profesorModel extends Model {
   public static $t1   = 'usuarios'; // Nombre de la tabla en la base de datos;
-  function __construct(){}
+  function __construct(){
+
+
+  }
 
   static function all(){
     // Todos los registros
     $sql = 'SELECT * FROM usuarios WHERE rol = "profesor" ORDER BY id DESC';
-    return ($rows = parent::query($sql)) ? $rows : [];}
+    return ($rows = parent::query($sql)) ? $rows : [];
+  
+  }
   //FUNCION QUE EXTRAE TODOS LOS REGISTRO YA PAGINADOS
   static function all_paginated(){
     // Todos los registros ya paginados

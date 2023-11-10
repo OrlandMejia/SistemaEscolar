@@ -1,57 +1,67 @@
 <?php require_once INCLUDES.'inc_header.php'; ?>
 
 <div class="row">
-  <div class="col-xl-6 col-md-6 col-12">
+  <div class="col-12">
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
-      <a href="#profesor_data" class="d-block card-header py-3" data-toggle="collapse"
+      <a href="#usuario_data" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="profesor_data">
           <h6 class="m-0 font-weight-bold text-primary"><?php echo $d->title; ?></h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="profesor_data">
           <div class="card-body">
-            <form action="usuarios/post_agregar" method="post">
-              <?php echo insert_inputs(); ?>
-              
-              <div class="form-group">
-                <label for="nombres">Identificación</label>
-                <input type="text" class="form-control" id="identificacion" name="identificacion" required>
+            <div class="row">
+              <div class="col-md-6">
+                <form action="usuarios/post_agregar" method="post">
+                  <?php echo insert_inputs(); ?>
+                  
+                  <div class="form-group">
+                    <label for="identificacion"><i class="fas fa-address-card" style="vertical-align: top;"></i> Identificación</label>
+                    <input type="text" class="form-control" style="width: 100%;" id="identificacion" name="identificacion" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="nombres"><i class="fas fa-user" style="vertical-align: top;"></i> Nombre(s)</label>
+                    <input type="text" class="form-control" style="width: 100%;" id="nombres" name="nombres" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="apellidos"><i class="fas fa-user" style="vertical-align: top;"></i> Apellido(s)</label>
+                    <input type="text" class="form-control" style="width: 100%;" id="apellidos" name="apellidos" required>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope" style="vertical-align: top;"></i> Correo electrónico</label>
+                    <input type="email" class="form-control" style="width: 100%;" id="email" name="email" required>
+                  </div>
+                </form>
               </div>
 
-              <div class="form-group">
-                <label for="nombres">Nombre(s)</label>
-                <input type="text" class="form-control" id="nombres" name="nombres" required>
-              </div>
+              <div class="col-md-6">
+                <form action="usuarios/post_agregar" method="post">
+                  <?php echo insert_inputs(); ?>
+                  
+                  <div class="form-group">
+                    <label for="telefono"><i class="fas fa-phone" style="vertical-align: top;"></i> Teléfono</label>
+                    <input type="text" class="form-control" style="width: 100%;" id="telefono" name="telefono">
+                  </div>
 
-              <div class="form-group">
-                <label for="apellidos">Apellido(s)</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos" required>
-              </div>
+                  <div class="form-group">
+                    <label for="password"><i class="fas fa-lock" style="vertical-align: top;"></i> Contraseña</label>
+                    <input type="password" class="form-control" style="width: 100%;" id="password" name="password">
+                  </div>
 
-              <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                  <div class="form-group">
+                    <label for="conf_password"><i class="fas fa-lock" style="vertical-align: top;"></i> Confirmar contraseña</label>
+                    <input type="password" class="form-control" style="width: 100%;" id="conf_password" name="conf_password">
+                  </div>
+                  <hr>
+                  <button class="btn btn-success" type="submit">Agregar Administrador</button>
+                </form>
               </div>
-
-              <div class="form-group">
-                <label for="telefono">Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono">
-              </div>
-
-              <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password">
-              </div>
-
-              <div class="form-group">
-                <label for="conf_password">Confirmar contraseña</label>
-                <input type="password" class="form-control" id="conf_password" name="conf_password">
-              </div>
-              <hr>
-              <button class="btn btn-success" type="submit">Agregar Administrador</button>
-            </form>
+            </div>
           </div>
       </div>
     </div>
@@ -82,6 +92,5 @@ passwordElement.addEventListener("input", function () {
     validatePassword(this.value);
 });
 </script>
-
 
 <?php require_once INCLUDES.'inc_footer.php'; ?>
