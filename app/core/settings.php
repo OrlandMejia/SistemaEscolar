@@ -30,13 +30,13 @@ define('CUR_PAGE'   , PROTOCOL.'://'.HOST.REQUEST_URI); // URL actual incluyendo
 define('DS'         , DIRECTORY_SEPARATOR);
 define('ROOT'       , getcwd().'/');
 
-define('APP'        , ROOT.'app/');
-define('CLASSES'    , APP.'classes/');
-define('CONFIG'     , APP.'config/');
-define('CONTROLLERS', APP.'controllers/');
-define('FUNCTIONS'  , APP.'functions/');
-define('MODELS'     , APP.'models/');
-define('LOGS'       , APP.'logs/');
+define('APP'        , ROOT.'app'.DS);
+define('CLASSES'    , APP.'classes'.DS);
+define('CONFIG'     , APP.'config'.DS);
+define('CONTROLLERS', APP.'controllers'.DS);
+define('FUNCTIONS'  , APP.'functions'.DS);
+define('MODELS'     , APP.'models'.DS);
+define('LOGS'       , APP.'logs'.DS);
 
 define('TEMPLATES'  , ROOT.'templates'.DS);
 define('INCLUDES'   , TEMPLATES.'includes'.DS);

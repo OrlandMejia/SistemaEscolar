@@ -807,9 +807,6 @@ function set_session($k, $v) {
     }
 }
 
-
-
-
 /**
  * Muestra en pantalla los valores pasados
  *

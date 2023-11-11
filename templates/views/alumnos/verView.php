@@ -19,12 +19,12 @@
               <div class="row">
                 <div class="col-md-6">
                 <div class="form-group">
-                    <label for="carnet">Carnet</label>
+                    <label for="identificacion">Carnet</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                       </div>
-                      <input type="text" class="form-control" id="carnet" name="carnet" value="<?php echo $d->a->identificacion ?>" required>
+                      <input type="text" class="form-control" id="identificacion" name="identificacion" value="<?php echo $d->a->identificacion ?>" required>
                     </div>
                   </div>
                   <div class="form-group">

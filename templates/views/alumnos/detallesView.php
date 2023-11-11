@@ -17,8 +17,8 @@
               <input type="hidden" name="id" value="<?php echo $d->a->id; ?>" required>
               
               <div class="form-group">
-                <label for="nombres">Carnet</label>
-                <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $d->a->nombres; ?>" disabled>
+                <label for="identificacion">Carnet</label>
+                <input type="text" class="form-control" id="identificacion" name="identificacion" value="<?php echo $d->a->nombres; ?>" disabled>
               </div>
 
               <div class="form-group">

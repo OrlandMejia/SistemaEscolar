@@ -119,7 +119,8 @@ class grupoModel extends Model {
     ];
     return (self::remove(self::$t2, $data)) ? true : false;
   }
-  static function  alumnos_asignados($id_grupo)
+
+  static function alumnos_asignados($id_grupo)
   {
     $sql = 
     'SELECT
@@ -134,6 +135,7 @@ class grupoModel extends Model {
 
     return ($rows = parent::query($sql, ['id' => $id_grupo])) ? $rows : [];
   }
+
   static function quitar_alumno($id_grupo, $id_alumno)
   {
     $data =
@@ -143,6 +145,7 @@ class grupoModel extends Model {
     ];
     return (self::remove(self::$t3, $data)) ? true : false;
   }
+
   static function eliminar($id_grupo)
   {
     $sql = 
@@ -153,6 +156,7 @@ class grupoModel extends Model {
     WHERE g.id = :id';
     return parent::query($sql, ['id' => $id_grupo]) ? true : false;
   }
+  
   static function by_alumno($id_alumno)
   {
     $sql = 

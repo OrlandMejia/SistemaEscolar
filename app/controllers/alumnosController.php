@@ -20,11 +20,11 @@ class alumnosController extends Controller {
   
   function index()
   {
-    //validar el rol de la persona que quiera acceder al listado
+   /* //validar el rol de la persona que quiera acceder al listado
     if(!is_admin(get_user_rol())){
       Flasher::new(get_notificaciones(0), 'danger');
       Redirect::back();
-    }
+    }*/
     //array que contiene los datos del titulo la viable slug que activa el link y la url del boton para agregar
     $data = 
     [
@@ -32,7 +32,7 @@ class alumnosController extends Controller {
       'slug' => 'alumnos',
       'button' => ['url' => 'alumnos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Alumno'],
       'alumnos' => alumnoModel::all_paginated()
-];
+    ];
 
 // Descomentar vista si requerida
 View::render('index', $data);
@@ -90,6 +90,10 @@ View::render('index', $data);
 
   function agregar()
   {
+    if (!is_admin(get_user_rol())) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
     $data = 
     [
       'title' => 'Inscribir un Nuevo Estudiante',
@@ -103,17 +107,17 @@ View::render('index', $data);
   function post_agregar()
   {
     try {
-      if (!check_posted_data(['csrf','carnet','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+      if (!check_posted_data(['csrf','nombres','apellidos','email','telefono','password','conf_password','id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
         throw new Exception(get_notificaciones());
       }
 
-  //validar el rol de la persona que quiera acceder al listado
-  if(!is_admin(get_user_rol())){
-    Flasher::new(get_notificaciones(0), 'danger');
-    Redirect::back();
-  }
+      //validar el rol de la persona que quiera acceder al listado
+      if (!is_admin(get_user_rol())) {
+        Flasher::new(get_notificaciones(), 'danger');
+        Redirect::back();
+      }
     //VARIABLES PARA INGRESAR DATOS EN LA BASE DE DATOS
-      $carnet         = clean($_POST['carnet']);
+      $carnet        = clean($_POST["identificacion"]);
       $nombres       = clean($_POST["nombres"]);
       $apellidos     = clean($_POST["apellidos"]);
       $email         = clean($_POST["email"]);
@@ -218,7 +222,7 @@ View::render('index', $data);
   function post_editar()
 {
     try {
-        if (!check_posted_data(['csrf', 'id','carnet', 'nombres', 'apellidos', 'email', 'telefono', 'password', 'conf_password', 'id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+        if (!check_posted_data(['csrf', 'id','identificacion', 'nombres', 'apellidos', 'email', 'telefono', 'password', 'conf_password', 'id_grupo'], $_POST) || !Csrf::validate($_POST['csrf'])) {
             throw new Exception(get_notificaciones());
         }
 
@@ -241,7 +245,7 @@ View::render('index', $data);
         $db_id_g = $alumno['id_grupo'];
 
         // VARIABLES DE INFORMACIÓN DEL FORMULARIO
-        $carnet = clean($_POST['carnet']);
+        $carnet = clean($_POST['identificacion']);
         $nombres = clean($_POST["nombres"]);
         $apellidos = clean($_POST["apellidos"]);
         $email = clean($_POST["email"]);
@@ -418,13 +422,13 @@ View::render('index', $data);
                         width: 10%;
                     }
                     .column-carnet {
-                      width: 12%;
+                      width: 19%;
                   }
                     .column-nombre {
                         width: 35%;
                     }
                     .column-email {
-                        width: 30%;
+                        width: 32%;
                     }
                     .column-status {
                         width: 12%;
@@ -438,11 +442,11 @@ View::render('index', $data);
       $html .= '<table>';
   
       // Agregar fila de encabezados
-      $html .= '<tr><th class="column-id">No.</th><th class="column-carnet">Carnet</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
+      $html .= '<tr><th class="column-carnet">Carnet</th><th class="column-nombre">Nombre Completo</th><th class="column-email">Correo Electrónico</th><th class="column-status">Status</th></tr>';
   
       // Agregar filas de datos
       foreach ($alumnos as $alumno) {
-          $html .= '<tr><td class="column-id">' . $alumno['numero'] . '</td><td class="column-carnet">' . utf8_decode($alumno['identificacion']) .'</td><td class="column-nombre">' . utf8_decode($alumno['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($alumno['email']) . '</td><td class="column-status">' . utf8_decode($alumno['status']) . '</td></tr>';
+          $html .= '<tr><td class="column-carnet">' . utf8_decode($alumno['identificacion']) .'</td><td class="column-nombre">' . utf8_decode($alumno['nombre_completo']) . '</td><td class="column-email">' . utf8_decode($alumno['email']) . '</td><td class="column-status">' . utf8_decode($alumno['status']) . '</td></tr>';
       }
       $html .= '</table>';
   

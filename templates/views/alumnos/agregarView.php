@@ -5,27 +5,28 @@
     <!-- Collapsable Card Example -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
-      <a href="#profesor_data" class="d-block card-header py-3" data-toggle="collapse"
-          role="button" aria-expanded="true" aria-controls="profesor_data">
+      <a href="#alumnos_data" class="d-block card-header py-3" data-toggle="collapse"
+          role="button" aria-expanded="true" aria-controls="alumnos_data">
           <h6 class="m-0 font-weight-bold text-primary"><?php echo $d->title; ?></h6>
       </a>
       <!-- Card Content - Collapse -->
-      <div class="collapse show" id="profesor_data">
+      <div class="collapse show" id="alumnos_data">
           <div class="card-body">
             <form action="alumnos/post_agregar" method="post">
               <?php echo insert_inputs(); ?>
-              
               <div class="row">
                 <div class="col-md-6">
+
                   <div class="form-group">
-                    <label for="carnet">Carnet</label>
+                    <label for="identificacion">Carnet</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                       </div>
-                      <input type="text" class="form-control" id="carnet" name="carnet" required>
+                      <input type="text" class="form-control" id="identificacion" name="identificacion" required>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="nombres">Nombre(s)</label>
                     <div class="input-group">
@@ -35,15 +36,17 @@
                       <input type="text" class="form-control" id="nombres" name="nombres" required>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="apellidos">Apellido(s)</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                       </div>
-                      <input type="text" class="form-control" id="apellidos" name "apellidos" required>
+                      <input type="text" class="form-control" id="apellidos" name="apellidos" required>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <label for="email">Correo electrónico</label>
                     <div class="input-group">
@@ -53,7 +56,9 @@
                       <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                   </div>
+
                 </div>
+
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="telefono">Teléfono</label>
@@ -107,30 +112,4 @@
     </div>
   </div>
 </div>
-
-<script>
-function validatePassword(password) {
-    const messageElement = document.getElementById("password-validation-message");
-    const passwordElement = document.getElementById("password");
-
-    const isLengthValid = password.length >= 8;
-    const hasSpecialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password);
-    const hasNumbers = /\d/.test(password);
-
-    if (isLengthValid && hasSpecialChars && hasNumbers) {
-        messageElement.textContent = "Contraseña válida";
-        messageElement.style.color = "green";
-    } else {
-        messageElement.textContent = "La contraseña debe contener al menos 8 caracteres, caracteres especiales y números.";
-        messageElement.style.color = "red";
-    }
-}
-
-// Agregar un evento de escucha para validar la contraseña en tiempo real
-const passwordElement = document.getElementById("password");
-passwordElement.addEventListener("input", function () {
-    validatePassword(this.value);
-});
-</script>
-
 <?php require_once INCLUDES.'inc_footer.php'; ?>

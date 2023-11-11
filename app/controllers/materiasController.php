@@ -7,6 +7,8 @@
  * Controlador de materias
  */
 class materiasController extends Controller {
+  private $id  = null;
+  private $rol = null;
   function __construct()
   {
     // Validación de sesión de usuario, descomentar si requerida
@@ -14,6 +16,9 @@ class materiasController extends Controller {
       Flasher::new('Debes iniciar sesión primero.', 'danger');
       Redirect::to('login');
     }
+
+    $this->id  = get_user('id');
+    $this->rol = get_user_rol();
   }
   
   function index()
@@ -44,6 +49,24 @@ class materiasController extends Controller {
       'm' => $materia
     ];
     View::render('ver',$data);
+  }
+
+  function asignadas()
+  {
+    if (!is_profesor($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::to('dashboard');
+    }
+
+    $id_profesor = get_user('id');
+    $data =
+    [
+      'title'    => 'Materias Asignadas',
+      'slug'     => 'materias',
+      'materias' => materiaModel::materias_profesor($id_profesor)
+    ];
+
+    View::render('asignadas', $data);
   }
 
   function agregar()

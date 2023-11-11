@@ -55,7 +55,7 @@
 			</div>
 		<?php else: ?>
 			<div class="py-5 text-center">
-				<img src="error.jpg" alt="No hay registros" style="width: 250px;">
+				<img src="img/error.jpg" alt="No hay registros" style="width: 250px;">
 				<p class="text-muted">No hay registros en la base de datos.</p>
 			</div>
 		<?php endif; ?>
