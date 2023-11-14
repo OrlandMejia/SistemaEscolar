@@ -358,4 +358,22 @@ class gruposController extends Controller {
     View::render('materia', $data);
   }
 
+  function notas(){
+    if (!is_admin($this->rol)) {
+      Flasher::new(get_notificaciones(), 'danger');
+      Redirect::back();
+    }
+    
+    $data = 
+    [
+      'title'  => 'Todos los Grados',
+      'slug'   => 'notas',
+      'button' => ['url' => 'grupos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Grado'],
+      'grupos' => grupoModel::all_paginated()
+    ];
+    
+    // Descomentar vista si requerida
+    View::render('index', $data);
+  }
+
 }

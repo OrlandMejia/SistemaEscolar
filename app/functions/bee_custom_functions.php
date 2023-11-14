@@ -346,7 +346,7 @@ function get_ingresos()
     ['Septiembre', 23848],
     ['Octubre'   , 50000],
     ['Noviembre' , 63250],
-    ['Diciembre' , 83500]
+    ['Diciembre' , 50000]
   ];
 }
 

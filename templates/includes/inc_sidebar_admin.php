@@ -60,7 +60,7 @@
 			<li class="nav-item <?php echo $slug === 'notas' ? 'active' : null; ?>">
 		<a class="nav-link" href="notas">
 		<i class="fas fa-fw fa-pencil-alt"></i>
-			<span>Notas</span></a>
+			<span>Calificaciones</span></a>
 	</li>
 
 		<!-- Nav Item - Profesores -->

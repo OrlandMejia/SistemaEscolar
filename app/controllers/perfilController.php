@@ -15,7 +15,6 @@ class perfilController extends Controller {
     function index() {
         $userData = $this->auth->user();
         $data = [
-            'title' => 'Perfil de Usuario',
             'userData' => $userData,
         ];
 

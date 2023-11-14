@@ -46,7 +46,7 @@
               <?php if (!empty($d->grupos)): ?>
                 <div class="form-group">
                   <label for="id_grupo">Grupo</label>
-                  <select name="id_grupo" id="id_grupo" class="form-control">
+                  <select name="id_grupo" id="id_grupo" class="form-control" disabled>
                     <?php foreach ($d->grupos as $g): ?>
                       <?php echo sprintf('<option value="%s" %s>%s</option>', $g->id, $g->id == $d->a->id_grupo ? 'selected' : null, $g->nombre); ?>
                     <?php endforeach; ?>
