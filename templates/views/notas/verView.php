@@ -46,13 +46,7 @@
                 <td><?php echo $ac->promedio; ?></td>
                 <td>
                   <div class="btn-group">
-                    <a href="<?php echo 'alumnos/ver/'.$ac->id_usuario; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-                    <?php if ($ac->status === 'suspendido'): ?>
-                    <button class="btn btn-warning text-dark btn-sm remover_suspension_alumno" data-view="alumnos" data-id="<?php echo $ac->id_usuario; ?>"><i class="fas fa-undo"></i></button>
-                    <?php else: ?>
-                    <button class="btn btn-danger btn-sm suspender_alumno" data-view="alumnos" data-id="<?php echo $ac->id_usuario; ?>"><i class="fas fa-ban"></i></button>
-                    <?php endif; ?>
-                    <a href="<?php echo buildURL('alumnos/borrar/'.$ac->id_usuario); ?>" class="btn btn-sm btn-danger confirmar"><i class="fas fa-trash"></i></a>
+                    <a href="<?php echo 'notas/editar/'.$ac->id_usuario; ?>" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
                   </div>
                 </td>
               </tr>

@@ -29,6 +29,7 @@
 								<td>
 									<div class="btn-group">
 										<a href="<?php echo 'notas/ver/'.$g->id; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
+										<a href="<?php echo 'notas/agregar/'.$g->id; ?>" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
 										
 									</div>
 								</td>

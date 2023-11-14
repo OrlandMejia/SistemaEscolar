@@ -27,6 +27,13 @@
 			<span>Materias</span></a>
 	</li>
 
+				<!-- Nav Item - Profesores -->
+				<li class="nav-item <?php echo $slug === 'notas' ? 'active' : null; ?>">
+		<a class="nav-link" href="notas">
+		<i class="fas fa-fw fa-pencil-alt"></i>
+			<span>Calificaciones</span></a>
+	</li>
+
 	<!-- Divider -->
 	<hr class="sidebar-divider d-none d-md-block">
 

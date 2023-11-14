@@ -34,7 +34,6 @@ class notasController extends Controller {
     [
       'title'  => 'Calificaciones por Grado',
       'slug'   => 'notas',
-      'button' => ['url' => 'grupos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Grado'],
       'grupos' => grupoModel::all_paginated()
     ];
     
@@ -49,12 +48,17 @@ class notasController extends Controller {
       Redirect::back();
     }
 
+    if (!$grupo = grupoModel::by_id($id_grupo)) {
+      Flasher::new('No existe el grupo en la base de datos.', 'danger');
+      Redirect::back();
+    }
+
     // Obtener alumnos y calificaciones para el grupo dado
     $alumnosCalificaciones = notasModel::getAlumnosCalificaciones($id_grupo);
 
     // Datos para la vista
     $data = [
-      'title' => 'Calificaciones por alumno',
+      'title'  => sprintf('Calificaciones Alumnos de: %s', $grupo['nombre']),
       'slug' => 'notas',
       'button' => ['url' => 'alumnos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Alumno'],
       'alumnosCalificaciones' => $alumnosCalificaciones
@@ -64,20 +68,88 @@ class notasController extends Controller {
     View::render('ver', $data);
   }
 
-  function agregar()
-  {
-    View::render('agregar');
+  function agregar($id_grupo) {
+    // Obtener alumnos sin calificación para el grupo dado
+    $alumnosSinCalificacion = notasModel::getAlumnosSinCalificacion($id_grupo);
+
+    // Resto del código...
+    
+    $data = [
+        'title' => 'Agregar Calificaciones',
+        'slug' => 'notas',
+        'button' => ['url' => 'alumnos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Alumno'],
+        'alumnos' => $alumnosSinCalificacion
+    ];
+
+    // Descomentar vista si requerida
+    View::render('agregar', $data);
+}
+
+function post_agregar()
+{
+    try {
+        if (!check_posted_data(['csrf', 'id_alumno', 'primer_bimestre', 'segundo_bimestre', 'tercer_bimestre', 'cuarto_bimestre'], $_POST) || !Csrf::validate($_POST['csrf'])) {
+            throw new Exception(get_notificaciones());
+        }
+
+        // Obtener datos del formulario
+        $id_alumno = clean($_POST['id_alumno']);
+        $primer_bimestre = clean($_POST['primer_bimestre']);
+        $segundo_bimestre = clean($_POST['segundo_bimestre']);
+        $tercer_bimestre = clean($_POST['tercer_bimestre']);
+        $cuarto_bimestre = clean($_POST['cuarto_bimestre']);
+
+        // Validar las calificaciones (puedes agregar más validaciones según tus necesidades)
+        if (!is_numeric($primer_bimestre) || !is_numeric($segundo_bimestre) || !is_numeric($tercer_bimestre) || !is_numeric($cuarto_bimestre)) {
+            throw new Exception('Ingresa calificaciones numéricas válidas.');
+        }
+
+        // Crear un array con los datos de calificación
+        $calificacion_data = [
+            'id_usuario' => $id_alumno,
+            'primer_bimestre' => $primer_bimestre,
+            'segundo_bimestre' => $segundo_bimestre,
+            'tercer_bimestre' => $tercer_bimestre,
+            'cuarto_bimestre' => $cuarto_bimestre,
+            'promedio' => ($primer_bimestre + $segundo_bimestre + $tercer_bimestre + $cuarto_bimestre) / 4
+        ];
+
+        // Insertar la calificación en la base de datos
+        if (!$id_calificacion = notasModel::add(notasModel::$t2, $calificacion_data)) {
+            throw new Exception(get_notificaciones(2));
+        }
+
+        // Redirigir o mostrar mensaje de éxito según tu lógica
+        Flasher::new('Calificaciones agregadas con éxito.', 'success');
+        Redirect::to('notas/ver');
+
+    } catch (PDOException $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    } catch (Exception $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    }
+}
+
+
+public function editar($id_grupo)
+{
+  if (!$alumno = notasModel::by_id($id_grupo)) {
+    Flasher::new('No existe el Alumno en la base de datos.', 'danger');
+    Redirect::back();
   }
 
-  function post_agregar()
-  {
+  $data = 
+  [
+    'title'  => sprintf('Calificaciones del Alumno: %s', $alumno['nombre_completo']),
+    'slug' => 'notas',
+    'button' => ['url' => 'notas', 'text' => '<i class="fas fa-table"></i> Ver Notas']
+  ];
+  View::render('editar',$data);
+}
 
-  }
 
-  function editar($id)
-  {
-    View::render('editar');
-  }
 
   function post_editar()
   {

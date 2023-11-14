@@ -24,7 +24,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                       </div>
-                      <input type="text" class="form-control" id="identificacion" name="identificacion" value="<?php echo $d->a->identificacion ?>" required>
+                      <input type="text" class="form-control" id="identificacion" name="identificacion" value="<?php echo $d->a->identificacion; ?>" required>
                     </div>
                   </div>
                   <div class="form-group">

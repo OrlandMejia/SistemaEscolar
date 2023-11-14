@@ -55,7 +55,7 @@ class gruposController extends Controller {
 
     $data =
     [
-      'title'  => sprintf('Grupo %s', $grupo['nombre']),
+      'title'  => sprintf('Grado %s', $grupo['nombre']),
       'slug'   => 'grupos',
       'button' => ['url' => 'grupos', 'text' => '<i class="fas fa-table"></i> Todos los Grados'],
       'g'      => $grupo
