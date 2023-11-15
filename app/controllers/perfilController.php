@@ -12,13 +12,18 @@ class perfilController extends Controller {
         }
     }
 
-    function index() {
-        $userData = $this->auth->user();
-        $data = [
-            'userData' => $userData,
-        ];
+    public function index() {
+        // Obtener los datos del usuario desde la sesión
+        $userData = $_SESSION['user_session']['user'];
 
-        View::render('index', $data);
+        $data = [
+        'title' => 'PERFIL',
+        'ud'=> $userData
+        ];
+        // Pasar los datos a la vista
+        View::render('index', ['userData' => $userData]);
+
+
     }
     function editar() {
     }

@@ -67,9 +67,6 @@ class notasModel extends Model {
   
       return parent::query($sql, ['id_alumno' => $id_alumno]);
   }
-  
-  
-  
 
   static function getAlumnosCalificaciones($id_grupo)
   {
@@ -120,26 +117,30 @@ class notasModel extends Model {
     return parent::query($sql, ['id_grupo' => $id_grupo]);
 }
 
+// En tu controlador notasController.php
+
 static function updateCalificacion($id_alumno, $calificacion_data)
 {
     try {
-        $table = 'calificacion';
+        $sql = 'UPDATE calificacion
+                SET primer_bimestre = :primer_bimestre,
+                    segundo_bimestre = :segundo_bimestre,
+                    tercer_bimestre = :tercer_bimestre,
+                    cuarto_bimestre = :cuarto_bimestre
+                WHERE id_usuario = :id_usuario';
+
         $params = [
             'primer_bimestre' => $calificacion_data['primer_bimestre'],
             'segundo_bimestre' => $calificacion_data['segundo_bimestre'],
             'tercer_bimestre' => $calificacion_data['tercer_bimestre'],
             'cuarto_bimestre' => $calificacion_data['cuarto_bimestre'],
-        ];
-
-        $haystack = [
             'id_usuario' => $id_alumno,
         ];
 
-        return parent::update($table, $haystack, $params);
+        return parent::query($sql, $params);
     } catch (PDOException $e) {
         throw new Exception($e->getMessage());
     }
 }
-
 
 }

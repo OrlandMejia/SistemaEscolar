@@ -27,11 +27,10 @@
 								<?php echo add_ellipsis($g->ciclo_escolar, 50); ?>
 								</td>
 								<td>
-									<div class="btn-group">
-										<a href="<?php echo 'notas/ver/'.$g->id; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-										<a href="<?php echo 'notas/agregar/'.$g->id; ?>" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></a>
-										
-									</div>
+								<div class="btn-group">
+									<a href="<?php echo 'notas/ver/'.$g->id; ?>" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
+									<a href="<?php echo 'notas/agregar/'.$g->id; ?>" class="btn btn-sm btn-primary" style="margin-left: 5px;"><i class="fas fa-plus"></i></a>
+						</div>
 								</td>
 							</tr>
 						<?php endforeach; ?>

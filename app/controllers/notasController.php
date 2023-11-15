@@ -98,7 +98,7 @@ function post_agregar()
         }
 
         // Obtener datos del formulario
-        $id_alumno = clean($_POST['id_alumno']);
+        $id_alumno      = clean($_POST['id_alumno']);
         $primer_bimestre = clean($_POST['primer_bimestre']);
         $segundo_bimestre = clean($_POST['segundo_bimestre']);
         $tercer_bimestre = clean($_POST['tercer_bimestre']);
@@ -137,6 +137,7 @@ function post_agregar()
     }
 }
 
+// En tu controlador notasController.ph
 
 public function editar($id)
 {
@@ -152,7 +153,7 @@ public function editar($id)
   $data = [
     'title'  => sprintf('Calificaciones del Alumno: %s', $alumno[0]['nombre_completo']),
     'slug' => 'notas',
-    'button' => ['url' => 'notas', 'text' => '<i class="fas fa-table"></i> Ver Notas'],
+    'button' => ['url' => 'notas', 'text' => '<i class="fas fa-table"></i> Ver Grados'],
     'ac' => $alumno[0]
     // Otros datos necesarios para la vista de edición
   ];
@@ -161,13 +162,59 @@ public function editar($id)
   //echo debug($data);
 }
 
-
-
-
-// En el controlador notasController.php
-function post_editar()
+public function post_editar()
 {
-  
+    try {
+        // Verificar la validez de los datos del formulario
+        $required_fields = ['csrf', 'id_alumno', 'primer_bimestre', 'segundo_bimestre', 'tercer_bimestre', 'cuarto_bimestre'];
+        
+        if (!check_posted_data($required_fields, $_POST) || !Csrf::validate($_POST['csrf'])) {
+            throw new Exception(get_notificaciones());
+        }
+
+        // Validar si el usuario tiene permisos para realizar la acción
+        if (!is_admin($this->rol)) {
+            Flasher::new(get_notificaciones(), 'danger');
+            Redirect::back();
+        }
+
+        // Obtener datos del formulario
+        $id_alumno = clean($_POST['id_alumno']);
+        $primer_bimestre = clean($_POST['primer_bimestre']);
+        $segundo_bimestre = clean($_POST['segundo_bimestre']);
+        $tercer_bimestre = clean($_POST['tercer_bimestre']);
+        $cuarto_bimestre = clean($_POST['cuarto_bimestre']);
+
+        // Validar las calificaciones (puedes agregar más validaciones según tus necesidades)
+        if (!is_numeric($primer_bimestre) || !is_numeric($segundo_bimestre) || !is_numeric($tercer_bimestre) || !is_numeric($cuarto_bimestre)) {
+            throw new Exception('Ingresa calificaciones numéricas válidas.');
+        }
+
+        // Crear un array con los datos de calificación
+        $calificacion_data = [
+            'primer_bimestre' => $primer_bimestre,
+            'segundo_bimestre' => $segundo_bimestre,
+            'tercer_bimestre' => $tercer_bimestre,
+            'cuarto_bimestre' => $cuarto_bimestre,
+            'promedio' => ($primer_bimestre + $segundo_bimestre + $tercer_bimestre + $cuarto_bimestre) / 4,
+        ];
+
+        // Actualizar la calificación en la base de datos
+        if (!notasModel::updateCalificacion($id_alumno, $calificacion_data)) {
+            throw new Exception(get_notificaciones(2));
+        }
+
+        // Redirigir o mostrar mensaje de éxito según tu lógica
+        Flasher::new('Calificaciones actualizadas con éxito.', 'success');
+        Redirect::to('notas');
+
+    } catch (PDOException $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    } catch (Exception $e) {
+        Flasher::new($e->getMessage(), 'danger');
+        Redirect::back();
+    }
 }
 
 

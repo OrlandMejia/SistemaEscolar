@@ -1,7 +1,7 @@
 <?php require_once INCLUDES . 'inc_header.php'; ?>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-10">
         <div class="card shadow mb-4">
             <a href="#calificaciones_data" class="d-block card-header py-3" data-toggle="collapse"
                 role="button" aria-expanded="true" aria-controls="calificaciones_data">
@@ -14,7 +14,7 @@
                     <form action="notas/post_editar" method="post">
                         <?php echo insert_inputs(); ?>
                         <!-- Agrega el campo oculto para id_alumno -->
-                        <input type="hidden" name="id" value="<?php echo $d->ac->id; ?>">
+                        <input type="hidden" name="id_alumno" value="<?php echo $d->ac->id_usuario; ?>">
 
                         <div class="row">
                             <div class="col-md-6">
@@ -45,6 +45,13 @@
                                         <i class="fas fa-chart-bar"></i> Cuarto Bimestre
                                     </label>
                                     <input type="number" class="form-control" id="cuarto_bimestre" name="cuarto_bimestre" value="<?php echo $d->ac->cuarto_bimestre; ?>" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="cuarto_bimestre">
+                                        <i class="fas fa-chart-bar"></i> Promedio General
+                                    </label>
+                                    <input type="number" class="form-control" id="promedio" name="promedio" value="<?php echo $d->ac->promedio; ?>" disabled>
                                 </div>
                             </div>
 
