@@ -92,6 +92,11 @@ function post_agregar()
             throw new Exception(get_notificaciones());
         }
 
+        if (!is_admin($this->rol)) {
+          Flasher::new(get_notificaciones(), 'danger');
+          Redirect::back();
+        }
+
         // Obtener datos del formulario
         $id_alumno = clean($_POST['id_alumno']);
         $primer_bimestre = clean($_POST['primer_bimestre']);
@@ -121,7 +126,7 @@ function post_agregar()
 
         // Redirigir o mostrar mensaje de éxito según tu lógica
         Flasher::new('Calificaciones agregadas con éxito.', 'success');
-        Redirect::to('notas/ver');
+        Redirect::to('notas');
 
     } catch (PDOException $e) {
         Flasher::new($e->getMessage(), 'danger');
@@ -133,28 +138,40 @@ function post_agregar()
 }
 
 
-public function editar($id_grupo)
+public function editar($id)
 {
-  if (!$alumno = notasModel::by_id($id_grupo)) {
-    Flasher::new('No existe el Alumno en la base de datos.', 'danger');
+  $alumno = notasModel::by_id_notas($id);
+
+  if (empty($alumno)) {
+    Flasher::new('No existe el Alumno en la base de datos o no tiene calificaciones.', 'danger');
     Redirect::back();
   }
 
-  $data = 
-  [
-    'title'  => sprintf('Calificaciones del Alumno: %s', $alumno['nombre_completo']),
+  // Cargar otros datos necesarios para la vista de edición si es necesario
+
+  $data = [
+    'title'  => sprintf('Calificaciones del Alumno: %s', $alumno[0]['nombre_completo']),
     'slug' => 'notas',
-    'button' => ['url' => 'notas', 'text' => '<i class="fas fa-table"></i> Ver Notas']
+    'button' => ['url' => 'notas', 'text' => '<i class="fas fa-table"></i> Ver Notas'],
+    'ac' => $alumno[0]
+    // Otros datos necesarios para la vista de edición
   ];
-  View::render('editar',$data);
+
+  View::render('editar', $data);
+  //echo debug($data);
 }
 
 
 
-  function post_editar()
-  {
 
-  }
+// En el controlador notasController.php
+function post_editar()
+{
+  
+}
+
+
+
 
   function borrar($id)
   {

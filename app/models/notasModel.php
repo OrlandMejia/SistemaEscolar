@@ -33,11 +33,11 @@ class notasModel extends Model {
     return PaginationHandler::paginate($sql);
   }
 
-  static function by_id($id_alumno)
+  static function by_id($id)
   {
     // Un registro con $id
     $sql = 'SELECT * FROM usuarios WHERE id = :id LIMIT 1';
-    return ($rows = parent::query($sql, ['id' => $id_alumno])) ? $rows[0] : [];
+    return ($rows = parent::query($sql, ['id' => $id])) ? $rows[0] : [];
   }
 
   static function by_id_notas($id_alumno)
@@ -52,7 +52,7 @@ class notasModel extends Model {
           u.email,
           u.telefono,
           u.status,
-          c.id_calificacion,
+          c.id_usuario, -- Cambié el nombre de la columna para evitar redundancia
           c.primer_bimestre,
           c.segundo_bimestre,
           c.tercer_bimestre,
@@ -65,9 +65,9 @@ class notasModel extends Model {
       WHERE
           u.id = :id_alumno AND u.rol = "alumno"';
   
-  
       return parent::query($sql, ['id_alumno' => $id_alumno]);
   }
+  
   
   
 
@@ -83,7 +83,7 @@ class notasModel extends Model {
           u.email,
           u.telefono,
           u.status,
-          c.id_calificacion,
+          c.id,
           c.primer_bimestre,
           c.segundo_bimestre,
           c.tercer_bimestre,
@@ -120,9 +120,26 @@ class notasModel extends Model {
     return parent::query($sql, ['id_grupo' => $id_grupo]);
 }
 
-static function getAlumnoCalificacion($id)
+static function updateCalificacion($id_alumno, $calificacion_data)
 {
-    $sql = 'SELECT * FROM calificacion WHERE id_calificacion = :id_calificacion LIMIT 1';
-    return ($rows = parent::query($sql, ['id_calificacion' => $id])) ? $rows[0] : [];
+    try {
+        $table = 'calificacion';
+        $params = [
+            'primer_bimestre' => $calificacion_data['primer_bimestre'],
+            'segundo_bimestre' => $calificacion_data['segundo_bimestre'],
+            'tercer_bimestre' => $calificacion_data['tercer_bimestre'],
+            'cuarto_bimestre' => $calificacion_data['cuarto_bimestre'],
+        ];
+
+        $haystack = [
+            'id_usuario' => $id_alumno,
+        ];
+
+        return parent::update($table, $haystack, $params);
+    } catch (PDOException $e) {
+        throw new Exception($e->getMessage());
+    }
 }
+
+
 }

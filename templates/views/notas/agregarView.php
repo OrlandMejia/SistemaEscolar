@@ -5,7 +5,9 @@
         <div class="card shadow mb-4">
             <a href="#calificaciones_data" class="d-block card-header py-3" data-toggle="collapse"
                 role="button" aria-expanded="true" aria-controls="calificaciones_data">
-                <h6 class="m-0 font-weight-bold text-primary"><?php echo $d->title; ?></h6>
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-graduation-cap"></i> <?php echo $d->title; ?>
+                </h6>
             </a>
             <div class="collapse show" id="calificaciones_data">
                 <div class="card-body">
@@ -16,7 +18,9 @@
                                 <!-- Selección del Alumno -->
                                 <?php if (!empty($d->alumnos)): ?>
                                 <div class="form-group">
-                                    <label for="id_alumno">Selecciona un Alumno</label>
+                                    <label for="id_alumno">
+                                        <i class="fas fa-user"></i> Selecciona un Alumno
+                                    </label>
                                     <select name="id_alumno" id="id_alumno" class="form-control" required>
                                         <?php foreach ($d->alumnos as $alumno): ?>
                                             <option value="<?php echo $alumno->id_usuario; ?>">
@@ -26,30 +30,42 @@
                                     </select>
                                 </div>
                                 <?php else: ?>
-                <div class="form-group">
-                  <label for="id_alumno">Selecciona un Alumno</label>
-                  <div class="alert alert-danger">No hay Alumnos Asignados</div>
-                </div>
-              <?php endif; ?>
+                                    <div class="form-group">
+                                        <label for="id_alumno">
+                                            <i class="fas fa-user"></i> Selecciona un Alumno
+                                        </label>
+                                        <div class="alert alert-danger">
+                                            <i class="fas fa-exclamation-triangle"></i> No hay Alumnos Asignados
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
 
                                 <!-- Campos de Calificaciones -->
                                 <div class="form-group">
-                                    <label for="primer_bimestre">Primer Bimestre</label>
+                                    <label for="primer_bimestre">
+                                        <i class="fas fa-chart-bar"></i> Primer Bimestre
+                                    </label>
                                     <input type="number" class="form-control" id="primer_bimestre" name="primer_bimestre" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="segundo_bimestre">Segundo Bimestre</label>
+                                    <label for="segundo_bimestre">
+                                        <i class="fas fa-chart-bar"></i> Segundo Bimestre
+                                    </label>
                                     <input type="number" class="form-control" id="segundo_bimestre" name="segundo_bimestre" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="tercer_bimestre">Tercer Bimestre</label>
+                                    <label for="tercer_bimestre">
+                                        <i class="fas fa-chart-bar"></i> Tercer Bimestre
+                                    </label>
                                     <input type="number" class="form-control" id="tercer_bimestre" name="tercer_bimestre" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="cuarto_bimestre">Cuarto Bimestre</label>
+                                    <label for="cuarto_bimestre">
+                                        <i class="fas fa-chart-bar"></i> Cuarto Bimestre
+                                    </label>
                                     <input type="number" class="form-control" id="cuarto_bimestre" name="cuarto_bimestre" required>
                                 </div>
                             </div>
@@ -58,7 +74,9 @@
                                 <!-- Otros Campos si es necesario -->
 
                                 <!-- Botón de Agregar -->
-                                <button class="btn btn-success" type="submit">Agregar Calificaciones</button>
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fas fa-plus-circle"></i> Agregar Calificaciones
+                                </button>
                             </div>
                         </div>
                     </form>
