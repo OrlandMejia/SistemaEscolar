@@ -25,7 +25,7 @@ class notasController extends Controller {
   
   function index()
   {
-    if (!is_admin($this->rol)) {
+    if (!is_profesor($this->rol)) {
       Flasher::new(get_notificaciones(), 'danger');
       Redirect::back();
     }
@@ -43,7 +43,7 @@ class notasController extends Controller {
 
   function ver($id_grupo)
   {
-    if (!is_admin($this->rol)) {
+    if (!is_profesor($this->rol)) {
       Flasher::new(get_notificaciones(), 'danger');
       Redirect::back();
     }
@@ -60,7 +60,7 @@ class notasController extends Controller {
     $data = [
       'title'  => sprintf('Calificaciones Alumnos de: %s', $grupo['nombre']),
       'slug' => 'notas',
-      'button' => ['url' => 'alumnos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Alumno'],
+      'button' => ['url' => 'notas', 'text' => '<i class="fas fa-eye"></i> Ver Calificaciones'],
       'alumnosCalificaciones' => $alumnosCalificaciones
     ];
 
@@ -77,7 +77,7 @@ class notasController extends Controller {
     $data = [
         'title' => 'Agregar Calificaciones',
         'slug' => 'notas',
-        'button' => ['url' => 'alumnos/agregar', 'text' => '<i class="fas fa-plus"></i> Agregar Alumno'],
+        'button' => ['url' => 'notas', 'text' => '<i class="fas fa-plus"></i> Ver Calificaciones'],
         'alumnos' => $alumnosSinCalificacion
     ];
 
@@ -139,7 +139,7 @@ function post_agregar()
 
 // En tu controlador notasController.ph
 
-public function editar($id)
+function editar($id)
 {
   $alumno = notasModel::by_id_notas($id);
 
@@ -162,7 +162,7 @@ public function editar($id)
   //echo debug($data);
 }
 
-public function post_editar()
+function post_editar()
 {
     try {
         // Verificar la validez de los datos del formulario
@@ -206,7 +206,7 @@ public function post_editar()
 
         // Redirigir o mostrar mensaje de éxito según tu lógica
         Flasher::new('Calificaciones actualizadas con éxito.', 'success');
-        Redirect::to('notas');
+        Redirect::back();
 
     } catch (PDOException $e) {
         Flasher::new($e->getMessage(), 'danger');
@@ -217,11 +217,9 @@ public function post_editar()
     }
 }
 
-
-
-
   function borrar($id)
   {
     // Proceso de borrado
   }
+  
 }

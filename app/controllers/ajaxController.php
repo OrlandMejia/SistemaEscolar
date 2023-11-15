@@ -761,6 +761,72 @@ class ajaxController extends Controller {
     }
   }
 
+  function get_resumen_ensenanza_profesor()
+  {
+      try {
+          if (!is_profesor(get_user_rol())) {
+              throw new Exception(get_notificaciones(1));
+          }
+  
+          // Obtener el ID del profesor actual (asegúrate de tener acceso al ID del profesor en tu contexto)
+          $id_profesor = get_user('id');
+  
+          // Cambiar la llamada a la función stats de adminModel por stats_by_id de profesorModel
+          $stats = profesorModel::stats_by_id($id_profesor);
+  
+          // Obtener datos relevantes para el gráfico
+          $materias = $stats['materias'];
+          $grupos = $stats['grupos'];
+          $alumnos = $stats['alumnos'];
+          $lecciones = $stats['lecciones'];
+  
+          $data = [
+              'labels' => ['Materias', 'Grados', 'Alumnos', 'Tareas Publicadas'],
+              'data'   => [$materias, $grupos, $alumnos, $lecciones]
+          ];
+  
+          // Cambiar el tipo de gráfico a 'bar' para mostrar barras
+          $options = [
+              'type' => 'bar',
+              // ... otras opciones según sea necesario
+          ];
+  
+          // Salida JSON con datos y opciones para el gráfico
+          json_output(json_build(200, $data, $options));
+      } catch (Exception $e) {
+          // Manejo de excepciones
+          json_output(json_build(400, null, $e->getMessage()));
+      } catch (PDOException $e) {
+          // Manejo de excepciones de PDO
+          json_output(json_build(400, null, $e->getMessage()));
+      }
+  }
+
+  function get_tareas_chart()
+  {
+      try {
+          if (!is_profesor(get_user_rol())) {
+              throw new Exception(get_notificaciones(1));
+          }
+  
+          // Asegúrate de obtener correctamente el ID del profesor
+          $id_profesor = get_user('id');
+  
+          if (!$id_profesor) {
+              throw new Exception('No se pudo obtener el ID del profesor.');
+          }
+  
+          // Asegúrate de pasar $id_profesor al llamar a la función
+          $data = profesorModel::tareas_chart_data($id_profesor);
+  
+          json_output(json_build(200, $data));
+      } catch (Exception $e) {
+          json_output(json_build(400, null, $e->getMessage()));
+      } catch (PDOException $e) {
+          json_output(json_build(400, null, $e->getMessage()));
+      }
+  }
+
   function reiniciar_sistema()
   {
     try {
@@ -813,5 +879,5 @@ class ajaxController extends Controller {
       json_output(json_build(400, null, $e->getMessage()));
     }
   }
-
+  
 }

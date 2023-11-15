@@ -993,11 +993,13 @@ $(document).ready(function() {
   function init_dashboard() {
     var chart1 = $('#resumen_ingresos_chart'),
     chart2     = $('#resumen_comunidad_chart'),
-    chart3     = $('#resumen_enseñanza_chart');
+    chart3     = $('#resumen_enseñanza_chart'),
+    chart4     = $('#resumen_enseñanza_profesor_chart');
 
     if (chart1.length !== 0) draw_resumen_ingresos_chart(chart1);
     if (chart2.length !== 0) draw_resumen_comunidad_chart(chart2);
     if (chart3.length !== 0) draw_resumen_enseñanza_chart(chart3);
+    if (chart4.length !== 0) draw_resumen_enseñanza_profesor_chart(chart4);
   }
   init_dashboard();
 
@@ -1342,4 +1344,116 @@ $(document).ready(function() {
       button.waitMe('hide');
     })
   }
+
+ // Dibujar gráfica de resumen de lecciones
+ function draw_resumen_enseñanza_profesor_chart(element) {
+  var wrapper = element.parent('div'),
+  _t          = Bee.csrf,
+  action      = 'get',
+  hook        = 'bee_hook';
+
+  // AJAX
+  $.ajax({
+    url: 'ajax/get_resumen_ensenanza_profesor',
+    type: 'get',
+    dataType: 'json',
+    data : { _t, action, hook },
+    beforeSend: function() {
+      wrapper.waitMe();
+    }
+  }).done(function(res) {
+    if(res.status === 200) {
+      var myLineChart = new Chart(element, {
+        type: 'bar',
+        data: {
+          labels: res.data.labels,
+          datasets: [{
+            label: "Tareas",
+            lineTension: 0.3,
+            backgroundColor: "rgba(78, 115, 223, 0.5)",
+            borderColor: "rgba(78, 115, 223, 1)",
+            pointRadius: 3,
+            pointBackgroundColor: "rgba(78, 115, 223, 1)",
+            pointBorderColor: "rgba(78, 115, 223, 1)",
+            pointHoverRadius: 3,
+            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+            pointHitRadius: 10,
+            pointBorderWidth: 2,
+            data: res.data.data,
+          }],
+        },
+        options: {
+          maintainAspectRatio: false,
+          layout: {
+            padding: {
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0
+            }
+          },
+          scales: {
+            xAxes: [{
+              time: {
+                unit: 'date'
+              },
+              gridLines: {
+                display: false,
+                drawBorder: false
+              },
+              ticks: {
+                maxTicksLimit: 20
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                maxTicksLimit: 5,
+                padding: 10
+              },
+              gridLines: {
+                color: "rgb(234, 236, 244)",
+                zeroLineColor: "rgb(234, 236, 244)",
+                drawBorder: false,
+                borderDash: [2],
+                zeroLineBorderDash: [2]
+              }
+            }],
+          },
+          legend: {
+            display: false
+          },
+          tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            intersect: false,
+            mode: 'index',
+            caretPadding: 10,
+            callbacks: {
+              label: function(tooltipItem, chart) {
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + ': ' + tooltipItem.yLabel;
+              }
+            }
+          }
+        }
+      });
+    } else {
+      wrapper.html(res.msg);
+    }
+  }).fail(function(err) {
+    wrapper.html('Hubo un error al cargar la información.')
+  }).always(function() {
+    wrapper.waitMe('hide');
+  });
+}
+
 });

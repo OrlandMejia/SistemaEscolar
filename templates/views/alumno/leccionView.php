@@ -18,18 +18,6 @@
       </div>
     </div>
 
-    <?php if (!empty($d->l->video)): ?>
-      <!-- Video de la lección -->
-      <div class="card shadow mb-4">
-        <div class="card-header font-weight-bold text-primary">Video disponible</div>
-        <div class="card-body p-0">
-          <div class="yt_video_wrapper">
-            <iframe src="<?php echo $d->l->video; ?>" title="<?php echo $d->l->titutlo; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    <?php endif; ?>
-
     <!-- Contenido de la lección -->
     <div class="card shadow mb-4">
       <!-- Card Header - Accordion -->
@@ -44,6 +32,19 @@
           </div>
       </div>
     </div>
+
+    <?php if (!empty($d->l->video)): ?>
+    <!-- Video de la lección -->
+    <div class="card shadow mb-4">
+        <div class="card-header font-weight-bold text-primary">Material disponible</div>
+        <div class="card-body p-0">
+            <a href="<?php echo $d->l->video; ?>" target="_blank" class="yt_video_link">
+            <img src="img/lista.png" alt="Visitar Link" class="yt_play_button" style="width: 80px; height: 80px;">
+                <?php echo $d->l->titulo; ?>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>
   </div>
 </div>
 

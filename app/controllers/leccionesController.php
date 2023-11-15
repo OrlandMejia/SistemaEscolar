@@ -133,8 +133,8 @@ class leccionesController extends Controller {
       }
 
       // Validar que el url del video
-      if (!filter_var($video, FILTER_VALIDATE_URL) && !empty($video)) {
-        throw new Exception('Ingresa una URL de video válida.');
+      if (strlen($video) <5 && !empty($video)) {
+        throw new Exception('Contenido de la Tarea muy corto.');
       }
 
       // Lección a guardar
@@ -237,8 +237,8 @@ class leccionesController extends Controller {
       }
 
       // Validar que el url del video
-      if (!filter_var($video, FILTER_VALIDATE_URL) && !empty($video)) {
-        throw new Exception('Ingresa una URL de video válida.');
+      if (strlen($video)<5 && !empty($video)) {
+        throw new Exception('Ingresa una material valido');
       }
 
       // Lección a guardar

@@ -19,7 +19,7 @@
             <div class="col-xl-1">
             </div>
             <div class="col-xl-5">
-              Título de la lección
+              Título de la Tarea
             </div>
             <div class="col-xl-1">
               Video
@@ -40,7 +40,7 @@
             <div class="row">
               <div class="col-xl-1">
                 <a href="<?php echo sprintf('lecciones/ver/%s', $l->id); ?>">
-                  <img src="img/player.png" alt="<?php echo $l->titulo; ?>" class="img-fluid" style="width: 30px;">
+                  <img src="img/boton-de-play.png" alt="<?php echo $l->titulo; ?>" class="img-fluid" style="width: 30px;">
                 </a>
               </div>
               <div class="col-xl-5">
@@ -48,9 +48,9 @@
               </div>
               <div class="col-xl-1">
                 <?php if (!empty($l->video)): ?>
-                  <span class="badge badge-pull badge-success"><i class="fas fa-video"></i> Tiene video</span>
+                  <span class="badge badge-pull badge-success"><i class="fas fa-book"></i> Material</span>
                 <?php else: ?>
-                  <span class="badge badge-pull badge-danger"><i class="fas fa-video"></i> Sin video</span>
+                  <span class="badge badge-pull badge-danger"><i class="fas fa-video"></i> Sin Material</span>
                 <?php endif; ?>
               </div>
               <div class="col-xl-2">

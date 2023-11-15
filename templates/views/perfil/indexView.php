@@ -13,32 +13,33 @@
           <div class="card-body">
             <form action="profesores/post_editar" method="post">
               <?php echo insert_inputs(); ?>
-              <input type="hidden" name="id_alumno" value="<?php echo $d->ud->id_usuario; ?>" required>
+              
+              <?php if (property_exists($d, 'ud') && is_object($d->ud)): ?>
+                <input type="hidden" name="id_alumno" value="<?php echo $d->ud->id_usuario; ?>" required>
 
-              <div class="form-group">
-                <label for="dpi"><i class="fas fa-id-card"></i> DPI</label>
-                <input type="text" class="form-control" id="identificacion" name="identificacion" value="<?php echo $d->ud->identificacion; ?>" required>
-              </div>
+                <div class="form-group">
+                  <label for="nombres"><i class="fas fa-user"></i> Nombre(s)</label>
+                  <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $d->ud->nombres; ?>" required>
+                </div>
 
-              <div class="form-group">
-                <label for="nombres"><i class="fas fa-user"></i> Nombre(s)</label>
-                <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $d->p->nombres; ?>" required>
-              </div>
+                <div class="form-group">
+                  <label for="apellidos"><i class="fas fa-user"></i> Apellido(s)</label>
+                  <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $d->ud->apellidos; ?>" required>
+                </div>
 
-              <div class="form-group">
-                <label for="apellidos"><i class="fas fa-user"></i> Apellido(s)</label>
-                <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $d->p->apellidos; ?>" required>
-              </div>
+                <div class="form-group">
+                  <label for="email"><i class="fas fa-envelope"></i> Correo electrónico</label>
+                  <input type="email" class="form-control" id="email" name="email" value="<?php echo $d->ud->email; ?>" required>
+                </div>
 
-              <div class="form-group">
-                <label for="email"><i class="fas fa-envelope"></i> Correo electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo $d->p->email; ?>" required>
-              </div>
-
-              <div class="form-group">
-                <label for="telefono"><i class="fas fa-phone"></i> Teléfono</label>
-                <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $d->p->telefono; ?>">
-              </div>
+                <div class="form-group">
+                  <label for="telefono"><i class="fas fa-phone"></i> Teléfono</label>
+                  <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $d->ud->telefono; ?>">
+                </div>
+              <?php else: ?>
+                <!-- Mensaje de error o manejo adecuado si ud no está definido o no es un objeto -->
+                <p>Error: No se encontraron datos de usuario.</p>
+              <?php endif; ?>
 
               <button class="btn btn-success" type="submit">Guardar</button>
             </form>
@@ -46,7 +47,8 @@
       </div>
     </div>
     </div>
-
+  </div>
+</div>
 </div>
 
 <?php require_once INCLUDES.'inc_footer.php'; ?>

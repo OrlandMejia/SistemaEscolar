@@ -4,7 +4,7 @@
 <div class="card shadow mb-4">
   <div class="card-header py-3">
 	  <h6 class="m-0 font-weight-bold text-primary">
-      Lista de lecciones disponibles
+      Lista de Tareas Publicadas
     </h6>
   </div>
   <div class="card-body">
@@ -36,7 +36,7 @@
             <div class="row">
               <div class="col-xl-1">
                 <a href="<?php echo sprintf('alumno/leccion/%s', $l->id); ?>">
-                  <img src="<?php echo get_image('player.png'); ?>" alt="<?php echo $l->titulo; ?>" class="img-fluid" style="width: 30px;">
+                  <img src="img/boton-de-play.png" alt="<?php echo $l->titulo; ?>" class="img-fluid" style="width: 30px;">
                 </a>
               </div>
               <div class="col-xl-2">

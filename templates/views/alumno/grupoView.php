@@ -8,7 +8,7 @@
       <!-- Card Header - Accordion -->
       <a href="#grupo_data" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_data">
-          <h6 class="m-0 font-weight-bold text-primary">Mi grupo</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Mi Grado</h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="grupo_data">
@@ -31,13 +31,13 @@
                     <img src="<?php echo UPLOADED.$d->g->horario; ?>" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
                   </a>
                 <?php else: ?>
-                  <a href="<?php echo get_image('broken.png'); ?>" data-lightbox="Horario" title="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>">
-                    <img src="<?php echo get_image('broken.png'); ?>" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
+                  <a href="img/broken.png" data-lightbox="Horario" title="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>">
+                    <img src="img/broken.png" alt="<?php echo sprintf('Horario del grupo %s', $d->g->nombre); ?>" class="img-fluid img-thumbnail">
                   </a>
                   <p class="text-muted"><?php echo sprintf('El archivo <b>%s</b> no existe o está dañado.', $d->g->horario); ?></p>
                 <?php endif; ?>
               <?php else: ?>
-                <p>No hay un horario definido aún para este grupo.</p>
+                <p>No hay un horario definido aún para este Grado.</p>
               <?php endif; ?>
             </div>
           </div>
@@ -52,7 +52,7 @@
       <!-- Card Header - Accordion -->
       <a href="#grupo_alumnos" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_alumnos">
-          <h6 class="m-0 font-weight-bold text-primary">Compañeros de grupo</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Compañeros de Grado</h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="grupo_alumnos">
@@ -77,8 +77,8 @@
             </ul>
           <?php else: ?>
             <div class="text-center py-5">
-              <img src="<?php echo get_image('undraw_taken.png'); ?>" alt="No hay registros." class="img-fluid" style="width: 200px;">
-              <p class="text-muted">No hay alumnos inscritos a este grupo.</p>
+              <img src="img/undraw_taken.png')" alt="No hay registros." class="img-fluid" style="width: 200px;">
+              <p class="text-muted">No hay alumnos inscritos a este Grado.</p>
             </div>
           <?php endif; ?>
         </div>

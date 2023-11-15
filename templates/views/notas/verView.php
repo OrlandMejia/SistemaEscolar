@@ -2,8 +2,8 @@
 
 <!-- Agregar botón de exportar PDF -->
 <div class="mb-3 d-flex">
-  <a href="<?php echo buildURL('alumnos/exportar_pdf'); ?>" class="btn btn-info mr-2"  target="_blank"><i class="fas fa-file-pdf"></i> Exportar a PDF</a>
-  <a href="<?php echo buildURL('alumnos/exportar_excel'); ?>" class="btn btn-success"><i class="fas fa-file-excel"></i> Exportar a Excel</a>
+  <a href="<?php echo buildURL('notas/exportar_pdf'); ?>" class="btn btn-info mr-2"  target="_blank"><i class="fas fa-file-pdf"></i> Exportar a PDF</a>
+  <a href="<?php echo buildURL('notas/exportar_excel'); ?>" class="btn btn-success"><i class="fas fa-file-excel"></i> Exportar a Excel</a>
 </div>
 
 <!-- DataTales Example -->

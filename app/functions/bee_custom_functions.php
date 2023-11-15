@@ -362,7 +362,7 @@ function get_proyectos()
     [
       'titulo'   => 'Registro de nuevos alumnos',
       'tipo'     => 'warning',
-      'progreso' => 40
+      'progreso' => 20
     ],
     [
       'titulo'   => 'Registro de profesores',

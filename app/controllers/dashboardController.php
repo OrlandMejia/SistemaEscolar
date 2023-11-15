@@ -35,6 +35,8 @@ class dashboardController extends Controller {
     }if (is_profesor($rol)) {
       
       $data['stats'] = profesorModel::stats_by_id(get_user('id'));
+      // Nueva línea para obtener el total de lecciones
+     // $data['tareas_publicadas'] = profesorModel::tareas_publicadas(get_user('id'));
       View::render('dashboard_profesor', $data);
       
     } else if (is_alumno($rol)) {
@@ -48,7 +50,11 @@ class dashboardController extends Controller {
       
     }
   }
-
+  function tareas_publicadas_chart()
+  {
+      View::render('dashboard_profesor_chart');
+  }
+  
   function ver($id)
   {
     View::render('ver');

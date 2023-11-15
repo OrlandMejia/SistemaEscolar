@@ -45,7 +45,7 @@ class alumnoController extends Controller {
     $id_profesor = isset($_GET["id_profesor"]) ? clean($_GET["id_profesor"], true) : null;
     $data        =
     [
-      'title'     => 'Todas mis lecciones',
+      'title'     => 'Todas mis Tareas',
       'slug'      => 'alumno-lecciones',
       'lecciones' => leccionModel::by_alumno($this->id_alumno, $publicadas, $id_materia, $id_profesor)
     ];
@@ -102,7 +102,7 @@ class alumnoController extends Controller {
 
     $data =
     [
-      'title'      => sprintf('Lección %s', $leccion['titulo']),
+      'title'      => sprintf('Tarea: %s', $leccion['titulo']),
       'hide_title' => true,
       'slug'       => 'alumno-lecciones',
       'l'          => $leccion

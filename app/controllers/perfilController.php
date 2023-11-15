@@ -22,8 +22,7 @@ class perfilController extends Controller {
         ];
         // Pasar los datos a la vista
         View::render('index', ['userData' => $userData]);
-
-
+        //echo debug($userData);
     }
     function editar() {
     }

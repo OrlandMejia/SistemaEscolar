@@ -8,7 +8,7 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Materias</div>
+						<div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Materias Asignadas</div>
 						<div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $d->stats->materias; ?></div>
 					</div>
 					<div class="col-auto">
@@ -25,7 +25,7 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Grados</div>
+						<div class="text-xs font-weight-bold text-success text-uppercase mb-1">Grados Asignados</div>
 						<div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $d->stats->grupos; ?></div>
 					</div>
 					<div class="col-auto">
@@ -42,7 +42,7 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Alumnos</div>
+						<div class="text-xs font-weight-bold text-info text-uppercase mb-1">Alumnos Asignados</div>
 						<div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $d->stats->alumnos; ?></div>
 					</div>
 					<div class="col-auto">
@@ -59,7 +59,7 @@
 			<div class="card-body">
 				<div class="row no-gutters align-items-center">
 					<div class="col mr-2">
-						<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tareas</div>
+						<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Tareas Publicadas</div>
 						<div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $d->stats->lecciones; ?></div>
 					</div>
 					<div class="col-auto">
@@ -70,8 +70,8 @@
 		</div>
 	</div>
 
-	 <!-- Lecciones registradas por mes -->
-	 <div class="col-xl-12 col-lg-12">
+     <!-- Lecciones registradas por mes -->
+	<div class="col-xl-12 col-lg-12">
 		<div class="card shadow mb-4">
 			<!-- Card Header - Dropdown -->
 			<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -91,11 +91,12 @@
 			<!-- Card Body -->
 			<div class="card-body">
 				<div class="chart-area">
-					<canvas id="resumen_enseñanza_chart"></canvas>
+					<canvas id="resumen_enseñanza_profesor_chart"></canvas>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 <?php require_once INCLUDES.'inc_footer.php'; ?>
