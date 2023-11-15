@@ -8,7 +8,7 @@
       <!-- Card Header - Accordion -->
       <a href="#grupo_data" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_data">
-          <h6 class="m-0 font-weight-bold text-primary">Información General</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Información General <i class="fas fa-info-circle"></i></h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="grupo_data">
@@ -52,7 +52,7 @@
       <!-- Card Header - Accordion -->
       <a href="#grupo_alumnos" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_alumnos">
-          <h6 class="m-0 font-weight-bold text-primary">Alumnos inscritos</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Alumnos inscritos <i class="fas fa-users"></i></h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="grupo_alumnos">
@@ -88,7 +88,7 @@
       <!-- Card Header - Accordion -->
       <a href="#grupo_materias" class="d-block card-header py-3" data-toggle="collapse"
           role="button" aria-expanded="true" aria-controls="grupo_materias">
-          <h6 class="m-0 font-weight-bold text-primary">Materias</h6>
+          <h6 class="m-0 font-weight-bold text-primary">Materias <i class="fas fa-book"></i></h6>
       </a>
       <!-- Card Content - Collapse -->
       <div class="collapse show" id="grupo_materias">
